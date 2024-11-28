@@ -1,25 +1,28 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-import { initializeApp } from 'firebase/app';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import { initializeApp } from "firebase/app";
+import { AuthProvider } from "./contexts/AuthContext.jsx";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDuyP3vvcs29KznC4Oe4tCwzi2jEbQRAhw",
-  authDomain: "triangularchess.firebaseapp.com",
-  projectId: "triangularchess",
-  storageBucket: "triangularchess.firebasestorage.app",
-  messagingSenderId: "687897857402",
-  appId: "1:687897857402:web:156aadbe0466251f061ac3"
+  apiKey: process.env.REACT_APP_APIKEY,
+  authDomain: process.env.REACT_APP_AUTHDOMAIN,
+  projectId: process.env.REACT_APP_PROJECTID,
+  storageBucket: process.env.REACT_APP_STORAGEBUCKET,
+  messagingSenderId: process.env.REACT_APP_MESSAGINGSENDERID,
+  appId: process.env.REACT_APP_APPID,
 };
 
 initializeApp(firebaseConfig);
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <App />
+    <AuthProvider>
+      <App />
+    </AuthProvider>
   </React.StrictMode>
 );
 
