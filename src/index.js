@@ -3,6 +3,18 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { initializeApp } from 'firebase/app';
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDuyP3vvcs29KznC4Oe4tCwzi2jEbQRAhw",
+  authDomain: "triangularchess.firebaseapp.com",
+  projectId: "triangularchess",
+  storageBucket: "triangularchess.firebasestorage.app",
+  messagingSenderId: "687897857402",
+  appId: "1:687897857402:web:156aadbe0466251f061ac3"
+};
+
+initializeApp(firebaseConfig);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
