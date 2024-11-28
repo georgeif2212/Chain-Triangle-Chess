@@ -28,20 +28,28 @@ const GameBoard = () => {
   const [connections, setConnections] = useState([]);
   const [selectedVertex, setSelectedVertex] = useState(null); 
 
-    const handleVertexClick = (vertex) => {
-      if (selectedVertex) {
+  const handleVertexClick = (vertex) => {
+    if (selectedVertex) {
+      // Verifica que ambos vértices estén en la misma fila y sean adyacentes
+      const isSameRow = selectedVertex.row === vertex.row;
+      const isSameC = selectedVertex.row === vertex.row;
+      const isAdjacent = Math.abs(selectedVertex.col - vertex.col) === 1;
+  
+      if (isSameRow ) {
         setConnections([...connections, { start: selectedVertex, end: vertex }]);
         setSelectedVertex(null);
       } else {
-        setSelectedVertex(vertex);
+        // Si no son adyacentes, deselecciona el vértice seleccionado
+        setSelectedVertex(null);
       }
-    };
-
+    } else {
+      setSelectedVertex(vertex);
+    }
+  };
+  
   
   // * Generates the coordinates for the vertices
   const vertices = VertexGrid({ polygonX, polygonY, vertexSpacing, rows });
-
-
 
   return (
     <Stage width={stageWidth} height={stageHeight}>
