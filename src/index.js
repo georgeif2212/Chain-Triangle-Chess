@@ -4,6 +4,9 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth"; 
+import { getFirestore } from "firebase/firestore";
+
 import { AuthProvider } from "./contexts/AuthContext.jsx";
 
 const firebaseConfig = {
@@ -15,7 +18,10 @@ const firebaseConfig = {
   appId: process.env.REACT_APP_APPID,
 };
 
-initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
+
+export const auth = getAuth(app);
+export const db = getFirestore(app);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
