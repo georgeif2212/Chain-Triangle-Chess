@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { onAuthStateChanged, signOut } from "firebase/auth";
-import { auth } from "./firebase"; // Importa tu instancia de Firebase Authentication
+import { auth } from "../index.js";
 
 // * Create the context
 const AuthContext = createContext();
@@ -11,7 +11,7 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Escucha cambios en el estado de autenticación
+  // * Listen for changes in authentication status
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
       setLoading(false);
