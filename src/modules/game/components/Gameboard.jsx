@@ -32,8 +32,8 @@ const GameBoard = () => {
     if (selectedVertex) {
       // Verifica que ambos vértices estén en la misma fila y sean adyacentes
       const isSameRow = selectedVertex.row === vertex.row;
-      const isSameC = selectedVertex.row === vertex.row;
-      const isAdjacent = Math.abs(selectedVertex.col - vertex.col) === 1;
+      // const isSameC = selectedVertex.row === vertex.row;
+      // const isAdjacent = Math.abs(selectedVertex.col - vertex.col) === 1;
   
       if (isSameRow ) {
         setConnections([...connections, { start: selectedVertex, end: vertex }]);
