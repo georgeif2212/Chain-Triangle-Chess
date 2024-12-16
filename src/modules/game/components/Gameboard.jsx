@@ -12,7 +12,7 @@ const GameBoard = () => {
   const polygonY = stageHeight / 2;
   const radius = window.innerWidth / 4;
   const vertexSpacing = window.innerWidth / 16;
-  const rows = [4, 5, 6, 7, 6, 5, 4];
+  const rows = [3, 4, 5, 4, 3];
 
   useEffect(() => {
     const handleResize = () => {
@@ -26,7 +26,7 @@ const GameBoard = () => {
 
   // * Generates the connections
   const [connections, setConnections] = useState([]);
-  const [selectedVertex, setSelectedVertex] = useState(null); 
+  const [selectedVertex, setSelectedVertex] = useState(null);
 
   const handleVertexClick = (vertex) => {
     if (selectedVertex) {
@@ -34,9 +34,12 @@ const GameBoard = () => {
       const isSameRow = selectedVertex.row === vertex.row;
       // const isSameC = selectedVertex.row === vertex.row;
       // const isAdjacent = Math.abs(selectedVertex.col - vertex.col) === 1;
-  
-      if (isSameRow ) {
-        setConnections([...connections, { start: selectedVertex, end: vertex }]);
+
+      if (isSameRow) {
+        setConnections([
+          ...connections,
+          { start: selectedVertex, end: vertex },
+        ]);
         setSelectedVertex(null);
       } else {
         // Si no son adyacentes, deselecciona el vértice seleccionado
@@ -46,8 +49,7 @@ const GameBoard = () => {
       setSelectedVertex(vertex);
     }
   };
-  
-  
+
   // * Generates the coordinates for the vertices
   const vertices = VertexGrid({ polygonX, polygonY, vertexSpacing, rows });
 
@@ -70,7 +72,12 @@ const GameBoard = () => {
       {/* // *  Layer for the verticecs */}
       <Layer>
         {vertices.map((pos, index) => (
-          <Vertex key={index} x={pos.x} y={pos.y} onClick={() => handleVertexClick(pos)} />
+          <Vertex
+            key={index}
+            x={pos.x}
+            y={pos.y}
+            onClick={() => handleVertexClick(pos)}
+          />
         ))}
       </Layer>
 
