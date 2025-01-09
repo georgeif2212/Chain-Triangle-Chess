@@ -5,6 +5,7 @@ import Error from "./modules/game/pages/Error.jsx";
 import Register from "./modules/auth/pages/Register.jsx";
 import Login from "./modules/auth/pages/Login.jsx";
 import AuthMiddleware from "./middlewares/Authmiddleware.jsx";
+import Matrix from "./modules/game/components/MatrixValidEdges.jsx";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           }
         />
         <Route path="/register" element={<Register />} />
+        <Route path="/arrays" element={<Matrix />} />
         <Route path="/login" element={<Login />} />
         <Route path="/game" element={<Game />} />
         <Route path="*" element={<Error />} />
