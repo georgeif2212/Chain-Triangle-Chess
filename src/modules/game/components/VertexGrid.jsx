@@ -3,7 +3,7 @@ import { useMemo } from "react";
 const VertexGrid = ({ polygonX, polygonY, vertexSpacing, rows }) => {
   const vertices = useMemo(() => {
     const calculatedVertices = [];
-    let index = 0; // Contador para el índice de los vértices
+    let index = 1; // Contador para el índice de los vértices
 
     const totalRows = rows.length;
 
