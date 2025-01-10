@@ -4,6 +4,8 @@ import Vertex from "./Vertex.jsx";
 import VertexGrid from "./VertexGrid.jsx";
 import Cord from "./Cord.jsx";
 
+import { checkNewTriangles } from "./Rules.jsx";
+
 const GameBoard = () => {
   const containerRef = useRef(null);
   const [stageWidth, setStageWidth] = useState(0);
@@ -39,19 +41,16 @@ const GameBoard = () => {
   const [connections, setConnections] = useState([]);
   const [selectedVertex, setSelectedVertex] = useState(null);
 
+  
   const handleVertexClick = (vertex) => {
     if (selectedVertex) {
-      const isSameRow = selectedVertex.row === vertex.row;
-
-      if (isSameRow) {
-        setConnections([
-          ...connections,
-          { start: selectedVertex, end: vertex },
-        ]);
-        setSelectedVertex(null);
-      } else {
-        setSelectedVertex(null);
-      }
+      const p1 = selectedVertex.index < vertex.index ? selectedVertex.index : vertex.index;
+      const p2 = selectedVertex.index > vertex.index ? selectedVertex.index : vertex.index;
+      
+      checkNewTriangles(p1, p2);
+    
+      setConnections([...connections, { start: selectedVertex, end: vertex }]);
+      setSelectedVertex(null);
     } else {
       setSelectedVertex(vertex);
     }
