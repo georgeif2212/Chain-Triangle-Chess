@@ -1,40 +1,62 @@
 import { matrixValidEdges } from "../../../utils/createArrays.jsx";
 import { matrixAssociatedVertices } from "../../../utils/createArrays.jsx";
+import { gameBoardMatrix } from "../../../utils/createArrays.jsx";
+import { sortArray } from "../../../utils/utils.js";
+import { triangles } from "../../../utils/utils.js";
 
 export function checkNewTriangles(p_1, p_2) {
-  let intermedio = matrixValidEdges[p_1][p_2];
-  if (intermedio > 0) {
+  let intermediateEdge = matrixValidEdges[p_1 - 1][p_2 - 1];
+  if (intermediateEdge > -1) {
     return;
   }
 
-  intermedio = -intermedio;
+  intermediateEdge = -intermediateEdge;
+  console.log(p_1, p_2);
+  console.log(intermediateEdge);
 
-  const nuevas_aristas = [[p_1, intermedio], [intermedio, p_2]];
+  const newEdges = [
+    [p_1, intermediateEdge],
+    [intermediateEdge, p_2],
+  ];
 
-  // Para cada nueva arista, checa si se forma un triángulo
-  for (let i = 0; i < nuevas_aristas.length; i++) {
-    const llave = conseguir_llave_string(nuevas_aristas[i]); // Los ordena y regresa en string separados por ","
-    const asociados = matrixAssociatedVertices[llave]; // Consigue lista de 1 o dos postes asociados
+  gameBoardMatrix[p_1 - 1][intermediateEdge - 1] = 1;
+  gameBoardMatrix[intermediateEdge - 1][p_2 - 1] = 1;
+  
+  // * For each new edge, check if a triangle is formed
+  for (let i = 0; i < newEdges.length; i++) {
+    // Get associated vertices of each new Edge
+    const associatedVertices = matrixAssociatedVertices[newEdges[i][0] - 1][newEdges[i][1] - 1]; 
 
-    // Para cada poste asociado checa si está puesta una arista en el tablero
-    for (let j = 0; j < asociados.length; j++) {
-      // Obtener llaves para consultar el tablero. Cada llave es un par ordenado
-      const llaves_1 = ordenar(asociados[j], nuevas_aristas[i][0]); // Los postes deben estar ordenados de menor a mayor
-      const llaves_2 = ordenar(asociados[j], nuevas_aristas[i][1]);
+    // For each associated vertex check if an edge is placed on the board
+    for (let j = 0; j < associatedVertices.length; j++) {
+      // Get keys to query the board. Each key is an ordered pair
+      const llaves_1 = sortArray(associatedVertices[j], newEdges[i][0]); 
+      const llaves_2 = sortArray(associatedVertices[j], newEdges[i][1]);
+
+      console.log(gameBoardMatrix);
+      console.log("nuevas aristas:", newEdges);
+      console.log("associted: ", associatedVertices);
 
       // Consultar en el tablero si las aristas están puestas
-      const arista_puesta_1 = tablero[llaves_1[0]][llaves_1[1]]; // 1 si está puesta
-      const arista_puesta_2 = tablero[llaves_2[0]][llaves_2[1]]; // 1 si está puesta
+      const wildcardEdge_1 = gameBoardMatrix[llaves_1[0] - 1][llaves_1[1] - 1]; // 1 si está puesta
+      const wildcardEdge_2 = gameBoardMatrix[llaves_2[0] - 1][llaves_2[1] - 1]; //
+      console.log("arista1:", wildcardEdge_1, llaves_1);
+      console.log("arista2:", wildcardEdge_2, llaves_2);
 
-      if (arista_puesta_1 === 1 && arista_puesta_2 === 1) {
+      if (wildcardEdge_1 === 1 && wildcardEdge_2 === 1) {
         // Hay dos aristas puestas, entonces la nueva arista completa un triángulo
-        const tupla_ordenada = conseguir_llave_string([asociados[j], ...nuevas_aristas[i]]);
-
+        const verticesOfTriangle = sortArray([
+          associatedVertices[j],
+          ...newEdges[i],
+        ]);
+        console.log("verticesOfTriangle", verticesOfTriangle);
         // Checar si el triángulo que se formó ya está ocupado
-        const esta_ocupado = triangulos[tupla_ordenada];
-        if (!esta_ocupado) {
-          colorear_triangulo(tupla_ordenada, equipo_en_turno);
-          triangulos[tupla_ordenada] = true; // Ocupar el triángulo
+        console.log("STRING::  ", verticesOfTriangle.toString());
+        const availableTriangle = triangles[verticesOfTriangle.toString()];
+        console.log("availableTriangle",availableTriangle);
+        if (availableTriangle !== 0) {
+          console.log("SE FORMÓ TRIANGULOOOOO");
+          triangles[verticesOfTriangle.toString()] = 1; // Ocupar el triángulo
         }
       }
     }
