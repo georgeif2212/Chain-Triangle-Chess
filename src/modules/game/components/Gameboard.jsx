@@ -46,15 +46,23 @@ const GameBoard = () => {
     if (selectedVertex) {
       const p1 = selectedVertex.index < vertex.index ? selectedVertex.index : vertex.index;
       const p2 = selectedVertex.index > vertex.index ? selectedVertex.index : vertex.index;
-      
-      checkNewTriangles(p1, p2);
-    
-      setConnections([...connections, { start: selectedVertex, end: vertex }]);
+  
+      const onValidConnection = (p1, p2) => {
+        setConnections((prevConnections) => [
+          ...prevConnections,
+          { start: { ...selectedVertex, index: p1 }, end: { ...vertex, index: p2 } },
+        ]);
+      };
+  
+      // Call function with onValidConnection Callback
+      checkNewTriangles(p1, p2, onValidConnection);
+  
       setSelectedVertex(null);
     } else {
       setSelectedVertex(vertex);
     }
   };
+  
 
   // Generar coordenadas para los vértices
   const vertices = VertexGrid({ polygonX, polygonY, vertexSpacing, rows });
@@ -76,6 +84,12 @@ const GameBoard = () => {
         </Layer>
 
         <Layer>
+          {connections.map((connection, index) => (
+            <Cord key={index} start={connection.start} end={connection.end} />
+          ))}
+        </Layer>
+
+        <Layer>
           {vertices.map((pos, index) => (
             <Vertex
               key={index}
@@ -83,12 +97,6 @@ const GameBoard = () => {
               y={pos.y}
               onClick={() => handleVertexClick(pos)}
             />
-          ))}
-        </Layer>
-
-        <Layer>
-          {connections.map((connection, index) => (
-            <Cord key={index} start={connection.start} end={connection.end} />
           ))}
         </Layer>
       </Stage>
