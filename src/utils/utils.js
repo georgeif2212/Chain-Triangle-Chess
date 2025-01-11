@@ -25,6 +25,6 @@ export const triangles = {
   "15,18,19": 0,
 };
 
-export function sortArray(val1, val2) {
-  return [val1,val2].sort()
+export function sortArray(value1, value2) {
+  return [value1, value2].sort((a, b) => a - b);
 }
