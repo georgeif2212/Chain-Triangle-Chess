@@ -4,22 +4,25 @@ import { gameBoardMatrix } from "../../../utils/createArrays.jsx";
 import { sortArray } from "../../../utils/utils.js";
 import { triangles } from "../../../utils/utils.js";
 
-export function checkNewTriangles(p_1, p_2, onValidConnection) {
-  let intermediateEdge = matrixValidEdges[p_1 - 1][p_2 - 1];
+export function checkNewTriangles(vertex1, vertex2, onValidConnection) {
+  let p1_index = vertex1.index
+  let p2_index = vertex2.index
+
+  let intermediateEdge = matrixValidEdges[p1_index - 1][p2_index - 1];
   
   if (intermediateEdge > -1) {
     return; // ! It means that is not a valid movement
   }
-  onValidConnection(p_1, p_2); // Call the callback function
+  onValidConnection(p1_index, p2_index); // Call the callback function
   intermediateEdge = -intermediateEdge;
 
   const newEdges = [
-    [p_1, intermediateEdge],
-    [intermediateEdge, p_2],
+    [p1_index, intermediateEdge],
+    [intermediateEdge, p2_index],
   ];
 
-  gameBoardMatrix[p_1 - 1][intermediateEdge - 1] = 1;
-  gameBoardMatrix[intermediateEdge - 1][p_2 - 1] = 1;
+  gameBoardMatrix[p1_index - 1][intermediateEdge - 1] = 1;
+  gameBoardMatrix[intermediateEdge - 1][p2_index - 1] = 1;
 
   // Check if triangle is formed
   for (let i = 0; i < newEdges.length; i++) {

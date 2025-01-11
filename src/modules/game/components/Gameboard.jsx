@@ -44,18 +44,18 @@ const GameBoard = () => {
   
   const handleVertexClick = (vertex) => {
     if (selectedVertex) {
-      const p1 = selectedVertex.index < vertex.index ? selectedVertex.index : vertex.index;
-      const p2 = selectedVertex.index > vertex.index ? selectedVertex.index : vertex.index;
-  
-      const onValidConnection = (p1, p2) => {
+      const vertex1 = selectedVertex.index < vertex.index ? selectedVertex : vertex;
+      const vertex2 = selectedVertex.index > vertex.index ? selectedVertex : vertex;
+      
+      const onValidConnection = (index1, index2) => {
         setConnections((prevConnections) => [
           ...prevConnections,
-          { start: { ...selectedVertex, index: p1 }, end: { ...vertex, index: p2 } },
+          { start: { ...selectedVertex, index: index1 }, end: { ...vertex, index: index2 } },
         ]);
       };
   
       // Call function with onValidConnection Callback
-      checkNewTriangles(p1, p2, onValidConnection);
+      checkNewTriangles(vertex1, vertex2, onValidConnection);
   
       setSelectedVertex(null);
     } else {
