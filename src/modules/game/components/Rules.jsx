@@ -1,8 +1,70 @@
-import { matrixValidEdges } from "../../../utils/createArrays.jsx";
-import { matrixAssociatedVertices } from "../../../utils/createArrays.jsx";
-import { gameBoardMatrix } from "../../../utils/createArrays.jsx";
-import { sortArray } from "../../../utils/utils.js";
-import { triangles } from "../../../utils/utils.js";
+import {
+  matrixValidEdges,
+  matrixAssociatedVertices,
+  gameBoardMatrix,
+} from "../../../utils/createArrays.jsx";
+import { sortArray, triangles } from "../../../utils/utils.js";
+
+/**
+ * * Checks if a new connection is valid.
+ */
+function isValidConnection(vertex1, vertex2) {
+  const intermediateEdge = matrixValidEdges[vertex1.index - 1][vertex2.index - 1];
+  return intermediateEdge <= -1; // Retorna true si es un movimiento válido.
+}
+
+/**
+ * * Registers a new connection in the dashboard matrix.
+ */
+function registerNewConnection(vertex1, vertex2, intermediateEdge) {
+  console.log(vertex1,vertex2,intermediateEdge);
+  const updatedEdge = -intermediateEdge;
+  gameBoardMatrix[vertex1.index - 1][updatedEdge - 1] = 1;
+  gameBoardMatrix[updatedEdge - 1][vertex2.index - 1] = 1;
+  return updatedEdge;
+}
+
+/**
+ * * Obtains the coordinates of the vertices from their indices.
+ */
+function getTriangleCoordinates(vertices, vertexIndices) {
+  return vertexIndices.map((vertexIndex) => {
+    const vertex = vertices.find((v) => v.index === vertexIndex);
+    return { x: vertex.x, y: vertex.y };
+  });
+}
+
+/**
+ * * Checks if a triangle is formed with new connections and logs it if it is valid.
+ */
+function checkAndRegisterTriangle(newEdges, vertices, generateNewTriangle) {
+  for (let i = 0; i < newEdges.length; i++) {
+    const [start, end] = newEdges[i];
+    const associatedVertices = matrixAssociatedVertices[start - 1][end - 1];
+
+    associatedVertices.forEach((assocVertex) => {
+      const sortedVertices1 = sortArray(assocVertex, start);
+      const sortedVertices2 = sortArray(assocVertex, end);
+
+      if (
+        gameBoardMatrix[sortedVertices1[0] - 1][sortedVertices1[1] - 1] === 1 &&
+        gameBoardMatrix[sortedVertices2[0] - 1][sortedVertices2[1] - 1] === 1
+      ) {
+        const triangleVertices = [assocVertex, start, end].sort(
+          (a, b) => a - b
+        );
+        if (!triangles[triangleVertices.toString()]) {
+          const coordinates = getTriangleCoordinates(
+            vertices,
+            triangleVertices
+          );
+          triangles[triangleVertices.toString()] = 1;
+          generateNewTriangle(coordinates);
+        }
+      }
+    });
+  }
+}
 
 export function checkNewTriangles(
   vertex1,
@@ -11,60 +73,21 @@ export function checkNewTriangles(
   vertices,
   generateNewTriangle
 ) {
-  let p1_index = vertex1.index;
-  let p2_index = vertex2.index;
 
-  let intermediateEdge = matrixValidEdges[p1_index - 1][p2_index - 1];
+  if (!isValidConnection(vertex1, vertex2)) return; // ! It means that is not a valid movement
 
-  if (intermediateEdge > -1) {
-    return; // ! It means that is not a valid movement
-  }
-  onValidConnection(p1_index, p2_index); // Call the callback function
-  intermediateEdge = -intermediateEdge;
+  onValidConnection(vertex1.index, vertex2.index);
+
+  const intermediateEdge = registerNewConnection(
+    vertex1,
+    vertex2,
+    matrixValidEdges[vertex1.index - 1][vertex2.index - 1]
+  );
 
   const newEdges = [
-    [p1_index, intermediateEdge],
-    [intermediateEdge, p2_index],
+    [vertex1.index, intermediateEdge],
+    [intermediateEdge, vertex2.index],
   ];
 
-  gameBoardMatrix[p1_index - 1][intermediateEdge - 1] = 1;
-  gameBoardMatrix[intermediateEdge - 1][p2_index - 1] = 1;
-
-  // Check if triangle is formed
-  for (let i = 0; i < newEdges.length; i++) {
-    const associatedVertices =
-      matrixAssociatedVertices[newEdges[i][0] - 1][newEdges[i][1] - 1];
-
-    for (let j = 0; j < associatedVertices.length; j++) {
-      const llaves_1 = sortArray(associatedVertices[j], newEdges[i][0]);
-      const llaves_2 = sortArray(associatedVertices[j], newEdges[i][1]);
-
-      const wildcardEdge_1 = gameBoardMatrix[llaves_1[0] - 1][llaves_1[1] - 1];
-      const wildcardEdge_2 = gameBoardMatrix[llaves_2[0] - 1][llaves_2[1] - 1];
-
-      if (wildcardEdge_1 === 1 && wildcardEdge_2 === 1) {
-        const verticesOfTriangle = [associatedVertices[j], ...newEdges[i]].sort(
-          (a, b) => a - b
-        );
-
-        // console.log("VERTICESTRIANGLE: ", verticesOfTriangle);
-        // console.log("VERTICES: ", vertices);
-
-        const availableTriangle =
-          triangles[verticesOfTriangle.toString()];
-        console.log(availableTriangle);
-        if (availableTriangle === 0) {
-          const coordinates = verticesOfTriangle.map((vertexIndex) => {
-            const vertex = vertices.find((v) => v.index === vertexIndex);
-            return { x: vertex.x, y: vertex.y };
-          });
-          console.log("COORDENADAS: ",{...coordinates});
-          triangles[verticesOfTriangle.toString()] = 1;
-          console.log("SE FORMÓ TRIANGULO");
-          generateNewTriangle({...coordinates});
-
-        }
-      }
-    }
-  }
+  checkAndRegisterTriangle(newEdges, vertices, generateNewTriangle);
 }
