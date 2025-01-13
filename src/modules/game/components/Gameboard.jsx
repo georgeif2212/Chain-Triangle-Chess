@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Stage, Layer, RegularPolygon } from "react-konva";
+import { Stage, Layer, RegularPolygon, Line } from "react-konva";
 import Vertex from "./Vertex.jsx";
 import VertexGrid from "./VertexGrid.jsx";
 import Cord from "./Cord.jsx";
@@ -46,27 +46,41 @@ const GameBoard = () => {
 
   const handleVertexClick = (vertex) => {
     if (selectedVertex) {
-      const vertex1 = selectedVertex.index < vertex.index ? selectedVertex : vertex;
-      const vertex2 = selectedVertex.index > vertex.index ? selectedVertex : vertex;
-      
+      const vertex1 =
+        selectedVertex.index < vertex.index ? selectedVertex : vertex;
+      const vertex2 =
+        selectedVertex.index > vertex.index ? selectedVertex : vertex;
+
       const onValidConnection = (index1, index2) => {
         setConnections((prevConnections) => [
           ...prevConnections,
-          { start: { ...selectedVertex, index: index1 }, end: { ...vertex, index: index2 } },
+          {
+            start: { ...selectedVertex, index: index1 },
+            end: { ...vertex, index: index2 },
+          },
         ]);
       };
-  
+
+      const generateNewTriangle = (coordinates) => {
+        setTriangles((prevTriangles) => [...prevTriangles, coordinates]);
+        console.log("triangles: ", triangles);
+        console.log("COORDENADAS: ", coordinates);
+      };
+
       // Call function with onValidConnection Callback
-      checkNewTriangles(vertex1, vertex2, onValidConnection, vertices);
-  
+      checkNewTriangles(
+        vertex1,
+        vertex2,
+        onValidConnection,
+        vertices,
+        generateNewTriangle
+      );
+
       setSelectedVertex(null);
     } else {
       setSelectedVertex(vertex);
     }
   };
-  
-
-
 
   return (
     <div ref={containerRef} style={{ width: "100%", height: "100%" }}>
@@ -85,14 +99,28 @@ const GameBoard = () => {
         </Layer>
 
         <Layer>
-          {connections.map((connection, index) => (
-            <Cord key={index} start={connection.start} end={connection.end} />
+          {triangles.map((triangle, index) => (
+            <Line
+              key={index}
+              points={[
+                triangle[0].x,
+                triangle[0].y,
+                triangle[1].x,
+                triangle[1].y,
+                triangle[2].x,
+                triangle[2].y,
+              ]}
+              stroke="red"
+              strokeWidth={2}
+              fill="red"
+              closed
+            />
           ))}
         </Layer>
 
         <Layer>
-          {triangles.map((connection, index) => (
-            <RegularPolygon key={index} sides={3}  />
+          {connections.map((connection, index) => (
+            <Cord key={index} start={connection.start} end={connection.end} />
           ))}
         </Layer>
 
