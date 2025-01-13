@@ -7,9 +7,21 @@ import Cord from "./Cord.jsx";
 import { checkNewTriangles } from "./Rules.jsx";
 
 const GameBoard = () => {
-  const containerRef = useRef(null);
   const [stageWidth, setStageWidth] = useState(0);
   const [stageHeight, setStageHeight] = useState(0);
+  const [connections, setConnections] = useState([]);
+  const [triangles, setTriangles] = useState([]);
+  const [selectedVertex, setSelectedVertex] = useState(null);
+  const containerRef = useRef(null);
+
+  const polygonX = stageWidth / 2;
+  const polygonY = stageHeight / 2;
+  const radius = stageWidth / 4;
+  const vertexSpacing = stageWidth / 10;
+  const rows = [3, 4, 5, 4, 3];
+
+  // Generar coordenadas para los vértices
+  const vertices = VertexGrid({ polygonX, polygonY, vertexSpacing, rows });
 
   useEffect(() => {
     const currentContainer = containerRef.current;
@@ -32,16 +44,6 @@ const GameBoard = () => {
     };
   }, []);
 
-  const polygonX = stageWidth / 2;
-  const polygonY = stageHeight / 2;
-  const radius = stageWidth / 4;
-  const vertexSpacing = stageWidth / 10;
-  const rows = [3, 4, 5, 4, 3];
-
-  const [connections, setConnections] = useState([]);
-  const [selectedVertex, setSelectedVertex] = useState(null);
-
-  
   const handleVertexClick = (vertex) => {
     if (selectedVertex) {
       const vertex1 = selectedVertex.index < vertex.index ? selectedVertex : vertex;
@@ -55,7 +57,7 @@ const GameBoard = () => {
       };
   
       // Call function with onValidConnection Callback
-      checkNewTriangles(vertex1, vertex2, onValidConnection);
+      checkNewTriangles(vertex1, vertex2, onValidConnection, vertices);
   
       setSelectedVertex(null);
     } else {
@@ -64,8 +66,7 @@ const GameBoard = () => {
   };
   
 
-  // Generar coordenadas para los vértices
-  const vertices = VertexGrid({ polygonX, polygonY, vertexSpacing, rows });
+
 
   return (
     <div ref={containerRef} style={{ width: "100%", height: "100%" }}>
@@ -86,6 +87,12 @@ const GameBoard = () => {
         <Layer>
           {connections.map((connection, index) => (
             <Cord key={index} start={connection.start} end={connection.end} />
+          ))}
+        </Layer>
+
+        <Layer>
+          {triangles.map((connection, index) => (
+            <RegularPolygon key={index} sides={3}  />
           ))}
         </Layer>
 
