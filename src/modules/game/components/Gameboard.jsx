@@ -4,7 +4,7 @@ import VertexGrid from "./VertexGrid.jsx";
 import TriangleLayer from "./TriangleLayer.jsx";
 import ConnectionLayer from "./ConnectionLayer.jsx";
 import VertexLayer from "./VertexLayer.jsx";
-import { checkNewTriangles } from "./Rules.jsx";
+import { checkNewTriangles } from "../services/Rules.jsx";
 
 const GameBoard = () => {
   const [stageWidth, setStageWidth] = useState(0);
