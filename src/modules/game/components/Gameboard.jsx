@@ -93,9 +93,18 @@ const GameBoard = () => {
             rotation={90}
           />
         </Layer>
-        <TriangleLayer triangles={triangles} />
-        <ConnectionLayer connections={connections} />
-        <VertexLayer vertices={vertices} onVertexClick={handleVertexClick} />
+
+        <Layer>
+          <TriangleLayer triangles={triangles} />
+        </Layer>
+
+        <Layer>
+          <ConnectionLayer connections={connections} />
+        </Layer>
+
+        <Layer>
+          <VertexLayer vertices={vertices} onVertexClick={handleVertexClick} />
+        </Layer>
       </Stage>
     </div>
   );

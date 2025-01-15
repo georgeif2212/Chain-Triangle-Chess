@@ -1,7 +1,7 @@
-import { Layer, Line } from "react-konva";
+import { Line } from "react-konva";
 
 const TriangleLayer = ({ triangles }) => (
-  <Layer>
+  <>
     {triangles.map((triangle, index) => (
       <Line
         key={index}
@@ -16,7 +16,7 @@ const TriangleLayer = ({ triangles }) => (
         closed
       />
     ))}
-  </Layer>
+  </>
 );
 
 export default TriangleLayer;
