@@ -6,8 +6,8 @@ const Vertex = ({ x, y, onClick }) => {
       x={x}
       y={y}
       radius={10}
-      fill="black"
-      stroke="black"
+      fill="#A79277"
+      stroke="#A79277"
       strokeWidth={1}
       onClick={onClick} 
       onMouseEnter={(e) => {

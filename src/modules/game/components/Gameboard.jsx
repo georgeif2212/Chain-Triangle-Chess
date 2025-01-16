@@ -87,9 +87,9 @@ const GameBoard = () => {
             y={polygonY}
             sides={6}
             radius={radius}
-            fill="grey"
-            stroke="grey"
-            strokeWidth={1}
+            fill="#EAD8C0"
+            stroke="#A79277"
+            strokeWidth={4}
             rotation={90}
           />
         </Layer>

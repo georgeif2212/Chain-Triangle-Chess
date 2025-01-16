@@ -10,9 +10,9 @@ const TriangleLayer = ({ triangles }) => (
           triangle[1].x, triangle[1].y,
           triangle[2].x, triangle[2].y,
         ]}
-        stroke="red"
+        stroke="#EF4B4B"
         strokeWidth={2}
-        fill="red"
+        fill="#EF4B4B"
         closed
       />
     ))}
