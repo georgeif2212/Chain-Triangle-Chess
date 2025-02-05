@@ -1,7 +1,7 @@
 import Vertex from "./Vertex.jsx";
-
+import { Layer } from "react-konva";
 const VertexLayer = ({ vertices, onVertexClick }) => (
-  <>
+  <Layer>
     {vertices.map((pos, index) => (
       <Vertex
         key={index}
@@ -10,7 +10,7 @@ const VertexLayer = ({ vertices, onVertexClick }) => (
         onClick={() => onVertexClick(pos)}
       />
     ))}
-  </>
+  </Layer>
 );
 
 export default VertexLayer;
