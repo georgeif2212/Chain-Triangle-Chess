@@ -1,7 +1,6 @@
 import { Line } from "react-konva";
 
   const TriangleLayer = ({ triangles }) => {
-
   return (
     <>
       {triangles.map((triangle, index) => (
@@ -15,9 +14,9 @@ import { Line } from "react-konva";
             triangle.coordinates[2].x,
             triangle.coordinates[2].y,
           ]}
-          stroke="#EF4B4B"
+          stroke={triangle.team.color}
           strokeWidth={2}
-          fill="#EF4B4B"
+          fill={triangle.team.color}
           closed
         />
       ))}
