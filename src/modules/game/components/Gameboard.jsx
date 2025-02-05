@@ -1,12 +1,15 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useContext } from "react";
 import { Stage, Layer, RegularPolygon } from "react-konva";
 import VertexGrid from "./VertexGrid.jsx";
 import TriangleLayer from "./TriangleLayer.jsx";
 import ConnectionLayer from "./ConnectionLayer.jsx";
 import VertexLayer from "./VertexLayer.jsx";
 import { checkNewTriangles } from "../services/Rules.jsx";
+import { GameContext } from "../../../contexts/GameContext.jsx";
 
 const GameBoard = () => {
+  const { state, dispatch } = useContext(GameContext);
+
   const [stageWidth, setStageWidth] = useState(0);
   const [stageHeight, setStageHeight] = useState(0);
   const [connections, setConnections] = useState([]);
@@ -61,7 +64,14 @@ const GameBoard = () => {
       };
 
       const generateNewTriangle = (coordinates) => {
-        setTriangles((prevTriangles) => [...prevTriangles, coordinates]);
+        const currentTeam = state.currentTeam;
+        
+        const newTriangle = {
+          coordinates,
+          team: currentTeam, 
+        };
+        
+        setTriangles((prevTriangles) => [...prevTriangles, newTriangle]);
       };
 
       checkNewTriangles(
