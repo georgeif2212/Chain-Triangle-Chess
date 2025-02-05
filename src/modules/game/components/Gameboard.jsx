@@ -7,7 +7,7 @@ import VertexLayer from "./VertexLayer.jsx";
 import { checkNewTriangles } from "../services/Rules.jsx";
 import { GameContext } from "../../../contexts/GameContext.jsx";
 
-const GameBoard = () => {
+const GameBoard = ({ currentTeam, onNextTeam }) => {
   const { state, dispatch } = useContext(GameContext);
 
   const [stageWidth, setStageWidth] = useState(0);
@@ -61,6 +61,7 @@ const GameBoard = () => {
             end: { ...vertex, index: index2 },
           },
         ]);
+        dispatch({ type: "NEXT_TEAM" });
       };
 
       const generateNewTriangle = (coordinates) => {
