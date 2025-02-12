@@ -5,6 +5,8 @@ const useStageSize = () => {
   const containerRef = useRef(null);
 
   useEffect(() => {
+    const currentContainer = containerRef.current; // Guardar referencia actual
+
     const resizeObserver = new ResizeObserver((entries) => {
       for (let entry of entries) {
         setStageSize({
@@ -14,16 +16,16 @@ const useStageSize = () => {
       }
     });
 
-    if (containerRef.current) {
-      resizeObserver.observe(containerRef.current);
+    if (currentContainer) {
+      resizeObserver.observe(currentContainer);
     }
 
     return () => {
-      if (containerRef.current) {
-        resizeObserver.unobserve(containerRef.current);
+      if (currentContainer) {
+        resizeObserver.unobserve(currentContainer);
       }
     };
-  }, []);
+  }, []); // No se necesita agregar dependencias
 
   return { stageSize, containerRef };
 };
