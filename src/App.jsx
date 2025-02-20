@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Home from "./modules/game/pages/Home.jsx";
+// import Home from "./modules/game/pages/Home.jsx";
 import Game from "./modules/game/pages/Game.jsx";
 import Error from "./modules/game/pages/Error.jsx";
 // import Register from "./modules/auth/pages/Register.jsx";
@@ -11,14 +11,14 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route
+        {/* <Route
           path="/"
           element={
             <AuthMiddleware>
               <Home />
             </AuthMiddleware>
           }
-        />
+        /> */}
         {/* <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} /> */}
         <Route path="/game" element={<Game />} />
