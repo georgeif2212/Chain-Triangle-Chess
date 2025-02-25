@@ -28,3 +28,6 @@ export const triangles = {
 export function sortArray(value1, value2) {
   return [value1, value2].sort((a, b) => a - b);
 }
+
+
+export const availableColors = ["#EF4B4B", "#7BD3EA", "#A5DD9B", "#FFD966"];
