@@ -1,6 +1,15 @@
 import { useContext, useState } from "react";
 import { GameContext } from "../../../contexts/GameContext.jsx";
-import { Card, Typography, Button, TextField, MenuItem, Select } from "@mui/material";
+import {
+  Card,
+  Typography,
+  Button,
+  TextField,
+  MenuItem,
+  Select,
+  FormControl,
+  InputLabel,
+} from "@mui/material";
 import { ChevronLeft, ChevronRight } from "@mui/icons-material";
 import "../styles/pages/Options.css";
 
@@ -56,57 +65,81 @@ const Options = () => {
         <div>
           <Typography variant="body1">Modo de juego:</Typography>
           <div className="options-card-gameMode ">
-            <Button onClick={() => handleGameModeChange(-1)}><ChevronLeft /></Button>
+            <Button onClick={() => handleGameModeChange(-1)}>
+              <ChevronLeft />
+            </Button>
             <Typography>{gameMode}</Typography>
-            <Button onClick={() => handleGameModeChange(1)}><ChevronRight /></Button>
+            <Button onClick={() => handleGameModeChange(1)}>
+              <ChevronRight />
+            </Button>
           </div>
         </div>
 
         {teams.map((team, index) => (
-          <div key={index} className="team-row">
+          <div key={index} className="flex justify-between items-center mb-2">
             <TextField
               label={`Equipo ${index + 1}`}
-              variant="outlined"
               value={team.name}
               onChange={(e) => handleTeamChange(index, "name", e.target.value)}
-              className="team-input"
+              variant="outlined"
+              size="small"
             />
-            <Select
-              value={team.color}
-              onChange={(e) => handleTeamChange(index, "color", e.target.value)}
-              className="color-select"
-              displayEmpty
-            >
-              <MenuItem value="">Color</MenuItem>
-              {colors.map((color) => (
-                <MenuItem
-                  key={color}
-                  value={color}
-                  disabled={teams.some((t) => t.color === color)}
-                >
-                  {color}
-                </MenuItem>
-              ))}
-            </Select>
+            <FormControl size="small">
+              <InputLabel>Color</InputLabel>
+              <Select
+                value={team.color}
+                onChange={(e) =>
+                  handleTeamChange(index, "color", e.target.value)
+                }>
+                {colors.map((color) => (
+                  <MenuItem
+                    key={color}
+                    value={color}
+                    disabled={teams.some((t) => t.color === color)}>
+                    <div
+                      style={{
+                        width: 20,
+                        height: 20,
+                        backgroundColor: color,
+                        borderRadius: "50%",
+                      }}></div>
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
           </div>
         ))}
 
         <div className="team-buttons">
-          <Button onClick={handleAddTeam} disabled={teams.length >= 4} variant="contained">
+          <Button
+            onClick={handleAddTeam}
+            disabled={teams.length >= 4}
+            variant="contained">
             + Agregar equipo
           </Button>
-          <Button onClick={handleRemoveTeam} disabled={teams.length <= 2} variant="contained" color="error">
+          <Button
+            onClick={handleRemoveTeam}
+            disabled={teams.length <= 2}
+            variant="contained"
+            color="error">
             - Quitar equipo
           </Button>
         </div>
 
         <div className="order-buttons">
-          <Button onClick={handleRandomizeOrder} variant="contained" color="secondary">
+          <Button
+            onClick={handleRandomizeOrder}
+            variant="contained"
+            color="secondary">
             Orden aleatorio
           </Button>
         </div>
 
-        <Button onClick={handleStartGame} className="start-btn" variant="contained" color="success">
+        <Button
+          onClick={handleStartGame}
+          className="start-btn"
+          variant="contained"
+          color="success">
           Jugar
         </Button>
       </Card>
