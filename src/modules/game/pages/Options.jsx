@@ -4,16 +4,10 @@ import {
   Card,
   Typography,
   Button,
-  TextField,
-  MenuItem,
-  Select,
-  FormControl,
-  InputLabel,
 } from "@mui/material";
 import { ChevronLeft, ChevronRight } from "@mui/icons-material";
+import TeamSelector from "../components/TeamSelector.jsx";
 import "../styles/pages/Options.css";
-
-const colors = ["#EF4B4B", "#7BD3EA", "#A5DD9B", "#FFD966"];
 
 const Options = () => {
   const { state, dispatch } = useContext(GameContext);
@@ -26,10 +20,9 @@ const Options = () => {
   };
 
   const handleTeamChange = (index, key, value) => {
-    const updatedTeams = teams.map((team, i) =>
-      i === index ? { ...team, [key]: value } : team
+    setTeams((prev) =>
+      prev.map((team, i) => (i === index ? { ...team, [key]: value } : team))
     );
-    setTeams(updatedTeams);
   };
 
   const handleAddTeam = () => {
@@ -62,52 +55,24 @@ const Options = () => {
           Opciones del Juego
         </Typography>
 
-        <div>
-          <Typography variant="body1">Modo de juego:</Typography>
-          <div className="options-card-gameMode ">
-            <Button onClick={() => handleGameModeChange(-1)}>
-              <ChevronLeft />
-            </Button>
-            <Typography>{gameMode}</Typography>
-            <Button onClick={() => handleGameModeChange(1)}>
-              <ChevronRight />
-            </Button>
-          </div>
+        <div className="options-card-gameMode">
+          <Button onClick={handleGameModeChange}>
+            <ChevronLeft />
+          </Button>
+          <Typography>{gameMode}</Typography>
+          <Button onClick={handleGameModeChange}>
+            <ChevronRight />
+          </Button>
         </div>
 
         {teams.map((team, index) => (
-          <div key={index} className="flex justify-between items-center mb-2">
-            <TextField
-              label={`Equipo ${index + 1}`}
-              value={team.name}
-              onChange={(e) => handleTeamChange(index, "name", e.target.value)}
-              variant="outlined"
-              size="small"
-            />
-            <FormControl size="small">
-              <InputLabel>Color</InputLabel>
-              <Select
-                value={team.color}
-                onChange={(e) =>
-                  handleTeamChange(index, "color", e.target.value)
-                }>
-                {colors.map((color) => (
-                  <MenuItem
-                    key={color}
-                    value={color}
-                    disabled={teams.some((t) => t.color === color)}>
-                    <div
-                      style={{
-                        width: 20,
-                        height: 20,
-                        backgroundColor: color,
-                        borderRadius: "50%",
-                      }}></div>
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-          </div>
+          <TeamSelector
+            key={index}
+            index={index}
+            team={team}
+            teams={teams}
+            onTeamChange={handleTeamChange}
+          />
         ))}
 
         <div className="team-buttons">
@@ -115,14 +80,14 @@ const Options = () => {
             onClick={handleAddTeam}
             disabled={teams.length >= 4}
             variant="contained">
-            + Agregar equipo
+            +
           </Button>
           <Button
             onClick={handleRemoveTeam}
             disabled={teams.length <= 2}
             variant="contained"
             color="error">
-            - Quitar equipo
+            -
           </Button>
         </div>
 
