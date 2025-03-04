@@ -3,7 +3,7 @@ import { GameContext } from "../../../contexts/GameContext.jsx";
 import Button from "@mui/material/Button"
 import Typography from "@mui/material/Typography";
 import Card from "@mui/material/Card";
-// import { ChevronLeft, ChevronRight } from "@mui/icons-material";
+import { ChevronLeft, ChevronRight } from "@mui/icons-material";
 import TeamSelector from "../components/TeamSelector.jsx";
 import "../styles/pages/Options.css";
 
@@ -58,11 +58,11 @@ const Options = () => {
 
         <div className="options-card-gameMode">
           <Button onClick={handleGameModeChange}>
-            <p>change</p>
+            <ChevronLeft/>
           </Button>
           <Typography>{gameMode}</Typography>
           <Button onClick={handleGameModeChange}>
-            <p>change</p>
+          <ChevronRight/>
           </Button>
         </div>
 
