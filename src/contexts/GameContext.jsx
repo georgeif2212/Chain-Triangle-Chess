@@ -4,7 +4,7 @@ const GameContext = createContext();
 
 
 const initialState = {
-  mode: "normal",
+  mode: "Con preguntas",
   currentTeam: null,
   teams: [
     { name: "Team A", color: "#EF4B4B" },

@@ -1,0 +1,49 @@
+.options-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.options-card {
+  width: 400px;
+  padding: 20px;
+  text-align: center;
+}
+
+.options-card__title {
+  margin-bottom: 10px;
+}
+
+.options-card-gameMode {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.team-selector {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.color-box {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+}
+
+.options-card-teamButtons, .order-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.start-btn {
+  margin-top: 15px;
+  width: 100%;
+}
