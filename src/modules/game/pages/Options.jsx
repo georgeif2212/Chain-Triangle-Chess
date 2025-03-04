@@ -1,11 +1,9 @@
 import { useContext, useState } from "react";
 import { GameContext } from "../../../contexts/GameContext.jsx";
-import {
-  Card,
-  Typography,
-  Button,
-} from "@mui/material";
-import { ChevronLeft, ChevronRight } from "@mui/icons-material";
+import Button from "@mui/material/Button"
+import Typography from "@mui/material/Typography";
+import Card from "@mui/material/Card";
+// import { ChevronLeft, ChevronRight } from "@mui/icons-material";
 import TeamSelector from "../components/TeamSelector.jsx";
 import "../styles/pages/Options.css";
 
@@ -15,8 +13,11 @@ const Options = () => {
   const [teams, setTeams] = useState(state.teams.slice(0, 2)); // Mínimo 2 equipos
   const [orderRandom, setOrderRandom] = useState(false);
 
+  console.log(state);
   const handleGameModeChange = () => {
-    setGameMode((prev) => (prev === "normal" ? "sin preguntas" : "normal"));
+    setGameMode((prev) =>
+      prev === "Con preguntas" ? "Sin preguntas" : "Con preguntas"
+    );
   };
 
   const handleTeamChange = (index, key, value) => {
@@ -27,7 +28,7 @@ const Options = () => {
 
   const handleAddTeam = () => {
     if (teams.length < 4) {
-      setTeams([...teams, { name: `Equipo ${teams.length + 1}`, color: "" }]);
+      setTeams([...teams, { name: `Team  ${teams.length + 1}`, color: "" }]);
     }
   };
 
@@ -57,11 +58,11 @@ const Options = () => {
 
         <div className="options-card-gameMode">
           <Button onClick={handleGameModeChange}>
-            <ChevronLeft />
+            <p>change</p>
           </Button>
           <Typography>{gameMode}</Typography>
           <Button onClick={handleGameModeChange}>
-            <ChevronRight />
+            <p>change</p>
           </Button>
         </div>
 
@@ -75,8 +76,8 @@ const Options = () => {
           />
         ))}
 
-        <div className="team-buttons">
-          <Button
+        <div className="options-card-teamButtons">
+          <Button 
             onClick={handleAddTeam}
             disabled={teams.length >= 4}
             variant="contained">

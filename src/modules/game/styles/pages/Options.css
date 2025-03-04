@@ -36,7 +36,7 @@
   border-radius: 50%;
 }
 
-.team-buttons, .order-buttons {
+.options-card-teamButtons, .order-buttons {
   display: flex;
   justify-content: center;
   gap: 10px;
