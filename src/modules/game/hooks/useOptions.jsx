@@ -1,11 +1,13 @@
 import { useContext, useState } from "react";
 import { GameContext } from "../../../contexts/GameContext.jsx";
+import { useNavigate } from "react-router-dom";
 
 const useOptions = () => {
   const { state, dispatch } = useContext(GameContext);
   const [gameMode, setGameMode] = useState(state.mode);
   const [teams, setTeams] = useState(state.teams.slice(0, 2));
   const [orderRandom, setOrderRandom] = useState(false);
+  const navigate = useNavigate();
   console.log(state);
 
   const handleGameModeChange = () => {
@@ -22,7 +24,7 @@ const useOptions = () => {
 
   const handleAddTeam = () => {
     if (teams.length < 4) {
-      setTeams([...teams, { name: `Team ${teams.length + 1}`, color: "" }]);
+      setTeams([...teams, { name: `Equipo ${teams.length + 1}`, color: "" }]);
     }
   };
 
@@ -41,6 +43,8 @@ const useOptions = () => {
     dispatch({ type: "START_GAME" });
     dispatch({ type: "SET_MODE", payload: gameMode });
     dispatch({ type: "SET_CURRENT_TEAM", payload: teams[0] });
+    dispatch({ type: "SET_TEAMS", payload: [...teams] });
+    navigate("/game")
   };
 
   return {
