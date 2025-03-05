@@ -15,7 +15,7 @@ const Options = () => {
     handleAddTeam,
     handleRemoveTeam,
     handleRandomizeOrder,
-    handleStartGame,
+    handleOptionsStartGame,
   } = useOptions();
 
   return (
@@ -52,7 +52,7 @@ const Options = () => {
           </Button>
         </div>
 
-        <Button onClick={handleStartGame} className="start-btn" variant="contained" color="success">
+        <Button onClick={handleOptionsStartGame} className="start-btn" variant="contained" color="success">
           Jugar
         </Button>
       </Card>

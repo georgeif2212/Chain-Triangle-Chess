@@ -6,6 +6,7 @@ const useOptions = () => {
   const [gameMode, setGameMode] = useState(state.mode);
   const [teams, setTeams] = useState(state.teams.slice(0, 2));
   const [orderRandom, setOrderRandom] = useState(false);
+  console.log(state);
 
   const handleGameModeChange = () => {
     setGameMode((prev) =>
@@ -36,10 +37,10 @@ const useOptions = () => {
     setTeams([...teams].sort(() => Math.random() - 0.5));
   };
 
-  const handleStartGame = () => {
+  const handleOptionsStartGame = () => {
+    dispatch({ type: "START_GAME" });
     dispatch({ type: "SET_MODE", payload: gameMode });
-    dispatch({ type: "SET_CURRENT_TEAM", payload: null });
-    dispatch({ type: "SET_TEAMS", payload: orderRandom ? [...teams] : teams });
+    dispatch({ type: "SET_CURRENT_TEAM", payload: teams[0] });
   };
 
   return {
@@ -51,7 +52,7 @@ const useOptions = () => {
     handleAddTeam,
     handleRemoveTeam,
     handleRandomizeOrder,
-    handleStartGame,
+    handleOptionsStartGame,
   };
 };
 
