@@ -4,7 +4,7 @@ import Button from "@mui/material/Button"
 import Typography from "@mui/material/Typography";
 import Card from "@mui/material/Card";
 import { ChevronLeft, ChevronRight } from "@mui/icons-material";
-import TeamSelector from "../components/TeamSelector.jsx";
+import TeamListContainer from "../components/TeamListContainer.jsx";
 import "../styles/pages/Options.css";
 
 const Options = () => {
@@ -66,15 +66,7 @@ const Options = () => {
           </Button>
         </div>
 
-        {teams.map((team, index) => (
-          <TeamSelector
-            key={index}
-            index={index}
-            team={team}
-            teams={teams}
-            onTeamChange={handleTeamChange}
-          />
-        ))}
+        <TeamListContainer teams={teams} onTeamChange={handleTeamChange}/>        
 
         <div className="options-card-teamButtons">
           <Button 
