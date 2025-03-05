@@ -7,10 +7,8 @@ const initialState = {
   mode: "Con preguntas",
   currentTeam: null,
   teams: [
-    { name: "Team A", color: "#EF4B4B" },
-    { name: "Team B", color: "#7BD3EA" },
-    { name: "Team C", color: "#A5DD9B" },
-    { name: "Team D", color: "#FFD966" }
+    { name: "Equipo 1", color: "#EF4B4B" },
+    { name: "Equipo 2", color: "#7BD3EA" },
   ],
   gameStarted: false,
 };
@@ -32,6 +30,8 @@ const reducer = (state, action) => {
       return { ...state, currentTeam: action.payload };
     case "NEXT_TEAM":
       return { ...state, currentTeam: nextTeam(state) };
+    case "SET_TEAMS":
+      return {...state, teams: action.payload }
     default:
       return state;
   }
