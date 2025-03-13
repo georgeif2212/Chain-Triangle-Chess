@@ -1,15 +1,31 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Stage } from "react-konva";
-import useStageSize from "../hooks/useStageSize";
-import useVertexSelection from "../hooks/useVertexSelection";
-import VertexGrid from "./VertexGrid.jsx";
+import HexagonLayer from "./HexagonLayer.jsx";
 import TriangleLayer from "./TriangleLayer.jsx";
 import ConnectionLayer from "./ConnectionLayer.jsx";
 import VertexLayer from "./VertexLayer.jsx";
-import HexagonLayer from "./HexagonLayer.jsx";
+import VertexGrid from "./VertexGrid.jsx";
+import useVertexSelection from "../hooks/useVertexSelection";
+import "../styles/components/Gameboard.css";
 
 const GameBoard = () => {
-  const { stageSize, containerRef } = useStageSize();
+  const [stageSize, setStageSize] = useState({
+    width: window.innerWidth,
+    height: window.innerHeight,
+  });
+
+  useEffect(() => {
+    const handleResize = () => {
+      setStageSize({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   const [connections, setConnections] = useState([]);
   const [triangles, setTriangles] = useState([]);
 
@@ -23,7 +39,7 @@ const GameBoard = () => {
   const handleVertexClick = useVertexSelection(vertices, setConnections, setTriangles);
 
   return (
-    <div ref={containerRef} style={{ width: "100%", height: "100%" }}>
+    <div className="board-container">
       <Stage width={stageSize.width} height={stageSize.height}>
         <HexagonLayer x={polygonX} y={polygonY} radius={radius} />
         <TriangleLayer triangles={triangles} />
