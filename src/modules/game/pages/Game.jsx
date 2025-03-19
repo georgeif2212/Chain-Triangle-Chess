@@ -6,7 +6,6 @@ import "../styles/pages/Game.css";
 
 const Game = () => {
   const { state, dispatch } = useContext(GameContext);
-  console.log(state.teams);
   const handleStartGame = () => {
     dispatch({ type: "START_GAME" });
   };
