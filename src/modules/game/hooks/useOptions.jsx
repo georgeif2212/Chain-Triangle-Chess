@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
 import { GameContext } from "../../../contexts/GameContext.jsx";
 import { useNavigate } from "react-router-dom";
+import { availableColors } from "../../../utils/utils.js";
 
 const useOptions = () => {
   const { state, dispatch } = useContext(GameContext);
@@ -23,8 +24,18 @@ const useOptions = () => {
   };
 
   const handleAddTeam = () => {
+    const usedColors = teams.map((team) => team.color);
+    const availableColor =
+      availableColors.find((color) => !usedColors.includes(color)) || "#000000";
+
     if (teams.length < 4) {
-      setTeams([...teams, { name: `Equipo ${teams.length + 1}`, color: "" }]);
+      const newTeams = [
+        ...teams,
+        { name: `Equipo ${teams.length + 1}`, color: availableColor },
+      ];
+
+      setTeams(newTeams);
+      dispatch({ type: "SET_TEAMS", payload: newTeams });
     }
   };
 
@@ -43,7 +54,7 @@ const useOptions = () => {
     dispatch({ type: "SET_MODE", payload: gameMode });
     dispatch({ type: "SET_CURRENT_TEAM", payload: teams[0] });
     dispatch({ type: "SET_TEAMS", payload: [...teams] });
-    navigate("/game")
+    navigate("/game");
   };
 
   return {
