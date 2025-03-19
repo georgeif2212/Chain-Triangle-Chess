@@ -1,6 +1,5 @@
 import { TextField, MenuItem, Select, FormControl, InputLabel } from "@mui/material";
-
-const colors = ["#EF4B4B", "#7BD3EA", "#A5DD9B", "#FFD966"];
+import { availableColors } from "../../../utils/utils";
 
 const TeamSelector = ({ index, team, teams, onTeamChange }) => {
   return (
@@ -17,7 +16,7 @@ const TeamSelector = ({ index, team, teams, onTeamChange }) => {
         <Select
           value={team.color}
           onChange={(e) => onTeamChange(index, "color", e.target.value)}>
-          {colors.map((color) => (
+          {availableColors.map((color) => (
             <MenuItem
               key={color}
               value={color}
