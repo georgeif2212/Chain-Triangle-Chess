@@ -17,7 +17,6 @@ function isValidConnection(vertex1, vertex2) {
  * * Registers a new connection in the dashboard matrix.
  */
 function registerNewConnection(vertex1, vertex2, intermediateEdge) {
-  console.log(vertex1,vertex2,intermediateEdge);
   const updatedEdge = -intermediateEdge;
   gameBoardMatrix[vertex1.index - 1][updatedEdge - 1] = 1;
   gameBoardMatrix[updatedEdge - 1][vertex2.index - 1] = 1;
