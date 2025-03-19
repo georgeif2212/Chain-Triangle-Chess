@@ -7,6 +7,12 @@ import "../styles/pages/Game.css";
 const Game = () => {
   const { state, dispatch } = useContext(GameContext);
   const handleStartGame = () => {
+    const updatedTeams = state.teams.map(team => ({
+      ...team,
+      score: 0, 
+    }));
+  
+    dispatch({ type: "SET_TEAMS", payload: updatedTeams });
     dispatch({ type: "START_GAME" });
   };
 
