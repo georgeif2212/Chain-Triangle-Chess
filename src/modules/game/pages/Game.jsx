@@ -6,15 +6,30 @@ import "../styles/pages/Game.css";
 
 const Game = () => {
   const { state, dispatch } = useContext(GameContext);
-
+  console.log(state.teams);
   const handleStartGame = () => {
     dispatch({ type: "START_GAME" });
   };
 
-  const renderStartButton = () => (
-    <Button variant="contained" color="primary" onClick={handleStartGame}>
-      Comenzar juego
-    </Button>
+  const renderGameNotStarted = () => (
+    <>
+      <div>
+        <p>
+          <strong>Mode: </strong>
+          {state.mode}
+        </p>
+        <p>Equipos: </p>
+        {state.teams.map((team, index) => (
+          <p key={index}>
+            <strong>Team {index + 1}: </strong>
+            {team.name}
+          </p>
+        ))}
+      </div>
+      <Button variant="contained" color="primary" onClick={handleStartGame}>
+        Comenzar juego
+      </Button>
+    </>
   );
 
   const renderGameContent = () => (
@@ -29,7 +44,7 @@ const Game = () => {
   return (
     <Container className="game-container ">
       <Typography variant="h3">Triangle Chess!</Typography>
-      {!state.gameStarted ? renderStartButton() : renderGameContent()}
+      {!state.gameStarted ? renderGameNotStarted() : renderGameContent()}
     </Container>
   );
 };
