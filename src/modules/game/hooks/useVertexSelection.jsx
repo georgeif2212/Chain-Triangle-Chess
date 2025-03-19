@@ -33,7 +33,18 @@ const useVertexSelection = (vertices, setConnections, setTriangles) => {
         ...prev,
         { coordinates, team: state.currentTeam },
       ]);
+    
+      // * Update score current team's score
+      const updatedTeams = state.teams.map((team) =>
+        team.name === state.currentTeam.name
+          ? { ...team, score: (team.score || 0) + 1 }
+          : team
+      );
+    
+      dispatch({ type: "SET_TEAMS", payload: updatedTeams });
+    
     };
+    
 
     checkNewTriangles(vertex1, vertex2, onValidConnection, vertices, generateNewTriangle);
     setSelectedVertex(null);
