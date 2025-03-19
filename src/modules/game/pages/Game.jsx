@@ -7,11 +7,11 @@ import "../styles/pages/Game.css";
 const Game = () => {
   const { state, dispatch } = useContext(GameContext);
   const handleStartGame = () => {
-    const updatedTeams = state.teams.map(team => ({
+    const updatedTeams = state.teams.map((team) => ({
       ...team,
-      score: 0, 
+      score: 0,
     }));
-  
+
     dispatch({ type: "SET_TEAMS", payload: updatedTeams });
     dispatch({ type: "START_GAME" });
   };
@@ -39,9 +39,17 @@ const Game = () => {
 
   const renderGameContent = () => (
     <>
-      <Typography variant="h5">
-        Turno de: <strong>{state.currentTeam.name}</strong>
-      </Typography>
+      <div>
+        {state.teams.map((team, index) => (
+          <Typography key={index} variant="h5">
+            <strong>{team.name}:</strong> Puntaje: {team.score}
+          </Typography>
+        ))}
+        <Typography variant="h5">
+          Turno de: <strong>{state.currentTeam.name}</strong>
+        </Typography>
+      </div>
+
       <GameBoard />
     </>
   );
