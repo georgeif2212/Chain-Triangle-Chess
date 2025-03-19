@@ -40,7 +40,6 @@ const useOptions = () => {
   };
 
   const handleOptionsStartGame = () => {
-    dispatch({ type: "START_GAME" });
     dispatch({ type: "SET_MODE", payload: gameMode });
     dispatch({ type: "SET_CURRENT_TEAM", payload: teams[0] });
     dispatch({ type: "SET_TEAMS", payload: [...teams] });
