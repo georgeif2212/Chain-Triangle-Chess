@@ -22,16 +22,12 @@ const Game = () => {
       <Typography variant="h5">
         Turno de: <strong>{state.currentTeam.name}</strong>
       </Typography>
-      <Typography >
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam libero, laborum maxime omnis est nemo possimus
-        similique numquam blanditiis ipsum perferendis aliquam nihil illum, eveniet facere a, asperiores iure tenetur.
-      </Typography>
       <GameBoard />
     </>
   );
 
   return (
-    <Container>
+    <Container className="game-container ">
       <Typography variant="h3">Triangle Chess!</Typography>
       {!state.gameStarted ? renderStartButton() : renderGameContent()}
     </Container>
