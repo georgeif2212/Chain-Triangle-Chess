@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-// import Home from "./modules/game/pages/Home.jsx";
+import Home from "./modules/game/pages/Home.jsx";
 import Game from "./modules/game/pages/Game.jsx";
 import Options from "./modules/game/pages/Options.jsx";
 import Error from "./modules/game/pages/Error.jsx";
@@ -7,19 +7,11 @@ import Error from "./modules/game/pages/Error.jsx";
 // import Login from "./modules/auth/pages/Login.jsx";
 import AuthMiddleware from "./middlewares/Authmiddleware.jsx";
 
-
 function App() {
   return (
     <Router>
       <Routes>
-        {/* <Route
-          path="/"
-          element={
-            <AuthMiddleware>
-              <Home />
-            </AuthMiddleware>
-          }
-        /> */}
+        <Route path="/" element={<Home />} />
         {/* <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} /> */}
         <Route path="/options" element={<Options />} />
