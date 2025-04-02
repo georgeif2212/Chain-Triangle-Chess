@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { Typography, Button, Container } from "@mui/material";
 import { GameContext } from "../../../contexts/GameContext.jsx";
@@ -16,26 +17,36 @@ const Game = () => {
     dispatch({ type: "START_GAME" });
   };
 
-  const renderGameNotStarted = () => (
-    <>
-      <div>
-        <p>
-          <strong>Mode: </strong>
-          {state.mode}
-        </p>
-        <p>Equipos: </p>
-        {state.teams.map((team, index) => (
-          <p key={index}>
-            <strong>Team {index + 1}: </strong>
-            {team.name}
+  const renderGameNotStarted = () => {
+    const navigate = useNavigate();
+    return (
+      <>
+        <div>
+          <p>
+            <strong>Mode: </strong>
+            {state.mode}
           </p>
-        ))}
-      </div>
-      <Button variant="contained" color="primary" onClick={handleStartGame}>
-        Comenzar juego
-      </Button>
-    </>
-  );
+          <p>Equipos: </p>
+          {state.teams.map((team, index) => (
+            <p key={index}>
+              <strong>Team {index + 1}: </strong>
+              {team.name}
+            </p>
+          ))}
+        </div>
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={() => navigate("/options")}
+        >
+          Configurar
+        </Button>
+        <Button variant="contained" color="primary" onClick={handleStartGame}>
+          Comenzar juego
+        </Button>
+      </>
+    );
+  };
 
   const renderGameContent = () => (
     <>
