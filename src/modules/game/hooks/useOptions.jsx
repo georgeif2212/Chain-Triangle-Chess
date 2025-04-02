@@ -6,7 +6,7 @@ import { availableColors } from "../../../utils/utils.js";
 const useOptions = () => {
   const { state, dispatch } = useContext(GameContext);
   const [gameMode, setGameMode] = useState(state.mode);
-  const [teams, setTeams] = useState(state.teams.slice(0, 2));
+  const [teams, setTeams] = useState(state.teams);
   const [orderRandom, setOrderRandom] = useState(false);
   const navigate = useNavigate();
   console.log(state);
