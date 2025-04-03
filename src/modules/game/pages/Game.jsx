@@ -85,7 +85,9 @@ const Game = () => {
           ))}
         </ul>
 
-        <Button variant="contained" color="primary" onClick={resetGame}>
+        <Button variant="contained" color="primary" onClick={()=>{
+          console.log("reset")
+        }}>
           Jugar de nuevo
         </Button>
       </div>
@@ -93,9 +95,11 @@ const Game = () => {
   };
 
   return (
-    <Container className="game-container ">
+    <Container className="game-container">
       <Typography variant="h3">Triangle Chess!</Typography>
-      {!state.gameStarted ? renderGameNotStarted() : renderGameContent()}
+      {state.gameState === "notStarted" && renderGameNotStarted()}
+      {state.gameState === "started" && renderGameContent()}
+      {state.gameState === "finished" && renderGameHasFinished()}
     </Container>
   );
 };
