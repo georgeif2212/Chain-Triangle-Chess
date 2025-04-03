@@ -58,7 +58,7 @@ function checkAndRegisterTriangle(newEdges, vertices, generateNewTriangle) {
             triangleVertices
           );
           triangles[triangleVertices.toString()] = 1;
-          generateNewTriangle(coordinates);
+          generateNewTriangle(coordinates,triangles);
         }
       }
     });
