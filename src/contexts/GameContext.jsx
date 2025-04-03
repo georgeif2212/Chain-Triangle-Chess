@@ -11,6 +11,7 @@ const initialState = {
     { name: "Equipo 2", color: "#7BD3EA" },
   ],
   gameStarted: false,
+  gameOver:false
 };
 
 const nextTeam = (state) => {
@@ -32,6 +33,8 @@ const reducer = (state, action) => {
       return { ...state, currentTeam: nextTeam(state) };
     case "SET_TEAMS":
       return {...state, teams: action.payload }
+    case "GAME_OVER":
+      return {...state,gameOver:true}
     default:
       return state;
   }
