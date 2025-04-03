@@ -6,11 +6,10 @@ const initialState = {
   mode: "Con preguntas",
   currentTeam: null,
   teams: [
-    { name: "Equipo 1", color: "#EF4B4B" },
-    { name: "Equipo 2", color: "#7BD3EA" },
+    { name: "Equipo 1", color: "#EF4B4B",score:0 },
+    { name: "Equipo 2", color: "#7BD3EA",score:0 },
   ],
-  gameStarted: false,
-  gameOver: false,
+  gameState: "notStarted" //* Available states: notStarted || started || finished
 };
 
 const nextTeam = (state) => {
@@ -24,16 +23,16 @@ const reducer = (state, action) => {
     case "SET_MODE":
       return { ...state, mode: action.payload };
     case "START_GAME":
-      return { ...state, gameStarted: true, currentTeam: state.teams[0] };
+      return { ...state, gameState: "started", currentTeam: state.teams[0] };
     case "SET_CURRENT_TEAM":
-      if (!state.gameStarted) return state;
+      if (state.gameState==="notStarted") return state;
       return { ...state, currentTeam: action.payload };
     case "NEXT_TEAM":
       return { ...state, currentTeam: nextTeam(state) };
     case "SET_TEAMS":
       return { ...state, teams: action.payload };
     case "GAME_OVER":
-      return { ...state, gameOver: true };
+      return { ...state, gameState: "finished" };
     case "RESET_GAME":
       return {
         ...initialState, // Reset the whole initial state
