@@ -2,7 +2,6 @@ import React, { createContext, useReducer } from "react";
 
 const GameContext = createContext();
 
-
 const initialState = {
   mode: "Con preguntas",
   currentTeam: null,
@@ -11,7 +10,7 @@ const initialState = {
     { name: "Equipo 2", color: "#7BD3EA" },
   ],
   gameStarted: false,
-  gameOver:false
+  gameOver: false,
 };
 
 const nextTeam = (state) => {
@@ -32,9 +31,15 @@ const reducer = (state, action) => {
     case "NEXT_TEAM":
       return { ...state, currentTeam: nextTeam(state) };
     case "SET_TEAMS":
-      return {...state, teams: action.payload }
+      return { ...state, teams: action.payload };
     case "GAME_OVER":
-      return {...state,gameOver:true}
+      return { ...state, gameOver: true };
+    case "RESET_GAME":
+      return {
+        ...initialState, // Reset the whole initial state
+        teams: state.teams.map((team) => ({ ...team, score: 0 })), // Reset the score
+      };
+
     default:
       return state;
   }
