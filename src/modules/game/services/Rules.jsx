@@ -9,7 +9,8 @@ import { sortArray, triangles } from "../../../utils/utils.js";
  * * Checks if a new connection is valid.
  */
 function isValidConnection(vertex1, vertex2) {
-  const intermediateEdge = matrixValidEdges[vertex1.index - 1][vertex2.index - 1];
+  const intermediateEdge =
+    matrixValidEdges[vertex1.index - 1][vertex2.index - 1];
   return intermediateEdge <= -1; // Retorna true si es un movimiento válido.
 }
 
@@ -36,7 +37,15 @@ function getTriangleCoordinates(vertices, vertexIndices) {
 /**
  * * Checks if a triangle is formed with new connections and logs it if it is valid.
  */
-function checkAndRegisterTriangle(newEdges, vertices, generateNewTriangle) {
+function checkAndRegisterTriangle(
+  newEdges,
+  vertices,
+  generateNewTriangle,
+  { state, dispatch }
+) {
+  let trianglesFormed = 0; // * Counter of formed triangles in each movement
+  let newTriangles = {}; // * Store the new triangles in this movement
+
   for (let i = 0; i < newEdges.length; i++) {
     const [start, end] = newEdges[i];
     const associatedVertices = matrixAssociatedVertices[start - 1][end - 1];
@@ -52,27 +61,41 @@ function checkAndRegisterTriangle(newEdges, vertices, generateNewTriangle) {
         const triangleVertices = [assocVertex, start, end].sort(
           (a, b) => a - b
         );
-        if (!triangles[triangleVertices.toString()]) {
-          const coordinates = getTriangleCoordinates(
-            vertices,
-            triangleVertices
-          );
-          triangles[triangleVertices.toString()] = 1;
-          generateNewTriangle(coordinates,triangles);
+        const triangleKey = triangleVertices.toString();
+
+        // * Only count if the triangle has not been recorded before
+        if (!triangles[triangleKey] && !newTriangles[triangleKey]) {
+          const coordinates = getTriangleCoordinates(vertices, triangleVertices);
+          newTriangles[triangleKey] = 1; // Mark this triangle as new on this play
+          triangles[triangleKey] = 1; // Register it on the global list of triangles
+
+          trianglesFormed++; // Add to counter
+          generateNewTriangle(coordinates, triangles);
         }
       }
     });
   }
+
+  // * If new triangles were formed, update score and state
+  if (trianglesFormed > 0) {
+    const updatedTeams = state.teams.map((team) =>
+      team.name === state.currentTeam.name
+        ? { ...team, score: (team.score || 0) + trianglesFormed }
+        : team
+    );
+    dispatch({ type: "SET_TEAMS", payload: updatedTeams });
+  }
 }
+
 
 export function checkNewTriangles(
   vertex1,
   vertex2,
   onValidConnection,
   vertices,
-  generateNewTriangle
+  generateNewTriangle,
+  { state, dispatch }
 ) {
-
   if (!isValidConnection(vertex1, vertex2)) return; // ! It means that is not a valid movement
 
   onValidConnection(vertex1.index, vertex2.index);
@@ -88,5 +111,8 @@ export function checkNewTriangles(
     [intermediateEdge, vertex2.index],
   ];
 
-  checkAndRegisterTriangle(newEdges, vertices, generateNewTriangle);
+  checkAndRegisterTriangle(newEdges, vertices, generateNewTriangle, {
+    state,
+    dispatch,
+  });
 }

@@ -28,32 +28,31 @@ const useVertexSelection = (vertices, setConnections, setTriangles) => {
       dispatch({ type: "NEXT_TEAM" });
     };
 
-    const generateNewTriangle = (coordinates,triangles) => {
+    const generateNewTriangle = (coordinates, triangles) => {
       setTriangles((prev) => {
-        const updatedTriangles = [...prev, { coordinates, team: state.currentTeam }];
-    
+        const updatedTriangles = [
+          ...prev,
+          { coordinates, team: state.currentTeam },
+        ];
+
         // * Check if all triangles are completed
         if (Object.keys(triangles).length === updatedTriangles.length) {
           console.log("¡El juego ha finalizado!");
-          dispatch({ type: "GAME_OVER" }); 
+          dispatch({ type: "GAME_OVER" });
         }
-    
+
         return updatedTriangles;
       });
-    
-      // * Update current team's score
-      const updatedTeams = state.teams.map((team) =>
-        team.name === state.currentTeam.name
-          ? { ...team, score: (team.score || 0) + 1 }
-          : team
-      );
-    
-      dispatch({ type: "SET_TEAMS", payload: updatedTeams });
     };
-    
-    
 
-    checkNewTriangles(vertex1, vertex2, onValidConnection, vertices, generateNewTriangle);
+    checkNewTriangles(
+      vertex1,
+      vertex2,
+      onValidConnection,
+      vertices,
+      generateNewTriangle,
+      { state, dispatch }
+    );
     setSelectedVertex(null);
   };
 
