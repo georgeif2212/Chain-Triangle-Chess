@@ -17,6 +17,7 @@ const useVertexSelection = (vertices, setConnections, setTriangles) => {
         ? [selectedVertex, vertex]
         : [vertex, selectedVertex];
 
+    // * If it is a valid connection from Rules.jsx a connection is drawn
     const onValidConnection = (index1, index2) => {
       setConnections((prev) => [
         ...prev,
