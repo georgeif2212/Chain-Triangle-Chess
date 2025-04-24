@@ -1,8 +1,19 @@
-import { Alert as MuiAlert } from "@mui/material";
-import checkboxClasses from "@mui/material";
+import { Snackbar, Alert, AlertTitle } from "@mui/material";
 
-const Alert = (props) => {
-  <Alert icon={<CheckIcon fontSize="inherit" />} severity="success">
-    Here is a gentle confirmation that your action was successful.
-  </Alert>;
+const InvalidMoveAlert = ({ open, onClose }) => {
+  return (
+    <Snackbar
+      open={open}
+      autoHideDuration={3000}
+      onClose={onClose}
+      anchorOrigin={{ vertical: "top", horizontal: "right" }}
+    >
+      <Alert variant="filled" onClose={onClose} severity="error" style={{ width: "100%" }}>
+        <AlertTitle>Movimiento inválido</AlertTitle>
+        Intenta con otra conexión.
+      </Alert>
+    </Snackbar>
+  );
 };
+
+export default InvalidMoveAlert;
