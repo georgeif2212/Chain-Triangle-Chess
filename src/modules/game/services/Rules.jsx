@@ -65,7 +65,10 @@ function checkAndRegisterTriangle(
 
         // * Only count if the triangle has not been recorded before
         if (!triangles[triangleKey] && !newTriangles[triangleKey]) {
-          const coordinates = getTriangleCoordinates(vertices, triangleVertices);
+          const coordinates = getTriangleCoordinates(
+            vertices,
+            triangleVertices
+          );
           newTriangles[triangleKey] = 1; // Mark this triangle as new on this play
           triangles[triangleKey] = 1; // Register it on the global list of triangles
 
@@ -87,16 +90,19 @@ function checkAndRegisterTriangle(
   }
 }
 
-
 export function checkNewTriangles(
   vertex1,
   vertex2,
   onValidConnection,
   vertices,
   generateNewTriangle,
-  { state, dispatch }
+  { state, dispatch },
+  onInvalidConnection
 ) {
-  if (!isValidConnection(vertex1, vertex2)) return; // ! It means that is not a valid movement
+  if (!isValidConnection(vertex1, vertex2)) {
+    onInvalidConnection();
+    return;
+  } // ! It means that is not a valid movement
 
   onValidConnection(vertex1.index, vertex2.index);
 
