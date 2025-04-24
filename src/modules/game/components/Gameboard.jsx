@@ -7,12 +7,14 @@ import VertexLayer from "./VertexLayer.jsx";
 import VertexGrid from "./VertexGrid.jsx";
 import useVertexSelection from "../hooks/useVertexSelection";
 import "../styles/components/Gameboard.css";
+import InvalidMoveAlert from "../../core/design/Alert.jsx";
 
 const GameBoard = () => {
   const [stageSize, setStageSize] = useState({
     width: window.innerWidth,
     height: window.innerHeight,
   });
+  const [invalidMoveAlert, setInvalidMoveAlert] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
@@ -36,7 +38,12 @@ const GameBoard = () => {
   const rows = [3, 4, 5, 4, 3];
 
   const vertices = VertexGrid({ polygonX, polygonY, vertexSpacing, rows });
-  const handleVertexClick = useVertexSelection(vertices, setConnections, setTriangles);
+  const handleVertexClick = useVertexSelection(
+    vertices,
+    setConnections,
+    setTriangles,
+    setInvalidMoveAlert
+  );
 
   return (
     <div className="board-container">
@@ -46,6 +53,10 @@ const GameBoard = () => {
         <ConnectionLayer connections={connections} />
         <VertexLayer vertices={vertices} onVertexClick={handleVertexClick} />
       </Stage>
+      <InvalidMoveAlert
+        open={invalidMoveAlert}
+        onClose={() => setInvalidMoveAlert(false)}
+      />
     </div>
   );
 };
