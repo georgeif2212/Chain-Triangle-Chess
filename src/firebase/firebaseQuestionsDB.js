@@ -16,15 +16,15 @@ const vaepFirebaseConfig = {
   measurementId: import.meta.env.VITE_REACT_APP_VAEP_MEASUREMENTID,
 };
 
-let secondaryApp;
+let vaepFirebaseDB;
 
 const existingApps = getApps();
-const alreadyInitialized = existingApps.find(app => app.name === "secondary");
+const alreadyInitialized = existingApps.find((app) => app.name === "secondary");
 
 if (!alreadyInitialized) {
-  secondaryApp = initializeApp(vaepFirebaseConfig, "secondary"); // nombre personalizado
+  vaepFirebaseDB = initializeApp(vaepFirebaseConfig, "secondary"); // nombre personalizado
 } else {
-  secondaryApp = alreadyInitialized;
+  vaepFirebaseDB = alreadyInitialized;
 }
 
-export default secondaryApp;
+export default vaepFirebaseDB;
