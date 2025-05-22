@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "./modules/game/pages/Home.jsx";
 import Game from "./modules/game/pages/Game.jsx";
 import Options from "./modules/game/pages/Options.jsx";
-import Questions from "./modules/game/pages/Questions.jsx";
+import GameSession from "./modules/game/hooks/useQuestions.jsx";
 import Error from "./modules/game/pages/Error.jsx";
 // import Register from "./modules/auth/pages/Register.jsx";
 // import Login from "./modules/auth/pages/Login.jsx";
@@ -13,7 +13,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/questions" element={<Questions />} />
+        <Route path="/gameSession" element={<GameSession />} />
         {/* <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} /> */}
         <Route path="/options" element={<Options />} />
