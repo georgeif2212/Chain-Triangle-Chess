@@ -6,10 +6,10 @@ const initialState = {
   mode: "Con preguntas",
   currentTeam: null,
   teams: [
-    { name: "Equipo 1", color: "#EF4B4B",score:0 },
-    { name: "Equipo 2", color: "#7BD3EA",score:0 },
+    { name: "Equipo 1", color: "#EF4B4B", score: 0 },
+    { name: "Equipo 2", color: "#7BD3EA", score: 0 },
   ],
-  gameState: "notStarted" //* Available states: notStarted || started || finished
+  gameState: "notStarted", //* Available states: notStarted || started || finished
 };
 
 const nextTeam = (state) => {
@@ -25,7 +25,7 @@ const reducer = (state, action) => {
     case "START_GAME":
       return { ...state, gameState: "started", currentTeam: state.teams[0] };
     case "SET_CURRENT_TEAM":
-      if (state.gameState==="notStarted") return state;
+      if (state.gameState === "notStarted") return state;
       return { ...state, currentTeam: action.payload };
     case "NEXT_TEAM":
       return { ...state, currentTeam: nextTeam(state) };
@@ -33,6 +33,17 @@ const reducer = (state, action) => {
       return { ...state, teams: action.payload };
     case "GAME_OVER":
       return { ...state, gameState: "finished" };
+    case "LOAD_QUESTIONS":
+      return {
+        ...state,
+        vaepData: {
+          preguntas: action.payload.preguntas,
+          respuestas: action.payload.respuestas,
+          opciones: action.payload.opciones,
+          materiaNombre: action.payload.materiaNombre,
+          temaNombre: action.payload.temaNombre,
+        },
+      };
     case "RESET_GAME":
       return {
         ...initialState, // Reset the whole initial state
