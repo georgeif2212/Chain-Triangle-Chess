@@ -36,34 +36,39 @@ const Game = () => {
     }
   }, [dispatch, state.gameState]);
 
-  const GameContent = () => (
-    <>
-      {params.mode === "conPreguntas" && (
-        <QuestionLogicProvider
-          materia={params.materia}
-          tema={params.tema}
-          token={params.token}
-        />
-      )}
-      <div>
-        {state.teams.map((team, index) => (
-          <Typography key={index} variant="h5">
-            <strong>{team.name}:</strong> Puntaje: {team.score}
+  const GameContent = () => {
+    const { state } = useContext(GameContext);
+  
+    return (
+      <>
+        {params.mode === "conPreguntas" && (
+          <QuestionLogicProvider
+            materia={params.materia}
+            tema={params.tema}
+            token={params.token}
+          />
+        )}
+        <div>
+          {state.teams.map((team, index) => (
+            <Typography key={index} variant="h5">
+              <strong>{team.name}:</strong> Puntaje: {team.score}
+            </Typography>
+          ))}
+          <Typography variant="h5">
+            Turno de: <strong>{state.currentTeam.name}</strong>
           </Typography>
-        ))}
-        <Typography variant="h5">
-          Turno de: <strong>{state.currentTeam.name}</strong>
-        </Typography>
-      </div>
-      <GameBoard />
-    </>
-  );
+        </div>
+        <GameBoard />
+      </>
+    );
+  };
+  
 
   return (
     <Container className="game-container">
       <Typography variant="h3">Triangle Chess!</Typography>
       {state.gameState === "notStarted" && <GameHasNotStarted />}
-      {state.gameState === "started" && <GameContent />}
+      {state.gameState === "started" && GameContent()}
       {state.gameState === "finished" && <GameHasFinished state={state} />}
     </Container>
   );
