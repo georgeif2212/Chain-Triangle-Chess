@@ -33,7 +33,7 @@ const QuestionLogicProvider = ({ materia, tema, token }) => {
         window.location.href = "https://vaep-uamc.web.app?sesionExpirada=true";
       }, 3000);
     }
-  }, [preguntas, respuestas, opciones, dispatch, materiaNombre, temaNombre, errorSesion]);
+  }, []);
 
   return null; // no renderiza nada
 };
