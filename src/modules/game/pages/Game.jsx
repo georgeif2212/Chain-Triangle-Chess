@@ -5,7 +5,7 @@ import { useGameParams } from "../hooks/useGameParams.jsx";
 import { useLoadQuestions } from "../hooks/useLoadQuestions.jsx";
 import GameHasFinished from "./GameHasFinished.jsx";
 import GameHasNotStarted from "./GameHasNotStarted.jsx";
-import GameContent from "../components/GameContent.jsx";
+import GameContent from "./GameContent.jsx";
 import "../styles/pages/Game.css";
 
 const Game = () => {
