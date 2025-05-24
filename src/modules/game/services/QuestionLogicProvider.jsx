@@ -1,9 +1,10 @@
-import { useEffect } from "react";
+import { useEffect,useState } from "react";
 import { useQuestions } from "../hooks/useQuestions.jsx";
 import { useContext } from "react";
 import { GameContext } from "../../../contexts/GameContext.jsx"; // o donde guardes tus preguntas
 
 const QuestionLogicProvider = ({ materia, tema, token }) => {
+  const { dispatch } = useContext(GameContext);
   const {
     preguntas,
     respuestas,
@@ -12,10 +13,11 @@ const QuestionLogicProvider = ({ materia, tema, token }) => {
     temaNombre,
     errorSesion,
   } = useQuestions({ materia, tema, token });
-  const { dispatch } = useContext(GameContext);
+
+  const [cargado, setCargado] = useState(false);
 
   useEffect(() => {
-    if (preguntas.length && respuestas.length && opciones.length) {
+    if (!cargado && preguntas.length && respuestas.length && opciones.length) {
       dispatch({
         type: "LOAD_QUESTIONS",
         payload: {
@@ -26,14 +28,16 @@ const QuestionLogicProvider = ({ materia, tema, token }) => {
           temaNombre,
         },
       });
+      setCargado(true); 
     }
+
     if (errorSesion) {
       console.error("Sesión expirada. Redirigiendo...");
       setTimeout(() => {
         window.location.href = "https://vaep-uamc.web.app?sesionExpirada=true";
       }, 3000);
     }
-  }, []);
+  }, [preguntas, respuestas, opciones, materiaNombre, temaNombre, errorSesion]);
 
   return null; // no renderiza nada
 };
