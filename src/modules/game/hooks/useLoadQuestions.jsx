@@ -1,9 +1,10 @@
-import { useEffect,useState } from "react";
-import { useQuestions } from "../hooks/useQuestions.jsx";
+// hooks/useLoadQuestions.js
+import { useEffect, useState } from "react";
+import { useQuestions } from "./useQuestions.jsx";
 import { useContext } from "react";
-import { GameContext } from "../../../contexts/GameContext.jsx"; // o donde guardes tus preguntas
+import { GameContext } from "../../../contexts/GameContext.jsx"
 
-const QuestionLogicProvider = ({ materia, tema, token }) => {
+export const useLoadQuestions = ({ materia, tema, token }) => {
   const { dispatch } = useContext(GameContext);
   const {
     preguntas,
@@ -28,7 +29,7 @@ const QuestionLogicProvider = ({ materia, tema, token }) => {
           temaNombre,
         },
       });
-      setCargado(true); 
+      setCargado(true);
     }
 
     if (errorSesion) {
@@ -39,7 +40,5 @@ const QuestionLogicProvider = ({ materia, tema, token }) => {
     }
   }, [preguntas, respuestas, opciones, materiaNombre, temaNombre, errorSesion]);
 
-  return null; // no renderiza nada
+  return cargado;
 };
-
-export default QuestionLogicProvider;
