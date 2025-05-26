@@ -31,14 +31,7 @@ const useVertexSelection = (
           end: { ...vertex, index: index2 },
         },
       ]);
-
-      if (state.mode === "Con preguntas") {
-        const questionIndex = connections.length;
-        setCurrentQuestionIndex(questionIndex);
-        setOpenQuestionDialog(true);
-      } else {
-        dispatch({ type: "NEXT_TEAM" });
-      }
+      dispatch({ type: "NEXT_TEAM" });
     };
 
     const generateNewTriangle = (coordinates, triangles) => {
