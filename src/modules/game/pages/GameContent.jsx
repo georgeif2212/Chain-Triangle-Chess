@@ -8,12 +8,13 @@ import { useLoadQuestions } from "../hooks/useLoadQuestions.jsx";
 const GameContent = () => {
   const { state } = useContext(GameContext);
   const params = useGameParams(({ mode }) => {
-      if (mode === "conPreguntas" && state.gameState === "notStarted") {
-        dispatch({ type: "START_GAME" });
-      }
-    });
-  
-    useLoadQuestions(params);
+    if (mode === "conPreguntas" && state.gameState === "notStarted") {
+      dispatch({ type: "START_GAME" });
+    }
+  });
+
+  let cargado = useLoadQuestions(params);
+  console.log(state);
   return (
     <>
       <div>
