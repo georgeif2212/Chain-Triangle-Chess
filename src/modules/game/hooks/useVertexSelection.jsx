@@ -2,7 +2,12 @@ import { useState, useContext } from "react";
 import { GameContext } from "../../../contexts/GameContext.jsx";
 import { checkNewTriangles } from "../services/Rules.jsx";
 
-const useVertexSelection = (vertices, setConnections, setTriangles,setInvalidMoveAlert) => {
+const useVertexSelection = (
+  vertices,
+  setConnections,
+  setTriangles,
+  setInvalidMoveAlert
+) => {
   const { state, dispatch } = useContext(GameContext);
   const [selectedVertex, setSelectedVertex] = useState(null);
 
@@ -26,7 +31,14 @@ const useVertexSelection = (vertices, setConnections, setTriangles,setInvalidMov
           end: { ...vertex, index: index2 },
         },
       ]);
-      dispatch({ type: "NEXT_TEAM" });
+
+      if (state.mode === "Con preguntas") {
+        const questionIndex = connections.length;
+        setCurrentQuestionIndex(questionIndex);
+        setOpenQuestionDialog(true);
+      } else {
+        dispatch({ type: "NEXT_TEAM" });
+      }
     };
 
     const generateNewTriangle = (coordinates, triangles) => {
