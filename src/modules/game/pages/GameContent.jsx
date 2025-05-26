@@ -2,9 +2,18 @@ import { useContext } from "react";
 import { Typography } from "@mui/material";
 import { GameContext } from "../../../contexts/GameContext.jsx";
 import GameBoard from "../components/Gameboard.jsx";
+import { useGameParams } from "../hooks/useGameParams.jsx";
+import { useLoadQuestions } from "../hooks/useLoadQuestions.jsx";
 
 const GameContent = () => {
   const { state } = useContext(GameContext);
+  const params = useGameParams(({ mode }) => {
+      if (mode === "conPreguntas" && state.gameState === "notStarted") {
+        dispatch({ type: "START_GAME" });
+      }
+    });
+  
+    useLoadQuestions(params);
   return (
     <>
       <div>
