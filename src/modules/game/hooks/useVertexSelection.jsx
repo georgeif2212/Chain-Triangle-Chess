@@ -2,7 +2,12 @@ import { useState, useContext } from "react";
 import { GameContext } from "../../../contexts/GameContext.jsx";
 import { checkNewTriangles } from "../services/Rules.jsx";
 
-const useVertexSelection = (vertices, setConnections, setTriangles,setInvalidMoveAlert) => {
+const useVertexSelection = (
+  vertices,
+  setConnections,
+  setTriangles,
+  setInvalidMoveAlert
+) => {
   const { state, dispatch } = useContext(GameContext);
   const [selectedVertex, setSelectedVertex] = useState(null);
 
