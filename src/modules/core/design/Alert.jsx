@@ -1,6 +1,6 @@
-import { Snackbar, Alert, AlertTitle } from "@mui/material";
+import { Snackbar, Alert as MuiAlert, AlertTitle } from "@mui/material";
 
-const InvalidMoveAlert = ({ open, onClose }) => {
+const CustomAlert = ({ open, onClose, title, message, severity = "error" }) => {
   return (
     <Snackbar
       open={open}
@@ -8,12 +8,17 @@ const InvalidMoveAlert = ({ open, onClose }) => {
       onClose={onClose}
       anchorOrigin={{ vertical: "top", horizontal: "right" }}
     >
-      <Alert variant="filled" onClose={onClose} severity="error" style={{ width: "100%" }}>
-        <AlertTitle>Movimiento inválido</AlertTitle>
-        Intenta con otra conexión.
-      </Alert>
+      <MuiAlert
+        variant="filled"
+        onClose={onClose}
+        severity={severity}
+        sx={{ width: "100%" }}
+      >
+        {title && <AlertTitle>{title}</AlertTitle>}
+        {message}
+      </MuiAlert>
     </Snackbar>
   );
 };
 
-export default InvalidMoveAlert;
+export default CustomAlert;
