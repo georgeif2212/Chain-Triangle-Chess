@@ -47,6 +47,7 @@ class QuestionMoveStrategy {
       options: opciones,
       correctAnswer: respuestaCorrecta,
       onSuccess: () => {
+        dispatch({ type: "NEXT_TEAM" });
         this.onValidConnection(this.vertex1.index, this.vertex2.index);
         const intermediateEdge = registerNewConnection(
           this.vertex1,
@@ -63,7 +64,6 @@ class QuestionMoveStrategy {
           this.generateNewTriangle,
           this.context
         );
-        dispatch({ type: "NEXT_TEAM" });
       },
       onFail: () => {
         dispatch({ type: "NEXT_TEAM" });
