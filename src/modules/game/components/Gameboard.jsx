@@ -7,7 +7,8 @@ import VertexLayer from "./VertexLayer.jsx";
 import VertexGrid from "./VertexGrid.jsx";
 import useVertexSelection from "../hooks/useVertexSelection";
 import "../styles/components/Gameboard.css";
-import InvalidMoveAlert from "../../core/design/Alert.jsx";
+import CustomAlert from "../../core/design/Alert.jsx";
+import QuestionDialog from "./QuestionDialog.jsx";
 
 const GameBoard = () => {
   const [stageSize, setStageSize] = useState({
@@ -15,6 +16,15 @@ const GameBoard = () => {
     height: window.innerHeight,
   });
   const [invalidMoveAlert, setInvalidMoveAlert] = useState(false);
+
+  const [questionData, setQuestionData] = useState({
+    open: false,
+    question: "",
+    options: [],
+    correctAnswer: "",
+    onSuccess: () => {},
+    onFail: () => {},
+  });
 
   useEffect(() => {
     const handleResize = () => {
@@ -42,7 +52,8 @@ const GameBoard = () => {
     vertices,
     setConnections,
     setTriangles,
-    setInvalidMoveAlert
+    setInvalidMoveAlert,
+    setQuestionData
   );
 
   return (
@@ -53,9 +64,25 @@ const GameBoard = () => {
         <ConnectionLayer connections={connections} />
         <VertexLayer vertices={vertices} onVertexClick={handleVertexClick} />
       </Stage>
-      <InvalidMoveAlert
+      <CustomAlert
         open={invalidMoveAlert}
         onClose={() => setInvalidMoveAlert(false)}
+      />
+
+      <QuestionDialog
+        open={questionData.open}
+        question={questionData.question}
+        options={questionData.options}
+        correctAnswer={questionData.correctAnswer}
+        onCorrect={() => {
+          questionData.onSuccess();
+          setQuestionData((prev) => ({ ...prev, open: false }));
+        }}
+        onIncorrect={() => {
+          questionData.onFail();
+          setQuestionData((prev) => ({ ...prev, open: false }));
+        }}
+        onClose={() => setQuestionData((prev) => ({ ...prev, open: false }))}
       />
     </div>
   );
