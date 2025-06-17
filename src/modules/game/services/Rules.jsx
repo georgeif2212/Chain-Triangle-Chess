@@ -8,7 +8,7 @@ import { sortArray, triangles } from "../../../utils/utils.js";
 /**
  * * Checks if a new connection is valid.
  */
-function isValidConnection(vertex1, vertex2) {
+export function isValidConnection(vertex1, vertex2) {
   const intermediateEdge =
     matrixValidEdges[vertex1.index - 1][vertex2.index - 1];
   return intermediateEdge <= -1; // Retorna true si es un movimiento válido.
@@ -17,7 +17,7 @@ function isValidConnection(vertex1, vertex2) {
 /**
  * * Registers a new connection in the dashboard matrix.
  */
-function registerNewConnection(vertex1, vertex2, intermediateEdge) {
+export function registerNewConnection(vertex1, vertex2, intermediateEdge) {
   const updatedEdge = -intermediateEdge;
   gameBoardMatrix[vertex1.index - 1][updatedEdge - 1] = 1;
   gameBoardMatrix[updatedEdge - 1][vertex2.index - 1] = 1;
@@ -37,7 +37,7 @@ function getTriangleCoordinates(vertices, vertexIndices) {
 /**
  * * Checks if a triangle is formed with new connections and logs it if it is valid.
  */
-function checkAndRegisterTriangle(
+export function checkAndRegisterTriangle(
   newEdges,
   vertices,
   generateNewTriangle,
