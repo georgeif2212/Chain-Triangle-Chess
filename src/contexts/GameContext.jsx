@@ -3,7 +3,7 @@ import React, { createContext, useReducer } from "react";
 const GameContext = createContext();
 
 const initialState = {
-  mode: "Con preguntas",
+  mode: "conPreguntas",
   currentTeam: null,
   teams: [
     { name: "Equipo 1", color: "#EF4B4B", score: 0 },
