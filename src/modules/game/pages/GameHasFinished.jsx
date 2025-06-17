@@ -1,6 +1,10 @@
-import { Typography, Button, Container } from "@mui/material";
+import { Typography, Button } from "@mui/material";
+import { useContext } from "react";
+import { GameContext } from "../../../contexts/GameContext.jsx";
 
-const GameHasFinished = (state) => {
+const GameHasFinished = () => {
+  const { state, dispatch } = useContext(GameContext);
+  
   const sortedTeams = [...state.teams].sort((a, b) => b.score - a.score);
 
   return (
@@ -24,7 +28,7 @@ const GameHasFinished = (state) => {
         variant="contained"
         color="primary"
         onClick={() => {
-          console.log("reset");
+          dispatch({ type: "START_GAME" });
         }}
       >
         Jugar de nuevo

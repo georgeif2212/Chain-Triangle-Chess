@@ -7,7 +7,8 @@ import VertexLayer from "./VertexLayer.jsx";
 import VertexGrid from "./VertexGrid.jsx";
 import useVertexSelection from "../hooks/useVertexSelection";
 import "../styles/components/Gameboard.css";
-import InvalidMoveAlert from "../../core/design/Alert.jsx";
+import CustomAlert from "../../core/design/Alert.jsx";
+import QuestionDialog from "./QuestionDialog.jsx";
 
 const GameBoard = () => {
   const [stageSize, setStageSize] = useState({
@@ -15,6 +16,16 @@ const GameBoard = () => {
     height: window.innerHeight,
   });
   const [invalidMoveAlert, setInvalidMoveAlert] = useState(false);
+  const [incorrectAnswerAlert, setIncorrectAnswerAlert] = useState(false);
+
+  const [questionData, setQuestionData] = useState({
+    open: false,
+    question: "",
+    options: [],
+    correctAnswer: "",
+    onSuccess: () => {},
+    onFail: () => {},
+  });
 
   useEffect(() => {
     const handleResize = () => {
@@ -42,7 +53,8 @@ const GameBoard = () => {
     vertices,
     setConnections,
     setTriangles,
-    setInvalidMoveAlert
+    setInvalidMoveAlert,
+    setQuestionData
   );
 
   return (
@@ -53,9 +65,37 @@ const GameBoard = () => {
         <ConnectionLayer connections={connections} />
         <VertexLayer vertices={vertices} onVertexClick={handleVertexClick} />
       </Stage>
-      <InvalidMoveAlert
+
+      <QuestionDialog
+        open={questionData.open}
+        question={questionData.question}
+        options={questionData.options}
+        correctAnswer={questionData.correctAnswer}
+        onCorrect={() => {
+          questionData.onSuccess();
+          setQuestionData((prev) => ({ ...prev, open: false }));
+        }}
+        onIncorrect={() => {
+          questionData.onFail();
+          setQuestionData((prev) => ({ ...prev, open: false }));
+          setIncorrectAnswerAlert(true);
+        }}
+        onClose={() => setQuestionData((prev) => ({ ...prev, open: false }))}
+      />
+
+      <CustomAlert
         open={invalidMoveAlert}
         onClose={() => setInvalidMoveAlert(false)}
+        severity="warning"
+        title="Movimiento inválido"
+        message="No puedes conectar esos vértices."
+      />
+      <CustomAlert
+        open={incorrectAnswerAlert}
+        onClose={() => setIncorrectAnswerAlert(false)}
+        severity="error"
+        title="Respuesta incorrecta"
+        message="Fallaste la pregunta. Presta más atención la próxima vez."
       />
     </div>
   );

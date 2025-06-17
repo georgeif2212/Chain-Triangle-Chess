@@ -4,6 +4,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
+import { useState, useEffect } from "react";
 
 const QuestionDialog = ({
   open,
@@ -15,6 +16,10 @@ const QuestionDialog = ({
   onClose,
 }) => {
   const [showAnswer, setShowAnswer] = useState(false);
+
+  useEffect(() => {
+    if (open) setShowAnswer(false); 
+  }, [open]);
 
   const handleOptionClick = (selected) => {
     if (selected === correctAnswer) {
