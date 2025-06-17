@@ -16,6 +16,7 @@ const GameBoard = () => {
     height: window.innerHeight,
   });
   const [invalidMoveAlert, setInvalidMoveAlert] = useState(false);
+  const [incorrectAnswerAlert, setIncorrectAnswerAlert] = useState(false);
 
   const [questionData, setQuestionData] = useState({
     open: false,
@@ -64,10 +65,6 @@ const GameBoard = () => {
         <ConnectionLayer connections={connections} />
         <VertexLayer vertices={vertices} onVertexClick={handleVertexClick} />
       </Stage>
-      <CustomAlert
-        open={invalidMoveAlert}
-        onClose={() => setInvalidMoveAlert(false)}
-      />
 
       <QuestionDialog
         open={questionData.open}
@@ -81,8 +78,24 @@ const GameBoard = () => {
         onIncorrect={() => {
           questionData.onFail();
           setQuestionData((prev) => ({ ...prev, open: false }));
+          setIncorrectAnswerAlert(true);
         }}
         onClose={() => setQuestionData((prev) => ({ ...prev, open: false }))}
+      />
+
+      <CustomAlert
+        open={invalidMoveAlert}
+        onClose={() => setInvalidMoveAlert(false)}
+        severity="warning"
+        title="Movimiento inválido"
+        message="No puedes conectar esos vértices."
+      />
+      <CustomAlert
+        open={incorrectAnswerAlert}
+        onClose={() => setIncorrectAnswerAlert(false)}
+        severity="error"
+        title="Respuesta incorrecta"
+        message="Fallaste la pregunta. Presta más atención la próxima vez."
       />
     </div>
   );
