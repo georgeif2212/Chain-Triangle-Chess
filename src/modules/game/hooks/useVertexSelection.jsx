@@ -36,10 +36,22 @@ const useVertexSelection = (
         ]),
       vertices,
       generateNewTriangle: (coordinates, triangles) =>
-        setTriangles((prev) => [
-          ...prev,
-          { coordinates, team: state.currentTeam },
-        ]),
+        setTriangles((prev) => {
+          const updatedTriangles = [
+            ...prev,
+            { coordinates, team: state.currentTeam },
+          ];
+
+          console.log(Object.keys(triangles).length)
+          // Validar si ya se completaron todos los triángulos posibles
+          if (Object.keys(triangles).length === updatedTriangles.length) {
+            console.log("¡El juego ha finalizado!");
+            dispatch({ type: "GAME_OVER" });
+          }
+
+          return updatedTriangles;
+        }),
+
       context: { state, dispatch },
       onInvalidConnection: () => setInvalidMoveAlert(true),
       showQuestion: (questionData) =>
