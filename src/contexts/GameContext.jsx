@@ -9,7 +9,7 @@ const getModeFromURL = () => {
 };
 
 const getInitialState = () => ({
-  mode: getModeFromURL(), 
+  mode: getModeFromURL().trim(), 
   currentTeam: null,
   teams: [
     { name: "Equipo 1", color: "#EF4B4B", score: 0 },
