@@ -14,7 +14,8 @@ const GameContent = () => {
   });
 
   let cargado = useLoadQuestions(params);
-  console.log(state);
+  if (state.mode === "conPreguntas" && !cargado) return <div>Cargando...</div>;
+
   return (
     <>
       <div>
