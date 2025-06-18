@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { GameContext } from "../../../contexts/GameContext.jsx";
 import { useContext } from "react";
 import { Button } from "@mui/material";
+import { formatMode } from "../../../utils/utils.js";
 
 const GameHasNotStarted = () => {
   const {state, dispatch}=useContext(GameContext)
@@ -22,7 +23,7 @@ const GameHasNotStarted = () => {
       <div>
         <p>
           <strong>Mode: </strong>
-          {state.mode}
+          {formatMode(state.mode)}
         </p>
         <p>Equipos: </p>
         {state.teams.map((team, index) => (
@@ -35,7 +36,7 @@ const GameHasNotStarted = () => {
       <Button
         variant="contained"
         color="secondary"
-        onClick={() => navigate("/options")}
+        onClick={() => navigate(`/options${location.search}`)}
       >
         Configurar
       </Button>
