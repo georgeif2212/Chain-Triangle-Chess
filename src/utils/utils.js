@@ -32,7 +32,9 @@ export function sortArray(value1, value2) {
 export const availableColors = ["#EF4B4B", "#7BD3EA", "#A5DD9B", "#FFD966"];
 
 export const formatMode = (mode) => {
-  switch (mode) {
+  console.log("Mode recibido en formatMode:", JSON.stringify(mode));
+
+  switch (mode.trim()) {
     case "conPreguntas":
       return "Con preguntas";
     case "sinPreguntas":
@@ -41,3 +43,4 @@ export const formatMode = (mode) => {
       return "Modo desconocido";
   }
 };
+
