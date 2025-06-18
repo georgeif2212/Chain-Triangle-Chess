@@ -2,15 +2,21 @@ import React, { createContext, useReducer } from "react";
 
 const GameContext = createContext();
 
-const initialState = {
-  mode: "conPreguntas",
+const getModeFromURL = () => {
+  const searchParams = new URLSearchParams(window.location.search);
+  const mode = searchParams.get("mode");
+  return mode === "sinPreguntas" ? "sinPreguntas" : "conPreguntas";
+};
+
+const getInitialState = () => ({
+  mode: getModeFromURL(), 
   currentTeam: null,
   teams: [
     { name: "Equipo 1", color: "#EF4B4B", score: 0 },
     { name: "Equipo 2", color: "#7BD3EA", score: 0 },
   ],
-  gameState: "notStarted", //* Available states: notStarted || started || finished
-};
+  gameState: "notStarted",
+});
 
 const nextTeam = (state) => {
   const currentIndex = state.teams.indexOf(state.currentTeam);
@@ -46,17 +52,16 @@ const reducer = (state, action) => {
       };
     case "RESET_GAME":
       return {
-        ...initialState, // Reset the whole initial state
-        teams: state.teams.map((team) => ({ ...team, score: 0 })), // Reset the score
+        ...getInitialState(), // reset con el modo actual desde URL
+        teams: state.teams.map((team) => ({ ...team, score: 0 })),
       };
-
     default:
       return state;
   }
 };
 
 const GameProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [state, dispatch] = useReducer(reducer, getInitialState());
   return (
     <GameContext.Provider value={{ state, dispatch }}>
       {children}
