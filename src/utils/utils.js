@@ -29,5 +29,15 @@ export function sortArray(value1, value2) {
   return [value1, value2].sort((a, b) => a - b);
 }
 
-
 export const availableColors = ["#EF4B4B", "#7BD3EA", "#A5DD9B", "#FFD966"];
+
+export const formatMode = (mode) => {
+  switch (mode) {
+    case "conPreguntas":
+      return "Con preguntas";
+    case "sinPreguntas":
+      return "Sin preguntas";
+    default:
+      return "Modo desconocido";
+  }
+};
