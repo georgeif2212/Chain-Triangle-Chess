@@ -9,13 +9,6 @@ const useOptions = () => {
   const [teams, setTeams] = useState(state.teams);
   const [orderRandom, setOrderRandom] = useState(false);
   const navigate = useNavigate();
-  console.log(state);
-
-  const handleGameModeChange = () => {
-    setGameMode((prev) =>
-      prev === "Con preguntas" ? "Sin preguntas" : "Con preguntas"
-    );
-  };
 
   const handleTeamChange = (index, key, value) => {
     setTeams((prev) =>
@@ -54,14 +47,13 @@ const useOptions = () => {
     dispatch({ type: "SET_MODE", payload: gameMode });
     dispatch({ type: "SET_CURRENT_TEAM", payload: teams[0] });
     dispatch({ type: "SET_TEAMS", payload: [...teams] });
-    navigate("/game");
+    navigate(`/game${location.search}`)
   };
 
   return {
     gameMode,
     teams,
     orderRandom,
-    handleGameModeChange,
     handleTeamChange,
     handleAddTeam,
     handleRemoveTeam,

@@ -28,7 +28,7 @@ const GameHasFinished = () => {
         variant="contained"
         color="primary"
         onClick={() => {
-          dispatch({ type: "START_GAME" });
+          dispatch({ type: "RESET_GAME" });
         }}
       >
         Jugar de nuevo

@@ -6,15 +6,17 @@ import { useGameParams } from "../hooks/useGameParams.jsx";
 import { useLoadQuestions } from "../hooks/useLoadQuestions.jsx";
 
 const GameContent = () => {
-  const { state } = useContext(GameContext);
-  const params = useGameParams(({ mode }) => {
-    if (mode === "conPreguntas" && state.gameState === "notStarted") {
-      dispatch({ type: "START_GAME" });
-    }
-  });
+  const { state, dispatch } = useContext(GameContext);
 
-  let cargado = useLoadQuestions(params);
-  console.log(state);
+  const params = useGameParams();
+
+  const cargado =
+    state.mode === "conPreguntas" ? useLoadQuestions(params) : true;
+
+  if (state.mode === "conPreguntas" && !cargado) {
+    return <div>Cargando preguntas...</div>;
+  }
+
   return (
     <>
       <div>
@@ -24,7 +26,13 @@ const GameContent = () => {
           </Typography>
         ))}
         <Typography variant="h5">
-          Turno de: <strong>{state.currentTeam.name}</strong>
+          Turno de: <strong>{state.currentTeam?.name}</strong>
+        </Typography>
+        <Typography variant="h6">
+          Modo:{" "}
+          <strong>
+            {state.mode === "conPreguntas" ? "Con preguntas" : "Sin preguntas"}
+          </strong>
         </Typography>
       </div>
       <GameBoard />
