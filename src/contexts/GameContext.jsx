@@ -5,7 +5,7 @@ const GameContext = createContext();
 const getModeFromURL = () => {
   const searchParams = new URLSearchParams(window.location.search);
   const mode = searchParams.get("mode");
-  return mode === "sinPreguntas" ? "sinPreguntas" : "conPreguntas";
+  return mode === "conPreguntas" ? "conPreguntas" : "sinPreguntas";
 };
 
 const getInitialState = () => ({
