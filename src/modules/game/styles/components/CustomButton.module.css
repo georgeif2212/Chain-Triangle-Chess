@@ -1,0 +1,26 @@
+.button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 12px;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.3s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.button:hover {
+  transform: scale(1.03);
+}
+
+/* Variante primaria - beige */
+.primary {
+  background-color: #ead8c0;
+  color: #5c4b32;
+}
+
+/* Variante secundaria - marrón claro */
+.secondary {
+  background-color: #a79277;
+  color: #ffffff;
+}
