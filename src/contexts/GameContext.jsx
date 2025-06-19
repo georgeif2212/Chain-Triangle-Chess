@@ -1,5 +1,7 @@
 import React, { createContext, useReducer } from "react";
 import { availableColors } from "../utils/utils.js";
+import { getFreshGameData } from "../utils/createArrays.jsx";
+
 const GameContext = createContext();
 
 const getModeFromURL = () => {
@@ -9,13 +11,14 @@ const getModeFromURL = () => {
 };
 
 const getInitialState = () => ({
-  mode: getModeFromURL().trim(), 
+  mode: getModeFromURL().trim(),
   currentTeam: null,
   teams: [
     { name: "Equipo 1", color: availableColors[0], score: 0 },
     { name: "Equipo 2", color: availableColors[1], score: 2 },
   ],
   gameState: "notStarted", // notStarted | started | finished
+  gameData: getFreshGameData(),
 });
 
 const nextTeam = (state) => {
