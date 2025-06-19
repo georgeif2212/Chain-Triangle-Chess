@@ -1,0 +1,99 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background: radial-gradient(circle, #f0eaea 0%, #e0dcdc 100%);
+  padding: 2rem;
+}
+
+.content {
+  max-width: 600px;
+  width: 100%;
+  padding: 2rem;
+  border-radius: 1.2rem;
+  background-color: rgba(255, 255, 255, 0.3); /* translúcido suave */
+  backdrop-filter: blur(10px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+  text-align: center;
+}
+
+.title {
+  font-weight: bold;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  color: #2c2c2c;
+}
+
+.winnerBox {
+  border-radius: 1rem;
+  padding: 1rem;
+  color: #fff;
+  margin-bottom: 2rem;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.winnerLabel {
+  font-weight: 500;
+  opacity: 0.9;
+}
+
+.winnerName {
+  font-weight: bold;
+  font-size: 1.8rem;
+}
+
+.winnerPoints {
+  font-size: 1rem;
+  opacity: 0.95;
+}
+
+.resultsBox {
+  margin-bottom: 2rem;
+}
+
+.label {
+  font-weight: 600;
+  color: #3f3f3f;
+  margin-bottom: 0.5rem;
+}
+
+.playAgainButton {
+  margin-top: 1rem;
+  font-weight: bold;
+  text-transform: none;
+  background-color: #4e73df;
+  color: white;
+  transition: background-color 0.3s ease;
+}
+
+.playAgainButton:hover {
+  background-color: #3a5ecb;
+}
+.resultsTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 0.5rem;
+  font-size: 1rem;
+}
+
+.resultsTable th,
+.resultsTable td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid #ccc;
+  text-align: left;
+}
+
+.resultsTable th {
+  background-color: #f5f5f5;
+  font-weight: 600;
+  color: #333;
+}
+
+.resultsTable tbody tr:nth-child(even) {
+  background-color: rgba(0, 0, 0, 0.03);
+}
+
+.resultsTable td {
+  color: #444;
+}
