@@ -31,3 +31,8 @@ export function darkenHexColor(hex, factor = 0.2) {
   );
   return `rgb(${r}, ${g}, ${b})`;
 }
+
+export function getIntermediateEdge(index1, index2, matrixValidEdges) {
+  const value = matrixValidEdges[index1 - 1][index2 - 1];
+  return value && value < 0 ? -value : null;
+}
