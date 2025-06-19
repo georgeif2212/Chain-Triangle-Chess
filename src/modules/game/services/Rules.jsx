@@ -48,10 +48,22 @@ export function checkAndRegisterTriangle(
   for (let i = 0; i < newEdges.length; i++) {
     const [start, end] = newEdges[i];
     const associatedVertices = matrixAssociatedVertices[start - 1][end - 1];
-
     associatedVertices.forEach((assocVertex) => {
       const sortedVertices1 = sortArray(assocVertex, start);
       const sortedVertices2 = sortArray(assocVertex, end);
+      // * for debugging
+      // console.log("checking triangle", start, end, "assoc:", associatedVertices);
+      // console.log(
+      //   "check side 1:",
+      //   sortedVertices1,
+      //   state.gameData.gameBoardMatrix[sortedVertices1[0] - 1][sortedVertices1[1] - 1]
+      // );
+      // console.log(
+      //   "check side 2:",
+      //   sortedVertices2,
+      //   state.gameData.gameBoardMatrix[sortedVertices2[0] - 1][sortedVertices2[1] - 1]
+      // );
+      
 
       if (
         state.gameData.gameBoardMatrix[sortedVertices1[0] - 1][sortedVertices1[1] - 1] === 1 &&
