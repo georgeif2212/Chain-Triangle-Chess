@@ -3,7 +3,7 @@ import Typography from "@mui/material/Typography";
 import Card from "@mui/material/Card";
 import TeamListContainer from "../components/TeamListContainer.jsx";
 import useOptions from "../hooks/useOptions.jsx";
-import "../styles/pages/Options.css";
+import styles from "../styles/pages/Options.module.css";
 import { formatMode } from "../../../utils/utils.js";
 
 import { useLocation, useNavigate } from "react-router-dom";
@@ -37,23 +37,24 @@ const Options = () => {
   } = useOptions();
 
   return (
-    <div className="options-container">
-      <Card className="options-card">
-        <Typography variant="h5" className="options-card__title">
+    <div className={styles.optionsContainer}>
+      <Card className={styles.optionsCard}>
+        <Typography variant="h4" className={styles.title}>
           Opciones del Juego
         </Typography>
 
-        <div className="options-card-gameMode">
-          <Typography>Modo: {formatMode(gameMode)}</Typography>
+        <div className={styles.gameMode}>
+          <Typography variant="body1">Modo: {formatMode(gameMode)}</Typography>
         </div>
 
         <TeamListContainer teams={teams} onTeamChange={handleTeamChange} />
 
-        <div className="options-card-teamButtons">
+        <div className={styles.teamButtons}>
           <Button
             onClick={handleAddTeam}
             disabled={teams.length >= 4}
             variant="contained"
+            className={styles.button}
           >
             +
           </Button>
@@ -62,24 +63,26 @@ const Options = () => {
             disabled={teams.length <= 2}
             variant="contained"
             color="error"
+            className={styles.button}
           >
             -
           </Button>
         </div>
 
-        <div className="order-buttons">
+        <div className={styles.orderButtons}>
           <Button
             onClick={handleRandomizeOrder}
             variant="contained"
             color="secondary"
+            className={styles.button}
           >
             Orden aleatorio
           </Button>
         </div>
 
         <Button
-          onClick={() => navigate(`/game/${location.search}`)}
-          className="start-btn"
+          onClick={() => navigate(`/game${location.search}`)}
+          className={styles.startBtn}
           variant="contained"
           color="success"
         >
