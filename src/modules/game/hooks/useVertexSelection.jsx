@@ -1,6 +1,8 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useRef } from "react";
 import { GameContext } from "../../../contexts/GameContext.jsx";
 import { getMoveStrategy } from "../services/MoveStrategyFactory.js";
+import { getIntermediateEdge } from "../../../utils/utils.js";
+import { matrixValidEdges } from "../../../utils/createArrays.jsx";
 
 const useVertexSelection = (
   vertices,
@@ -11,11 +13,10 @@ const useVertexSelection = (
 ) => {
   const { state, dispatch } = useContext(GameContext);
   const [selectedVertex, setSelectedVertex] = useState(null);
-
+  const connectedVerticesRef = useRef(new Set());
   const handleVertexClick = (vertex) => {
     if (!selectedVertex) {
       setSelectedVertex(vertex);
-
       return;
     }
 
@@ -24,18 +25,47 @@ const useVertexSelection = (
         ? [selectedVertex, vertex]
         : [vertex, selectedVertex];
 
+    const intermediateEdge = getIntermediateEdge(
+      vertex1.index,
+      vertex2.index,
+      matrixValidEdges
+    );
+
+    // si es el primer movimiento debe ser igual a 0
+    const isFirstMove = connectedVerticesRef.current.size === 0;
+
+    // determina si el set de vertices conectados tienen el vertice 1 o el vertice 2
+    const isConnected =
+      connectedVerticesRef.current.has(vertex1.index) ||
+      connectedVerticesRef.current.has(vertex2.index);
+
+    if (!isFirstMove && !isConnected) {
+      setInvalidMoveAlert(
+        "Movimiento inválido: debes conectar desde un vértice que ya esté conectado anteriormente."
+      );
+      setSelectedVertex(null);
+      return;
+    }
+
     const strategy = getMoveStrategy(state.mode, {
       vertex1,
       vertex2,
-      onValidConnection: (i1, i2) =>
+      onValidConnection: (i1, i2) => {
+        // Registrar la conexión visual
         setConnections((prev) => [
           ...prev,
           {
             start: { ...vertex1, index: i1 },
             end: { ...vertex2, index: i2 },
-            fromIndex: selectedVertex.index // is useful to generate the animation 
+            fromIndex: selectedVertex.index,
           },
-        ]),
+        ]);
+
+        // Actualizar el set de vértices conectados
+        connectedVerticesRef.current.add(i1);
+        connectedVerticesRef.current.add(i2);
+        connectedVerticesRef.current.add(intermediateEdge);
+      },
       vertices,
       generateNewTriangle: (coordinates, triangles) =>
         setTriangles((prev) => {
@@ -43,7 +73,7 @@ const useVertexSelection = (
             ...prev,
             { coordinates, team: state.currentTeam },
           ];
-          
+
           // Validar si ya se completaron todos los triángulos posibles
           if (Object.keys(triangles).length === updatedTriangles.length) {
             console.log("¡El juego ha finalizado!");
@@ -63,7 +93,10 @@ const useVertexSelection = (
     setSelectedVertex(null);
   };
 
-  return { handleVertexClick, selectedVertexIndex: selectedVertex?.index };
+  return {
+    handleVertexClick,
+    selectedVertexIndex: selectedVertex?.index,
+  };
 };
 
 export default useVertexSelection;
