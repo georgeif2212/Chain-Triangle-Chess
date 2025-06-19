@@ -7,13 +7,13 @@ import GameContent from "./GameContent.jsx";
 import "../styles/pages/Game.css";
 
 const Game = () => {
-  const { state } = useContext(GameContext);  
+  const { state } = useContext(GameContext);
 
   return (
     <Container className="game-container">
       {state.gameState === "notStarted" && <GameHasNotStarted />}
       {state.gameState === "started" && <GameContent />}
-      {state.gameState === "finished" && <GameHasFinished state={state} />}
+      {state.gameState === "finished" && <GameHasFinished />}
     </Container>
   );
 };
