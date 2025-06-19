@@ -42,19 +42,19 @@ export const formatMode = (mode) => {
   }
 };
 
-export const darkenColor = (hex, amount = 20) => {
-  let col = hex.replace("#", "");
-
-  if (col.length === 3) {
-    col = col
-      .split("")
-      .map((c) => c + c)
-      .join("");
-  }
-
-  const r = Math.max(0, parseInt(col.substring(0, 2), 16) - amount);
-  const g = Math.max(0, parseInt(col.substring(2, 4), 16) - amount);
-  const b = Math.max(0, parseInt(col.substring(4, 6), 16) - amount);
-
+export function darkenHexColor(hex, factor = 0.2) {
+  const color = hex.replace("#", "");
+  const r = Math.max(
+    0,
+    Math.floor(parseInt(color.substring(0, 2), 16) * (1 - factor))
+  );
+  const g = Math.max(
+    0,
+    Math.floor(parseInt(color.substring(2, 4), 16) * (1 - factor))
+  );
+  const b = Math.max(
+    0,
+    Math.floor(parseInt(color.substring(4, 6), 16) * (1 - factor))
+  );
   return `rgb(${r}, ${g}, ${b})`;
-};
+}
