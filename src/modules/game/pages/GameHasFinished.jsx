@@ -57,7 +57,9 @@ const GameHasFinished = () => {
         <Button
           variant="contained"
           className={styles.playAgainButton}
-          onClick={() => dispatch({ type: "RESET_GAME" })}
+          onClick={() => {
+            dispatch({ type: "RESET_GAME" }), window.location.reload();
+          }}
         >
           Jugar de nuevo
         </Button>
