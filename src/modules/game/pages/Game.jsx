@@ -11,7 +11,6 @@ const Game = () => {
 
   return (
     <Container className="game-container">
-      <Typography variant="h3">Triangle Chess!</Typography>
       {state.gameState === "notStarted" && <GameHasNotStarted />}
       {state.gameState === "started" && <GameContent />}
       {state.gameState === "finished" && <GameHasFinished state={state} />}
