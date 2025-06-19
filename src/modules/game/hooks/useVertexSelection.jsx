@@ -33,6 +33,7 @@ const useVertexSelection = (
           {
             start: { ...vertex1, index: i1 },
             end: { ...vertex2, index: i2 },
+            fromIndex: selectedVertex.index // is useful to generate the animation 
           },
         ]),
       vertices,
