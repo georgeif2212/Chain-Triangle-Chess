@@ -1,38 +1,67 @@
 import { Typography, Button } from "@mui/material";
 import { useContext } from "react";
 import { GameContext } from "../../../contexts/GameContext.jsx";
+import styles from "../styles/pages/GameHasFinished.module.css";
 
 const GameHasFinished = () => {
   const { state, dispatch } = useContext(GameContext);
-  
   const sortedTeams = [...state.teams].sort((a, b) => b.score - a.score);
+  const winner = sortedTeams[0];
 
   return (
-    <div className="game-summary">
-      <Typography variant="h4">🎉 ¡El juego ha finalizado! 🎉</Typography>
-      <Typography variant="h5">
-        🏆 Ganador: <strong>{sortedTeams[0].name}</strong> con{" "}
-        {sortedTeams[0].score} puntos
-      </Typography>
+    <div className={styles.container}>
+      <div className={styles.content}>
+        <Typography variant="h4" className={styles.title}>
+          El juego ha finalizado
+        </Typography>
 
-      <Typography variant="h6">📊 Resultados finales:</Typography>
-      <ul>
-        {sortedTeams.map((team, index) => (
-          <li key={team.name}>
-            {index + 1}. {team.name} - {team.score} puntos
-          </li>
-        ))}
-      </ul>
+        <div
+          className={styles.winnerBox}
+          style={{ backgroundColor: winner.color }}
+        >
+          <Typography variant="h6" className={styles.winnerLabel}>
+            Ganador
+          </Typography>
+          <Typography variant="h5" className={styles.winnerName}>
+            {winner.name}
+          </Typography>
+          <Typography variant="body1" className={styles.winnerPoints}>
+            {winner.score} puntos
+          </Typography>
+        </div>
 
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={() => {
-          dispatch({ type: "RESET_GAME" });
-        }}
-      >
-        Jugar de nuevo
-      </Button>
+        <div className={styles.resultsBox}>
+          <Typography variant="subtitle1" className={styles.label}>
+            Resultados finales
+          </Typography>
+          <table className={styles.resultsTable}>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Equipo</th>
+                <th>Puntos</th>
+              </tr>
+            </thead>
+            <tbody>
+              {sortedTeams.map((team, index) => (
+                <tr key={team.name}>
+                  <td>{index + 1}</td>
+                  <td>{team.name}</td>
+                  <td>{team.score}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        <Button
+          variant="contained"
+          className={styles.playAgainButton}
+          onClick={() => dispatch({ type: "RESET_GAME" })}
+        >
+          Jugar de nuevo
+        </Button>
+      </div>
     </div>
   );
 };
