@@ -34,14 +34,15 @@ const useVertexSelection = (
     // si es el primer movimiento debe ser igual a 0
     const isFirstMove = connectedVerticesRef.current.size === 0;
 
-    // determina si el set de vertices conectados tienen el vertice 1 o el vertice 2
+    // determina si el set de vertices conectados tienen el vertice 1 o el vertice 2 o el intermedio
     const isConnected =
       connectedVerticesRef.current.has(vertex1.index) ||
-      connectedVerticesRef.current.has(vertex2.index);
+      connectedVerticesRef.current.has(vertex2.index) ||
+      connectedVerticesRef.current.has(intermediateEdge)
 
     if (!isFirstMove && !isConnected) {
       setInvalidMoveAlert(
-        "Movimiento inválido: debes conectar desde un vértice que ya esté conectado anteriormente."
+        "Debes iniciar la conexión desde un vértice que ya esté conectado."
       );
       setSelectedVertex(null);
       return;
@@ -84,7 +85,8 @@ const useVertexSelection = (
         }),
 
       context: { state, dispatch },
-      onInvalidConnection: () => setInvalidMoveAlert(true),
+      onInvalidConnection: () =>
+        setInvalidMoveAlert("No puedes conectar esos vértices."),
       showQuestion: (questionData) =>
         setQuestionData({ open: true, ...questionData }),
     });

@@ -15,7 +15,7 @@ const GameBoard = () => {
     width: window.innerWidth,
     height: window.innerHeight,
   });
-  const [invalidMoveAlert, setInvalidMoveAlert] = useState(false);
+  const [invalidMoveAlert, setInvalidMoveAlert] = useState(null);
   const [incorrectAnswerAlert, setIncorrectAnswerAlert] = useState(false);
 
   const [questionData, setQuestionData] = useState({
@@ -89,12 +89,13 @@ const GameBoard = () => {
       />
 
       <CustomAlert
-        open={invalidMoveAlert}
-        onClose={() => setInvalidMoveAlert(false)}
+        open={Boolean(invalidMoveAlert)}
+        onClose={() => setInvalidMoveAlert(null)}
         severity="warning"
         title="Movimiento inválido"
-        message="No puedes conectar esos vértices."
+        message={invalidMoveAlert}
       />
+
       <CustomAlert
         open={incorrectAnswerAlert}
         onClose={() => setIncorrectAnswerAlert(false)}
