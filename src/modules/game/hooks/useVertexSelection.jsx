@@ -15,6 +15,7 @@ const useVertexSelection = (
   const handleVertexClick = (vertex) => {
     if (!selectedVertex) {
       setSelectedVertex(vertex);
+
       return;
     }
 
@@ -41,8 +42,7 @@ const useVertexSelection = (
             ...prev,
             { coordinates, team: state.currentTeam },
           ];
-
-          console.log(Object.keys(triangles).length)
+          
           // Validar si ya se completaron todos los triángulos posibles
           if (Object.keys(triangles).length === updatedTriangles.length) {
             console.log("¡El juego ha finalizado!");
@@ -62,7 +62,7 @@ const useVertexSelection = (
     setSelectedVertex(null);
   };
 
-  return handleVertexClick;
+  return { handleVertexClick, selectedVertexIndex: selectedVertex?.index };
 };
 
 export default useVertexSelection;
