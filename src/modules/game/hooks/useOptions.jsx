@@ -34,20 +34,24 @@ const useOptions = () => {
 
   const handleRemoveTeam = () => {
     if (teams.length > 2) {
-      setTeams(teams.slice(0, -1));
+      const updatedTeams = teams.slice(0, -1);
+      setTeams(updatedTeams);
+      dispatch({ type: "SET_TEAMS", payload: updatedTeams });
     }
   };
 
   const handleRandomizeOrder = () => {
     setOrderRandom(true);
-    setTeams([...teams].sort(() => Math.random() - 0.5));
+    const updatedTeams = [...teams].sort(() => Math.random() - 0.5);
+    setTeams(updatedTeams);
+    dispatch({ type: "SET_TEAMS", payload: updatedTeams });
   };
 
   const handleOptionsStartGame = () => {
     dispatch({ type: "SET_MODE", payload: gameMode });
     dispatch({ type: "SET_CURRENT_TEAM", payload: teams[0] });
     dispatch({ type: "SET_TEAMS", payload: [...teams] });
-    navigate(`/game${location.search}`)
+    navigate(`/game${location.search}`);
   };
 
   return {
