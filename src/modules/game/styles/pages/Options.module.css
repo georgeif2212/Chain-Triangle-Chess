@@ -1,49 +1,68 @@
-.options-container {
+.optionsContainer {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh;
+  padding: 2rem;
+  box-sizing: border-box;
 }
 
-.options-card {
-  width: 400px;
-  padding: 20px;
+.optionsCard {
+  width: 100%;
+  max-width: 420px;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   text-align: center;
 }
 
-.options-card__title {
-  margin-bottom: 10px;
+.optionsTitle {
+  font-size: 1.75rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 1.5rem;
 }
 
-.options-card-gameMode {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 15px;
+.modeDisplay {
+  font-size: 1rem;
+  color: #666;
+  margin-bottom: 1.25rem;
 }
 
-.team-selector {
+.teamSelector {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 1rem;
 }
 
-.color-box {
+.colorBox {
   width: 20px;
   height: 20px;
-  border-radius: 50%;
+  border-radius: 4px;
+  border: 1px solid #ccc;
 }
 
-.options-card-teamButtons, .order-buttons {
+.teamButtons,
+.orderButtons {
   display: flex;
   justify-content: center;
   gap: 10px;
-  margin-top: 10px;
+  margin-top: 1rem;
 }
 
-.start-btn {
-  margin-top: 15px;
+.startButton {
+  margin-top: 1.5rem;
   width: 100%;
+  font-weight: bold;
+  background-color: #5c8374;
+  transition: background-color 0.3s ease;
+}
+
+.startButton:hover {
+  background-color: #46695b;
+}
+
+.gameMode{
+  margin-bottom: 1em;
 }

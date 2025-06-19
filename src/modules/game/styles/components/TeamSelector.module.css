@@ -1,0 +1,23 @@
+.teamSelector {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.teamInput {
+  flex: 8;
+  width: 3rem;
+}
+
+.colorSelectControl {
+  flex: 2;
+}
+
+.colorBox {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1px solid #ccc;
+}
