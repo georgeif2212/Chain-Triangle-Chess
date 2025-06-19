@@ -91,3 +91,11 @@ export const triangles = {
   "15,16,19": 0,
   "15,18,19": 0,
 };
+
+// Copia dinámica de las tablas que se modifican
+export function getFreshGameData() {
+  return {
+    gameBoardMatrix: gameBoardMatrix.map((row) => [...row]), 
+    triangles: { ...triangles },
+  };
+}
