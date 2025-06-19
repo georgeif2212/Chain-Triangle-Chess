@@ -1,8 +1,6 @@
 import {
   matrixValidEdges,
   matrixAssociatedVertices,
-  gameBoardMatrix,
-  triangles,
 } from "../../../utils/createArrays.jsx";
 import { sortArray } from "../../../utils/utils.js";
 
@@ -18,10 +16,10 @@ export function isValidConnection(vertex1, vertex2) {
 /**
  * * Registers a new connection in the dashboard matrix.
  */
-export function registerNewConnection(vertex1, vertex2, intermediateEdge) {
+export function registerNewConnection(vertex1, vertex2, intermediateEdge, stateGameData) {
   const updatedEdge = -intermediateEdge;
-  gameBoardMatrix[vertex1.index - 1][updatedEdge - 1] = 1;
-  gameBoardMatrix[updatedEdge - 1][vertex2.index - 1] = 1;
+  stateGameData.gameBoardMatrix[vertex1.index - 1][updatedEdge - 1] = 1;
+  stateGameData.gameBoardMatrix[updatedEdge - 1][vertex2.index - 1] = 1;
   return updatedEdge;
 }
 
@@ -56,8 +54,8 @@ export function checkAndRegisterTriangle(
       const sortedVertices2 = sortArray(assocVertex, end);
 
       if (
-        gameBoardMatrix[sortedVertices1[0] - 1][sortedVertices1[1] - 1] === 1 &&
-        gameBoardMatrix[sortedVertices2[0] - 1][sortedVertices2[1] - 1] === 1
+        state.gameData.gameBoardMatrix[sortedVertices1[0] - 1][sortedVertices1[1] - 1] === 1 &&
+        state.gameData.gameBoardMatrix[sortedVertices2[0] - 1][sortedVertices2[1] - 1] === 1
       ) {
         const triangleVertices = [assocVertex, start, end].sort(
           (a, b) => a - b
@@ -65,16 +63,16 @@ export function checkAndRegisterTriangle(
         const triangleKey = triangleVertices.toString();
 
         // * Only count if the triangle has not been recorded before
-        if (!triangles[triangleKey] && !newTriangles[triangleKey]) {
+        if (!state.gameData.triangles[triangleKey] && !newTriangles[triangleKey]) {
           const coordinates = getTriangleCoordinates(
             vertices,
             triangleVertices
           );
           newTriangles[triangleKey] = 1; // Mark this triangle as new on this play
-          triangles[triangleKey] = 1; // Register it on the global list of triangles
+          state.gameData.triangles[triangleKey] = 1; // Register it on the global list of triangles
 
           trianglesFormed++; // Add to counter
-          generateNewTriangle(coordinates, triangles);
+          generateNewTriangle(coordinates, state.gameData.triangles);
         }
       }
     });
@@ -100,6 +98,7 @@ export function checkNewTriangles(
   { state, dispatch },
   onInvalidConnection
 ) {
+
   if (!isValidConnection(vertex1, vertex2)) {
     onInvalidConnection();
     return;
@@ -110,7 +109,8 @@ export function checkNewTriangles(
   const intermediateEdge = registerNewConnection(
     vertex1,
     vertex2,
-    matrixValidEdges[vertex1.index - 1][vertex2.index - 1]
+    matrixValidEdges[vertex1.index - 1][vertex2.index - 1],
+    state.gameData // pass the dynamic copy of the gameboard and triangles data
   );
 
   const newEdges = [
