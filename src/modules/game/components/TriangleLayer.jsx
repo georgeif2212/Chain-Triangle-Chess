@@ -1,8 +1,22 @@
 import { Line, Layer } from "react-konva";
 import { useEffect, useRef } from "react";
 
+const shrinkTriangle = (coordinates, factor = 0.85) => {
+  // Calcular centroide
+  const cx = (coordinates[0].x + coordinates[1].x + coordinates[2].x) / 3;
+  const cy = (coordinates[0].y + coordinates[1].y + coordinates[2].y) / 3;
+
+  // Acercar cada punto hacia el centroide
+  return coordinates.map((point) => ({
+    x: cx + (point.x - cx) * factor,
+    y: cy + (point.y - cy) * factor,
+  }));
+};
+
 const Triangle = ({ triangle }) => {
   const triangleRef = useRef(null);
+
+  const shrunkCoords = shrinkTriangle(triangle.coordinates, 0.75);
 
   useEffect(() => {
     if (triangleRef.current) {
@@ -19,17 +33,17 @@ const Triangle = ({ triangle }) => {
     <Line
       ref={triangleRef}
       points={[
-        triangle.coordinates[0].x,
-        triangle.coordinates[0].y,
-        triangle.coordinates[1].x,
-        triangle.coordinates[1].y,
-        triangle.coordinates[2].x,
-        triangle.coordinates[2].y,
+        shrunkCoords[0].x,
+        shrunkCoords[0].y,
+        shrunkCoords[1].x,
+        shrunkCoords[1].y,
+        shrunkCoords[2].x,
+        shrunkCoords[2].y,
       ]}
       stroke="#5a5a5a"
       strokeWidth={1}
       fill={triangle.team.color}
-      opacity={0} 
+      opacity={0}
       closed
     />
   );
