@@ -1,5 +1,5 @@
 import React, { createContext, useReducer } from "react";
-
+import { availableColors } from "../utils/utils.js";
 const GameContext = createContext();
 
 const getModeFromURL = () => {
@@ -12,10 +12,10 @@ const getInitialState = () => ({
   mode: getModeFromURL().trim(), 
   currentTeam: null,
   teams: [
-    { name: "Equipo 1", color: "#EF4B4B", score: 0 },
-    { name: "Equipo 2", color: "#7BD3EA", score: 0 },
+    { name: "Equipo 1", color: availableColors[0], score: 0 },
+    { name: "Equipo 2", color: availableColors[1], score: 2 },
   ],
-  gameState: "notStarted", // not started | started | finished
+  gameState: "notStarted", // notStarted | started | finished
 });
 
 const nextTeam = (state) => {
