@@ -13,7 +13,11 @@ const useVertexSelection = (
 ) => {
   const { state, dispatch } = useContext(GameContext);
   const [selectedVertex, setSelectedVertex] = useState(null);
+
   const connectedVerticesRef = useRef(new Set());
+  const usedConnectionsRef = useRef(new Set());         // Guarda conexiones completas ya usadas
+
+
   const handleVertexClick = (vertex) => {
     if (!selectedVertex) {
       setSelectedVertex(vertex);
@@ -31,6 +35,18 @@ const useVertexSelection = (
       matrixValidEdges
     );
 
+    // Clave única de esta conexión (ordenada)
+    const connectionKey = [vertex1.index, intermediateEdge, vertex2.index]
+      .sort((a, b) => a - b)
+      .join("-");
+
+    // Validación: ya existe esta conexión
+    if (usedConnectionsRef.current.has(connectionKey)) {
+      setInvalidMoveAlert("Esta conexión ya ha sido realizada.");
+      setSelectedVertex(null);
+      return;
+    }
+    
     // si es el primer movimiento debe ser igual a 0
     const isFirstMove = connectedVerticesRef.current.size === 0;
 
@@ -66,6 +82,9 @@ const useVertexSelection = (
         connectedVerticesRef.current.add(i1);
         connectedVerticesRef.current.add(i2);
         connectedVerticesRef.current.add(intermediateEdge);
+
+        // Registrar la conexión como ya usada
+        usedConnectionsRef.current.add(connectionKey);
       },
       vertices,
       generateNewTriangle: (coordinates, triangles) =>
