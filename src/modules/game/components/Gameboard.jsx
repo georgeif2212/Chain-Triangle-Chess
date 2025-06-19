@@ -6,7 +6,7 @@ import ConnectionLayer from "./ConnectionLayer.jsx";
 import VertexLayer from "./VertexLayer.jsx";
 import VertexGrid from "./VertexGrid.jsx";
 import useVertexSelection from "../hooks/useVertexSelection";
-import "../styles/components/Gameboard.css";
+import styles from "../styles/components/Gameboard.module.css";
 import CustomAlert from "../../core/design/Alert.jsx";
 import QuestionDialog from "./QuestionDialog.jsx";
 
@@ -43,9 +43,10 @@ const GameBoard = () => {
   const [triangles, setTriangles] = useState([]);
 
   const polygonX = stageSize.width / 2;
-  const polygonY = stageSize.height / 2;
-  const radius = stageSize.width / 4;
-  const vertexSpacing = stageSize.width / 10;
+  const polygonY = stageSize.height / 2.3;
+  const radius = stageSize.width / 4.5;
+  const vertexSpacing = stageSize.width / 11.5; // 12
+
   const rows = [3, 4, 5, 4, 3];
 
   const vertices = VertexGrid({ polygonX, polygonY, vertexSpacing, rows });
@@ -58,7 +59,7 @@ const GameBoard = () => {
   );
 
   return (
-    <div className="board-container">
+    <div className={styles.boardContainer}>
       <Stage width={stageSize.width} height={stageSize.height}>
         <HexagonLayer x={polygonX} y={polygonY} radius={radius} />
         <TriangleLayer triangles={triangles} />
