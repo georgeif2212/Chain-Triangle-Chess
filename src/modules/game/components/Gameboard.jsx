@@ -50,7 +50,7 @@ const GameBoard = () => {
   const rows = [3, 4, 5, 4, 3];
 
   const vertices = VertexGrid({ polygonX, polygonY, vertexSpacing, rows });
-  const handleVertexClick = useVertexSelection(
+  const { handleVertexClick, selectedVertexIndex } = useVertexSelection(
     vertices,
     setConnections,
     setTriangles,
@@ -64,7 +64,11 @@ const GameBoard = () => {
         <HexagonLayer x={polygonX} y={polygonY} radius={radius} />
         <TriangleLayer triangles={triangles} />
         <ConnectionLayer connections={connections} />
-        <VertexLayer vertices={vertices} onVertexClick={handleVertexClick} />
+        <VertexLayer
+          vertices={vertices}
+          selectedVertex={selectedVertexIndex}
+          onVertexClick={handleVertexClick}
+        />
       </Stage>
 
       <QuestionDialog
