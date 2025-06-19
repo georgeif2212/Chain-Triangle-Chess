@@ -1,15 +1,14 @@
 import { useNavigate } from "react-router-dom";
-import { GameContext } from "../../../contexts/GameContext";
 import { useContext } from "react";
-import { Button, Typography, Box } from "@mui/material";
+import { Typography } from "@mui/material";
+import { GameContext } from "../../../contexts/GameContext";
 import { formatMode } from "../../../utils/utils";
-import styles from "../styles/pages/GameHasNotStarted.module.css";
 import CustomButton from "../components/CustomButton.jsx";
+import styles from "../styles/pages/GameHasNotStarted.module.css";
 
 const GameHasNotStarted = () => {
   const { state, dispatch } = useContext(GameContext);
   const navigate = useNavigate();
-  console.log(state);
 
   const handleStartGame = () => {
     const updatedTeams = state.teams.map((team) => ({

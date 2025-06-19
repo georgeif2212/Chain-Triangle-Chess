@@ -39,7 +39,7 @@ const Options = () => {
 
   return (
     <div className={styles.optionsContainer}>
-      <Card className={styles.optionsCard}>
+      <div className={styles.optionsCard}>
         <Typography variant="h4" className={styles.title}>
           Opciones del Juego
         </Typography>
@@ -83,7 +83,7 @@ const Options = () => {
           variant="primary"
           onClick={() => navigate(`/game${location.search}`)}
         />
-      </Card>
+      </div>
     </div>
   );
 };

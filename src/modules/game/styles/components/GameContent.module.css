@@ -8,6 +8,8 @@
   box-sizing: border-box;
   padding: 1rem;
   gap: 5rem;
+  color: #4d3f32; 
+  font-family: 'Merriweather', serif; 
 }
 
 .sidebar {
@@ -37,6 +39,10 @@
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.statusInfo {
-  text-align: center;
+.statusInfo strong {
+  color: #5c4936;
+}
+
+.teamText {
+  color: #222121;
 }

@@ -5,6 +5,7 @@
   min-height: 100vh;
   padding: 2rem;
   box-sizing: border-box;
+  background-color: #f9f5f2;
 }
 
 .optionsCard {
@@ -14,6 +15,7 @@
   border-radius: 16px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   text-align: center;
+  background-color: #f9f5f2;
 }
 
 .optionsTitle {
