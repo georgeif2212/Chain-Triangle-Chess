@@ -1,10 +1,10 @@
-// GameHasNotStarted.jsx
 import { useNavigate } from "react-router-dom";
 import { GameContext } from "../../../contexts/GameContext";
 import { useContext } from "react";
 import { Button, Typography, Box } from "@mui/material";
 import { formatMode } from "../../../utils/utils";
 import styles from "../styles/pages/GameHasNotStarted.module.css";
+import CustomButton from "../components/CustomButton.jsx";
 
 const GameHasNotStarted = () => {
   const { state, dispatch } = useContext(GameContext);
@@ -46,16 +46,16 @@ const GameHasNotStarted = () => {
       </div>
 
       <div className={styles.buttonsWrapper}>
-        <Button
-          variant="outlined"
-          color="secondary"
+        <CustomButton
+          text="Configurar"
+          variant="secondary"
           onClick={() => navigate(`/options${location.search}`)}
-        >
-          Configurar
-        </Button>
-        <Button variant="contained" color="primary" onClick={handleStartGame}>
-          Comenzar juego
-        </Button>
+        />
+        <CustomButton
+          text="Comenzar juego"
+          variant="primary"
+          onClick={handleStartGame}
+        />
       </div>
     </div>
   );

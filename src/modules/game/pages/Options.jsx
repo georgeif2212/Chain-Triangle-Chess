@@ -8,6 +8,7 @@ import { formatMode } from "../../../utils/utils.js";
 
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import CustomButton from "../components/CustomButton.jsx";
 
 const Options = () => {
   const location = useLocation();
@@ -70,24 +71,18 @@ const Options = () => {
         </div>
 
         <div className={styles.orderButtons}>
-          <Button
+          <CustomButton
+            text="Orden aleatorio"
+            variant="secondary"
             onClick={handleRandomizeOrder}
-            variant="contained"
-            color="secondary"
-            className={styles.button}
-          >
-            Orden aleatorio
-          </Button>
+          />
         </div>
 
-        <Button
+        <CustomButton
+          text="Jugar"
+          variant="primary"
           onClick={() => navigate(`/game${location.search}`)}
-          className={styles.startBtn}
-          variant="contained"
-          color="success"
-        >
-          Jugar
-        </Button>
+        />
       </Card>
     </div>
   );
