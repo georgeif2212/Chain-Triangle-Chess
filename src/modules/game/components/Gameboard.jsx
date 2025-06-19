@@ -44,8 +44,8 @@ const GameBoard = () => {
 
   const polygonX = stageSize.width / 2;
   const polygonY = stageSize.height / 2.3;
-  const radius = stageSize.width / 4.5;
-  const vertexSpacing = stageSize.width / 11.5; // 12
+  const radius = stageSize.width / 4.1;
+  const vertexSpacing = stageSize.width / 10; // 12
 
   const rows = [3, 4, 5, 4, 3];
 
