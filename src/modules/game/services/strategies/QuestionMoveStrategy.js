@@ -5,7 +5,6 @@ import {
 } from "../Rules.jsx";
 import { matrixValidEdges } from "../../../../utils/createArrays.jsx";
 
-
 class QuestionMoveStrategy {
   constructor({
     vertex1,
@@ -52,7 +51,8 @@ class QuestionMoveStrategy {
         const intermediateEdge = registerNewConnection(
           this.vertex1,
           this.vertex2,
-          matrixValidEdges[this.vertex1.index - 1][this.vertex2.index - 1]
+          matrixValidEdges[this.vertex1.index - 1][this.vertex2.index - 1],
+          state.gameData
         );
         const newEdges = [
           [this.vertex1.index, intermediateEdge],
