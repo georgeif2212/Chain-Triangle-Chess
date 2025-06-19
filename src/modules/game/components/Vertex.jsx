@@ -11,7 +11,7 @@ const Vertex = ({ x, y, isSelected, onClick }) => {
         radius: isSelected ? 14 : 10,
         fill: isSelected ? "#d4b68a" : "#A79277",
         stroke: isSelected ? "#8a6f4d" : "#5c4936",
-        duration: 0.2,
+        duration: 0.1,
       });
     }
   }, [isSelected]);
