@@ -2,8 +2,9 @@ import {
   matrixValidEdges,
   matrixAssociatedVertices,
   gameBoardMatrix,
+  triangles,
 } from "../../../utils/createArrays.jsx";
-import { sortArray, triangles } from "../../../utils/utils.js";
+import { sortArray } from "../../../utils/utils.js";
 
 /**
  * * Checks if a new connection is valid.
