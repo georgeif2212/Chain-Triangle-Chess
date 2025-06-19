@@ -15,7 +15,7 @@ const getInitialState = () => ({
     { name: "Equipo 1", color: "#EF4B4B", score: 0 },
     { name: "Equipo 2", color: "#7BD3EA", score: 0 },
   ],
-  gameState: "notStarted",
+  gameState: "notStarted", // not started | started | finished
 });
 
 const nextTeam = (state) => {
