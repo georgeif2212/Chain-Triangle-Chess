@@ -53,6 +53,11 @@ const reducer = (state, action) => {
           temaNombre: action.payload.temaNombre,
         },
       };
+    case "ACTUALIZAR_VAEP_DATA":
+      return {
+        ...state,
+        vaepData: { ...action.payload },
+      };
     case "RESET_GAME":
       return {
         ...getInitialState(), // reset con el modo actual desde URL
