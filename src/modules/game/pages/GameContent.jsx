@@ -13,8 +13,9 @@ const GameContent = () => {
 
   const params = useGameParams();
 
-  const cargado =
-    state.mode === "conPreguntas" ? useLoadQuestions(params) : true;
+  const preguntasCargadas = useLoadQuestions(params); // se llama siempre
+
+  const cargado = state.mode === "conPreguntas" ? preguntasCargadas : true;
 
   if (state.mode === "conPreguntas" && !cargado) {
     return <div>Cargando preguntas...</div>;
@@ -33,7 +34,7 @@ const GameContent = () => {
             Modo: <strong>{formatMode(state.mode)}</strong>
           </Typography>
         </div>
-        
+
         <div className={styles.topBar}>
           {state.teams.map((team, index) => (
             <div
@@ -50,8 +51,6 @@ const GameContent = () => {
             </div>
           ))}
         </div>
-
-        
       </div>
 
       <GameBoard />
