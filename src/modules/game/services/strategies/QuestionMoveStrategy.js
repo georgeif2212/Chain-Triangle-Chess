@@ -37,6 +37,7 @@ class QuestionMoveStrategy {
     const preguntaIdx = Math.floor(
       Math.random() * state.vaepData.preguntas.length
     );
+
     const pregunta = state.vaepData.preguntas[preguntaIdx];
     const opciones = state.vaepData.opciones[preguntaIdx];
     const respuestaCorrecta = state.vaepData.respuestas[preguntaIdx];
@@ -45,6 +46,7 @@ class QuestionMoveStrategy {
       question: pregunta,
       options: opciones,
       correctAnswer: respuestaCorrecta,
+
       onSuccess: () => {
         dispatch({ type: "NEXT_TEAM" });
         this.onValidConnection(this.vertex1.index, this.vertex2.index);
@@ -64,9 +66,34 @@ class QuestionMoveStrategy {
           this.generateNewTriangle,
           this.context
         );
+
+        this.dispatchQuestionRemoval(preguntaIdx);
       },
+
       onFail: () => {
         dispatch({ type: "NEXT_TEAM" });
+        this.dispatchQuestionRemoval(preguntaIdx);
+      },
+    });
+  }
+
+  dispatchQuestionRemoval(preguntaIdx) {
+    const { state, dispatch } = this.context;
+
+    const nuevasPreguntas = [...state.vaepData.preguntas];
+    const nuevasOpciones = [...state.vaepData.opciones];
+    const nuevasRespuestas = [...state.vaepData.respuestas];
+
+    nuevasPreguntas.splice(preguntaIdx, 1);
+    nuevasOpciones.splice(preguntaIdx, 1);
+    nuevasRespuestas.splice(preguntaIdx, 1);
+
+    dispatch({
+      type: "ACTUALIZAR_VAEP_DATA",
+      payload: {
+        preguntas: nuevasPreguntas,
+        opciones: nuevasOpciones,
+        respuestas: nuevasRespuestas,
       },
     });
   }
