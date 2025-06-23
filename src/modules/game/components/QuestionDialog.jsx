@@ -18,7 +18,7 @@ const QuestionDialog = ({
   const [showAnswer, setShowAnswer] = useState(false);
 
   useEffect(() => {
-    if (open) setShowAnswer(false); 
+    if (open) setShowAnswer(false);
   }, [open]);
 
   const handleOptionClick = (selected) => {
@@ -30,7 +30,15 @@ const QuestionDialog = ({
   };
 
   return (
-    <Dialog open={open} onClose={onClose}>
+    <Dialog
+      open={open}
+      onClose={(event, reason) => {
+        if (reason === "backdropClick" || reason === "escapeKeyDown") {
+          return;
+        }
+        onClose();
+      }}
+    >
       <DialogTitle>Pregunta</DialogTitle>
       <DialogContent>
         <Typography>{question}</Typography>
