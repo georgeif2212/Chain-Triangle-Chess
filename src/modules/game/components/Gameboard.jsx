@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Stage } from "react-konva";
 import HexagonLayer from "./HexagonLayer.jsx";
 import TriangleLayer from "./TriangleLayer.jsx";
@@ -9,8 +9,14 @@ import useVertexSelection from "../hooks/useVertexSelection";
 import styles from "../styles/components/Gameboard.module.css";
 import CustomAlert from "../../core/design/Alert.jsx";
 import QuestionDialog from "./QuestionDialog.jsx";
+import NoMoreQuestionsDialog from "./NoMoreQuestionsDialog.jsx";
+import { GameContext } from "../../../contexts/GameContext.jsx";
 
 const GameBoard = () => {
+  const { state, dispatch } = useContext(GameContext);
+  const [showNoMoreQuestionsDialog, setShowNoMoreQuestionsDialog] =
+    useState(false);
+
   const [stageSize, setStageSize] = useState({
     width: window.innerWidth,
     height: window.innerHeight,
@@ -38,6 +44,15 @@ const GameBoard = () => {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+  console.log(state.vaepData);
+  useEffect(() => {
+    const sinPreguntas =
+      state.mode === "conPreguntas" && state.vaepData?.preguntas?.length === 0;
+
+    if (sinPreguntas) {
+      setShowNoMoreQuestionsDialog(true);
+    }
+  }, [state.vaepData, state.mode]);
 
   const [connections, setConnections] = useState([]);
   const [triangles, setTriangles] = useState([]);
@@ -102,6 +117,18 @@ const GameBoard = () => {
         severity="error"
         title="Respuesta incorrecta"
         message="Fallaste la pregunta. Presta más atención la próxima vez."
+      />
+
+      <NoMoreQuestionsDialog
+        open={showNoMoreQuestionsDialog}
+        onContinue={() => {
+          dispatch({ type: "SET_MODE", payload: "sinPreguntas" });
+          setShowNoMoreQuestionsDialog(false);
+        }}
+        onEnd={() => {
+          dispatch({ type: "GAME_OVER" });
+          setShowNoMoreQuestionsDialog(false);
+        }}
       />
     </div>
   );
