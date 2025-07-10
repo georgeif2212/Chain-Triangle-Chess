@@ -3,13 +3,14 @@
   flex-direction: row;
   justify-content: center;
   align-items: flex-start;
-  height: 90vh;
+  height: auto;
+  min-height: 90vh;
   overflow: hidden;
   box-sizing: border-box;
   padding: 1rem;
-  gap: 5rem;
-  color: #4d3f32; 
-  font-family: 'Merriweather', serif; 
+  gap: 3rem;
+  color: #4d3f32;
+  font-family: "Merriweather", serif;
 }
 
 .sidebar {

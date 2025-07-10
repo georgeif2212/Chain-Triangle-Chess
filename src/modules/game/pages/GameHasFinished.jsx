@@ -5,8 +5,27 @@ import styles from "../styles/pages/GameHasFinished.module.css";
 
 const GameHasFinished = () => {
   const { state, dispatch } = useContext(GameContext);
+
+  // Obtener ganadores (empates en primer lugar)
+  const maxScore = Math.max(...state.teams.map((t) => t.score));
+  const winners = state.teams.filter((t) => t.score === maxScore);
+
+  // Ordenar todos los equipos por puntaje descendente
   const sortedTeams = [...state.teams].sort((a, b) => b.score - a.score);
-  const winner = sortedTeams[0];
+
+  // Calcular ranking con empates
+  let lastScore = null;
+  let lastRank = 0;
+  let skip = 0;
+  const rankedTeams = sortedTeams.map((team, index) => {
+    if (team.score !== lastScore) {
+      lastRank = index + 1 + skip;
+      lastScore = team.score;
+    } else {
+      skip += 1;
+    }
+    return { ...team, rank: lastRank };
+  });
 
   return (
     <div className={styles.container}>
@@ -15,19 +34,25 @@ const GameHasFinished = () => {
           El juego ha finalizado
         </Typography>
 
-        <div
-          className={styles.winnerBox}
-          style={{ backgroundColor: winner.color }}
-        >
+        <div className={styles.winnerBoxMulti}>
           <Typography variant="h6" className={styles.winnerLabel}>
-            Ganador
+            {winners.length === 1 ? "Ganador" : "Empate entre"}
           </Typography>
-          <Typography variant="h5" className={styles.winnerName}>
-            {winner.name}
-          </Typography>
-          <Typography variant="body1" className={styles.winnerPoints}>
-            {winner.score} puntos
-          </Typography>
+
+          {winners.map((team) => (
+            <div
+              key={team.name}
+              className={styles.winnerBox}
+              style={{ backgroundColor: team.color }}
+            >
+              <Typography variant="h5" className={styles.winnerName}>
+                {team.name}
+              </Typography>
+              <Typography variant="body1" className={styles.winnerPoints}>
+                {team.score} puntos
+              </Typography>
+            </div>
+          ))}
         </div>
 
         <div className={styles.resultsBox}>
@@ -43,9 +68,9 @@ const GameHasFinished = () => {
               </tr>
             </thead>
             <tbody>
-              {sortedTeams.map((team, index) => (
+              {rankedTeams.map((team) => (
                 <tr key={team.name}>
-                  <td>{index + 1}</td>
+                  <td>{team.rank}</td>
                   <td>{team.name}</td>
                   <td>{team.score}</td>
                 </tr>
