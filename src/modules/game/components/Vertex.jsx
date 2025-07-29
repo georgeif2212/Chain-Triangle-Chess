@@ -8,7 +8,7 @@ const Vertex = ({ x, y, isSelected, onClick, index }) => {
   useEffect(() => {
     if (circleRef.current) {
       circleRef.current.to({
-        radius: isSelected ? 16 : 12,
+        radius: isSelected ? 20 : 16,
         fill: isSelected ? "#d4b68a" : "#A79277",
         stroke: isSelected ? "#8a6f4d" : "#5c4936",
         duration: 0.1,
@@ -30,7 +30,7 @@ const Vertex = ({ x, y, isSelected, onClick, index }) => {
     >
       <Circle
         ref={circleRef}
-        radius={12}
+        radius={16}
         fill="#A79277"
         stroke="#5c4936"
         strokeWidth={2}
@@ -41,12 +41,10 @@ const Vertex = ({ x, y, isSelected, onClick, index }) => {
       />
       <Text
         text={String(index)}
-        fontSize={11}
+        fontSize={16}
         fontFamily="sans-serif"
         fill="#ffffff" // tono marrón oscuro, combina con el stroke
-        align="center"
-        verticalAlign="middle"
-        offsetX={4.5}
+        offsetX={8.5}
         offsetY={5}
         fontStyle="bold"
       />
