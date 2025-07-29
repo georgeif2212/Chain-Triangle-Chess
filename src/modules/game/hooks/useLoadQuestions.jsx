@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { useQuestions } from "./useQuestions.jsx";
 import { useContext } from "react";
-import { GameContext } from "../../../contexts/GameContext.jsx"
+import { GameContext } from "../../../contexts/GameContext.jsx";
 
 export const useLoadQuestions = ({ materia, tema, token }) => {
   const { dispatch } = useContext(GameContext);
@@ -13,12 +13,14 @@ export const useLoadQuestions = ({ materia, tema, token }) => {
     materiaNombre,
     temaNombre,
     errorSesion,
+    user,
   } = useQuestions({ materia, tema, token });
-
   const [cargado, setCargado] = useState(false);
-
   useEffect(() => {
-    if (!cargado && preguntas.length && respuestas.length && opciones.length) {
+    const datosListos =
+      preguntas.length && respuestas.length && opciones.length && user;
+
+    if (!cargado && datosListos) {
       dispatch({
         type: "LOAD_QUESTIONS",
         payload: {
@@ -27,6 +29,7 @@ export const useLoadQuestions = ({ materia, tema, token }) => {
           opciones,
           materiaNombre,
           temaNombre,
+          user,
         },
       });
       setCargado(true);
@@ -38,7 +41,15 @@ export const useLoadQuestions = ({ materia, tema, token }) => {
         window.location.href = "https://vaep-uamc.web.app?sesionExpirada=true";
       }, 3000);
     }
-  }, [preguntas, respuestas, opciones, materiaNombre, temaNombre, errorSesion]);
+  }, [
+    preguntas,
+    respuestas,
+    opciones,
+    materiaNombre,
+    temaNombre,
+    user, 
+    errorSesion,
+  ]);
 
   return cargado;
 };
