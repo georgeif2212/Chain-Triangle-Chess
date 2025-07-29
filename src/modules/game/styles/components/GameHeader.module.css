@@ -1,0 +1,48 @@
+.header {
+  background-color: #f28c00;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1rem; /* MÁS BAJO */
+  flex-wrap: wrap;
+}
+
+.logoSection {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.logo {
+  height: 50px; /* más pequeño */
+}
+
+.titleSection {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  text-align: center;
+}
+
+.titleSection h2 {
+  margin: 0;
+  font-size: 1.3rem; /* tamaño más compacto */
+}
+
+.details {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem; /* menos separación horizontal */
+  justify-content: center;
+  font-size: 0.85rem; /* más pequeño */
+}
+
+.buttonSection {
+  display: flex;
+  flex-direction: row; /* los pone en fila */
+  align-items: center;
+  gap: 0.5rem;
+}

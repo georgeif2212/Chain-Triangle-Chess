@@ -27,6 +27,7 @@
   gap: 0.5rem;
   justify-content: center;
   margin-bottom: 1rem;
+  padding-top: 1rem;
 }
 
 .teamBox {
@@ -46,4 +47,18 @@
 
 .teamText {
   color: #222121;
+}
+
+.teamBox {
+  border: 2px solid black;
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  transition: transform 0.3s ease, padding 0.3s ease;
+}
+
+.currentTeamBox {
+  transform: scale(1.3);
+  padding: 14px; /* ligeramente más grande */
+  z-index: 1;
 }
