@@ -72,7 +72,6 @@ class QuestionMoveStrategy {
 
       onFail: () => {
         dispatch({ type: "NEXT_TEAM" });
-        this.dispatchQuestionRemoval(preguntaIdx);
       },
     });
   }
