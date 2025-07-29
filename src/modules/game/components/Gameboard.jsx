@@ -44,7 +44,6 @@ const GameBoard = () => {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-  console.log(state.vaepData);
   useEffect(() => {
     const sinPreguntas =
       state.mode === "conPreguntas" && state.vaepData?.preguntas?.length === 0;
