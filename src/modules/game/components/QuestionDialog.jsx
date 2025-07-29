@@ -42,32 +42,34 @@ const QuestionDialog = ({
       <DialogTitle>Pregunta</DialogTitle>
       <DialogContent>
         <Typography>{question}</Typography>
+
         {options?.length > 0 ? (
+          // Pregunta de opción múltiple
           options.map((opt, i) => (
             <Button key={i} onClick={() => handleOptionClick(opt)}>
               {opt}
             </Button>
           ))
         ) : (
+          // Pregunta abierta
           <>
-            {!showAnswer ? (
-              <Button onClick={() => setShowAnswer(true)}>
-                Mostrar respuesta
-              </Button>
-            ) : (
-              <Typography variant="body2">
+            <Button onClick={() => setShowAnswer(true)}>
+              Mostrar respuesta
+            </Button>
+
+            {showAnswer && (
+              <Typography variant="body2" sx={{ mt: 1 }}>
                 Respuesta: {correctAnswer}
               </Typography>
             )}
+
+            <DialogActions sx={{ mt: 2 }}>
+              <Button onClick={onCorrect}>Respondí bien</Button>
+              <Button onClick={onIncorrect}>Respondí mal</Button>
+            </DialogActions>
           </>
         )}
       </DialogContent>
-      {!options?.length && showAnswer && (
-        <DialogActions>
-          <Button onClick={onCorrect}>Respondí bien</Button>
-          <Button onClick={onIncorrect}>Respondí mal</Button>
-        </DialogActions>
-      )}
     </Dialog>
   );
 };
