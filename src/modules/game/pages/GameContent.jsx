@@ -18,7 +18,6 @@ const GameContent = () => {
   if (state.mode === "conPreguntas" && !cargado)
     return <div>Cargando preguntas...</div>;
   if (state.gameState === "notStarted") return <GameHasNotStarted />;
-
   return (
     <div className={styles.wrapper}>
       {/* Sidebar dinámico */}
@@ -37,20 +36,26 @@ const GameContent = () => {
             </div>
 
             <div className={styles.topBar}>
-              {state.teams.map((team, index) => (
-                <div
-                  key={index}
-                  className={styles.teamBox}
-                  style={{
-                    backgroundColor: team.color,
-                    borderColor: darkenHexColor(team.color, 0.3),
-                  }}
-                >
-                  <Typography variant="h6" className={styles.teamText}>
-                    {team.name}: {team.score} pts
-                  </Typography>
-                </div>
-              ))}
+              {state.teams.map((team, index) => {
+                const isCurrent = team.name === state.currentTeam?.name;
+
+                return (
+                  <div
+                    key={index}
+                    className={`${styles.teamBox} ${
+                      isCurrent ? styles.currentTeamBox : ""
+                    }`}
+                    style={{
+                      backgroundColor: team.color,
+                      borderColor: darkenHexColor(team.color, 0.3),
+                    }}
+                  >
+                    <Typography variant="h6" className={styles.teamText}>
+                      {team.name}: {team.score} pts
+                    </Typography>
+                  </div>
+                );
+              })}
             </div>
           </>
         )}
