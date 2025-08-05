@@ -14,21 +14,6 @@
 
 ---
 
-## 📑 Tabla de Contenidos
-
-- [Características principales](#características-principales)
-- [Tecnologías utilizadas](#tecnologías-utilizadas)
-- [Estructura del proyecto](#estructura-del-proyecto)
-- [Cómo ejecutar el proyecto](#cómo-ejecutar-el-proyecto)
-- [Modo de uso (VAEP)](#modo-de-uso-vaep)
-- [Lógica de juego](#lógica-de-juego)
-- [Evidencia visual](#anexo-evidencia-visual-del-funcionamiento-del-juego)
-- [Estado actual](#estado-actual)
-- [Licencia](#licencia)
-- [Autor](#autor)
-
----
-
 ## 🧩 Tecnologías utilizadas
 
 ![React](https://img.shields.io/badge/React-18.x-blue?logo=react)
