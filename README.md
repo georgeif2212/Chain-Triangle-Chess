@@ -1,72 +1,143 @@
-# Chain-Triangle-Chess
+# ♟️ Triangular Chess
 
-# Getting Started with Create React App
+Triangular Chess es un videojuego educativo multijugador por equipos, desarrollado como parte de un proyecto de servicio social en la Universidad Autónoma Metropolitana (UAM), con el objetivo de facilitar el aprendizaje . El juego combina estrategia en un tablero hexagonal con preguntas abiertas y de opción múltiple configurables según materia y tema provenientes de la plataforma universitaria VAEP.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 📌 Características principales
 
-## Available Scripts
+- 🔺 Tablero hexagonal con vértices y conexiones creadas dinámicamente en HTML5 Canvas usando React Konva.
+- 📚 Modo de juego con preguntas (o sin ellas) para apoyar el aprendizaje en distintas materias.
+- 🧠 Cada movimiento correcto permite responder una pregunta para seguir avanzando.
+- 🧑‍🏫 Integración con la plataforma VAEP de la UAM para lanzar el juego con parámetros personalizados.
+- 🎨 Interfaz moderna con MUI y estilos modulares.
+- 🔒 Autenticación e identificación de usuarios mediante tokens.
 
-In the project directory, you can run:
+---
 
-### `npm start`
+## 🧩 Tecnologías utilizadas
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- ⚛️ React
+- 🎨 MUI (Material UI)
+- 🎨 CSS Modules
+- 🧮 React Konva (HTML5 Canvas para representar el tablero)
+- 🔥 Firebase (Autenticación y base de datos)
+- 🌐 React Router DOM
+- ⚙️ Vite (bundler y servidor de desarrollo)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+---
 
-### `npm test`
+## 📂 Estructura del proyecto
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+El proyecto está organizado en módulos según responsabilidad (componentes, páginas, estilos, servicios, etc.), destacando:
 
-### `npm run build`
+- `game/components/board/`: componentes visuales del tablero (hexágonos, vértices, conexiones).
+- `game/hooks/`: hooks personalizados para lógica de juego, preguntas, selección, etc.
+- `game/services/`: lógica de movimiento y reglas del juego.
+- `game/pages/`: vistas del flujo del juego (inicio, en juego, finalización).
+- `firebase/`: configuración de conexión con Firebase.
+- `contexts/`: contexto global del juego.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+---
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## 🧪 Cómo ejecutar el proyecto
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+1. Clona el repositorio:
+    ```bash
+    git clone https://github.com/tuusuario/triangular-chess.git
+    cd triangular-chess
+    ```
+2. Instala las dependencias:
 
-### `npm run eject`
+    ```bash
+    npm install
+    ```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+3. Configura Firebase:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+    Crea un archivo `.env` con tus credenciales o edita `firebaseConfiguration.js` y `firebaseVAEP.js` con los valores de tu proyecto Firebase.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+4. Ejecuta el proyecto:
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+   ```bash
+   npm start
+   ```
 
-## Learn More
+5. Accede a: [http://localhost:5173](http://localhost:5173)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+---
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## 🖼️ Anexo: Evidencia visual del funcionamiento del juego
 
-### Code Splitting
+A continuación, se presentan capturas de pantalla del juego *Triangular Chess* en tres momentos clave. Estas evidencias forman parte del cuerpo del informe y se incluyen aquí como material de apoyo visual.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
 
-### Analyzing the Bundle Size
+### 📌 Menú principal
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+<div align="center">
+  <img src="./public/screenshots/triangleChess1.png" alt="Menú principal" width="70%"/>
+</div>  
+*Figura 1. Menú principal del juego.*
 
-### Making a Progressive Web App
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### 🎮 Inicio del juego con pregunta educativa
 
-### Advanced Configuration
+<div align="center">
+  <img src="./public/screenshots/triangleChess2.png" alt="Inicio del juego" width="70%"/>
+</div>  
+*Figura 2. Interfaz del juego durante una partida, con una pregunta mostrada tras un movimiento válido.*
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+---
 
-### Deployment
+### 🏁 Fin del juego
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+<div align="center">
+  <img src="./public/screenshots/triangleChess3.png" alt="Fin del juego" width="70%"/>
+</div>  
+*Figura 3. Pantalla final que anuncia el equipo ganador al finalizar la partida.*
 
-### `npm run build` fails to minify
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## 🛠️ Modo de uso (VAEP)
+
+La plataforma VAEP lanza el juego mediante una URL con parámetros:
+
+```
+https://triangularchess.web.app/game/?mode=conPreguntas&materia=Matemáticas&tema=Álgebra&token=xyz123
+```
+
+El juego recibe esta información y prepara dinámicamente el contenido de preguntas, los equipos y la lógica del juego.
+
+---
+
+## 🧠 Lógica de juego
+
+- Cada equipo elige un vértice para moverse.
+- Si responde correctamente una pregunta, puede avanzar.
+- El objetivo es formar triángulos y ganar puntos estratégicamente.
+- El movimiento y la estrategia se rigen por un patrón definido en `MoveStrategyFactory`.
+
+---
+
+## 📌 Estado actual
+
+✅ MVP funcional
+🧪 Pruebas internas realizadas
+🚀 Desplegado en Firebase Hosting
+
+---
+
+## 📄 Licencia
+
+Este proyecto fue desarrollado como parte del servicio social universitario y está bajo uso académico, sin fines de lucro. Para reutilización o ampliación, contactar con la UAM o con el autor.
+
+---
+
+## 🙋‍♂️ Autor
+
+Desarrollado por **Jorge Infante Fragoso**
+
+Estudiante de Ingeniería en Computación
+
+Universidad Autónoma Metropolitana – Unidad Cuajimalpa
+
+---
