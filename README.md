@@ -1,6 +1,7 @@
 # ♟️ Triangular Chess
 
-Triangular Chess es un videojuego educativo multijugador por equipos, desarrollado como parte de un proyecto de servicio social en la Universidad Autónoma Metropolitana (UAM), con el objetivo de facilitar el aprendizaje . El juego combina estrategia en un tablero hexagonal con preguntas abiertas y de opción múltiple configurables según materia y tema provenientes de la plataforma universitaria VAEP.
+
+> **Triangular Chess** es un videojuego educativo multijugador, desarrollado en React, que combina estrategia y aprendizaje mediante preguntas integradas desde la plataforma VAEP-UAM. El juego utiliza React Konva para el renderizado interactivo del tablero, Material UI para la interfaz, y Firebase para autenticación y gestión de datos.
 
 ## 📌 Características principales
 
@@ -13,15 +14,41 @@ Triangular Chess es un videojuego educativo multijugador por equipos, desarrolla
 
 ---
 
+## 📑 Tabla de Contenidos
+
+- [Características principales](#características-principales)
+- [Tecnologías utilizadas](#tecnologías-utilizadas)
+- [Estructura del proyecto](#estructura-del-proyecto)
+- [Cómo ejecutar el proyecto](#cómo-ejecutar-el-proyecto)
+- [Modo de uso (VAEP)](#modo-de-uso-vaep)
+- [Lógica de juego](#lógica-de-juego)
+- [Evidencia visual](#anexo-evidencia-visual-del-funcionamiento-del-juego)
+- [Estado actual](#estado-actual)
+- [Licencia](#licencia)
+- [Autor](#autor)
+
+---
+
 ## 🧩 Tecnologías utilizadas
 
-- ⚛️ React
-- 🎨 MUI (Material UI)
-- 🎨 CSS Modules
-- 🧮 React Konva (HTML5 Canvas para representar el tablero)
-- 🔥 Firebase (Autenticación y base de datos)
-- 🌐 React Router DOM
-- ⚙️ Vite (bundler y servidor de desarrollo)
+![React](https://img.shields.io/badge/React-18.x-blue?logo=react)
+![MUI](https://img.shields.io/badge/MUI-v5-blue?logo=mui)
+![Firebase](https://img.shields.io/badge/Firebase-9.x-yellow?logo=firebase)
+![Vite](https://img.shields.io/badge/Vite-4.x-purple?logo=vite)
+![Estado](https://img.shields.io/badge/Estado-En%20Desarrollo-brightgreen)
+![Licencia](https://img.shields.io/badge/Licencia-Académica-lightgrey)
+
+Además, se utilizan las siguientes tecnologías y herramientas:
+
+- [React](https://react.dev/) — Framework principal para la UI.
+- [React Router DOM](https://reactrouter.com/) — Navegación entre páginas.
+- [Material UI (MUI)](https://mui.com/) — Componentes de interfaz modernos y accesibles.
+- [React Konva](https://konvajs.org/docs/react/) — Renderizado de gráficos en Canvas para el tablero.
+- [Firebase](https://firebase.google.com/) — Autenticación, base de datos y hosting.
+- [Vite](https://vitejs.dev/) — Bundler y servidor de desarrollo ultrarrápido.
+- [CSS Modules](https://github.com/css-modules/css-modules) — Estilos encapsulados por componente.
+- [Jest](https://jestjs.io/) y [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/) — Pruebas unitarias y de integración.
+- [ESLint](https://eslint.org/) y [Prettier](https://prettier.io/) — Linting y formateo automático de código.
 
 ---
 
@@ -109,12 +136,16 @@ El juego recibe esta información y prepara dinámicamente el contenido de pregu
 
 ---
 
-## 🧠 Lógica de juego
+## 🧠 Flujo de juego
 
-- Cada equipo elige un vértice para moverse.
-- Si responde correctamente una pregunta, puede avanzar.
-- El objetivo es formar triángulos y ganar puntos estratégicamente.
-- El movimiento y la estrategia se rigen por un patrón definido en `MoveStrategyFactory`.
+1. El usuario selecciona modo de juego y equipos.
+2. Si es modo "con preguntas", se cargan preguntas desde VAEP vía Firebase.
+3. Cada turno, el equipo selecciona dos vértices para intentar conectar.
+4. Si el movimiento es válido:
+    - En modo "con preguntas": se muestra una pregunta. Si responde bien, se realiza la conexión y se colorea el triángulo si corresponde.
+    - En modo "sin preguntas": se realiza la conexión directamente.
+5. El turno pasa al siguiente equipo.
+6. El juego termina cuando se colorean todos los triángulos posibles.
 
 ---
 
@@ -123,6 +154,18 @@ El juego recibe esta información y prepara dinámicamente el contenido de pregu
 ✅ MVP funcional
 🧪 Pruebas internas realizadas
 🚀 Desplegado en Firebase Hosting
+
+---
+
+## 🚀 Despliegue
+
+El juego está desplegado en Firebase Hosting.  
+Para desplegar una nueva versión:
+
+```bash
+npm run build
+firebase deploy
+```
 
 ---
 
@@ -139,5 +182,11 @@ Desarrollado por **Jorge Infante Fragoso**
 Estudiante de Ingeniería en Computación
 
 Universidad Autónoma Metropolitana – Unidad Cuajimalpa
+
+
+### 📬 Contacto
+
+Para dudas, sugerencias o colaboración, escribe a:  
+jinfante2212@gmail.com
 
 ---
