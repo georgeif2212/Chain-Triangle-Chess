@@ -5,7 +5,7 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Button } from "@mui/material";
 import logoUAM from "@assets/logoUAM.png";
 
-const GameHeader = ({ usuario, materia, tema, onBack }) => {
+const GameHeader = ({ usuario, materia, tema }) => {
   const [open, setOpen] = useState(false);
 
   return (
@@ -29,17 +29,17 @@ const GameHeader = ({ usuario, materia, tema, onBack }) => {
           color="primary"
           onClick={() => setOpen(true)}
         >
-          INSTRUCCIONES
+          Instrucciones
         </Button>
         <Button
           variant="contained"
           color="primary"
           onClick={() =>
-            (window.location.href = "https://vaep-uamc.web.app/console")
+            (window.location.href = "http://148.206.168.145/vaep/")
           }
           startIcon={<ArrowBackIcon />}
         >
-          REGRESAR
+          Regresar
         </Button>
       </div>
 
