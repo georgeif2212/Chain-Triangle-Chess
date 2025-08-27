@@ -1,23 +1,17 @@
 import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 
-export const useGameParams = (onParamsLoaded) => {
+export const useGameParams = () => {
+  const [searchParams] = useSearchParams();
   const [params, setParams] = useState({
-    mode: null,
-    materia: null,
-    tema: null,
-    token: null,
+    themes: null,
   });
 
   useEffect(() => {
-    const searchParams = new URLSearchParams(window.location.search);
-    const mode = searchParams.get("mode");
-    const materia = searchParams.get("materia");
-    const tema = searchParams.get("tema");
-    const token = searchParams.get("token");
+    const themes = searchParams.getAll("themes").join(",");
 
-    if (mode === "conPreguntas" && materia && tema && token) {
-      setParams({ mode, materia, tema, token });
-      onParamsLoaded?.({ mode, materia, tema, token });
+    if (themes) {
+      setParams({ themes });
     }
   }, []);
 
