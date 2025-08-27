@@ -1,13 +1,13 @@
-import React, { createContext, useReducer } from "react";
-import { availableColors } from "../utils/utils.js";
-import { getFreshGameData } from "../utils/createArrays.jsx";
+import { createContext, useReducer } from "react";
+import { availableColors } from "@utils/utils.js";
+import { getFreshGameData } from "@utils/createArrays.jsx";
 
 const GameContext = createContext();
 
 const getModeFromURL = () => {
   const searchParams = new URLSearchParams(window.location.search);
-  const mode = searchParams.get("mode");
-  return mode === "conPreguntas" ? "conPreguntas  " : "sinPreguntas";
+  const themes = searchParams.getAll("themes"); // obtiene todos los themes
+  return themes.length > 0 ? "conPreguntas" : "sinPreguntas";
 };
 
 const getInitialState = () => ({
@@ -58,8 +58,8 @@ const reducer = (state, action) => {
       return {
         ...state,
         vaepData: {
-          ...state.vaepData, 
-          ...action.payload, 
+          ...state.vaepData,
+          ...action.payload,
         },
       };
 

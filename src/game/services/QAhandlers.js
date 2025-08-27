@@ -1,67 +1,18 @@
-import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { collection, query, getDocs } from "firebase/firestore";
 import { doc, getDoc } from "firebase/firestore";
+import { getQuestions } from "vaep-transition-toolkit";
 
 // Función para cargar preguntas y respuestas de ambos tipos
 export const cargarPreguntasYRespuestas = async (
-  db,
-  user,
-  materia,
   temaId,
   setPreguntas,
   setRespuestas,
   setOpciones
 ) => {
   try {
-    // Cargar preguntas-respuesta
-    const fetchPreguntasRespuesta = async () => {
-      const q = query(
-        collection(
-          db,
-          "usuarios",
-          user.uid,
-          "materias",
-          materia,
-          "temas",
-          temaId,
-          "preguntas-respuesta"
-        )
-      );
-      const querySnapshot = await getDocs(q);
-      const items = querySnapshot.docs.map((doc) => ({
-        tipo: "pregunta-respuesta",
-        pregunta: doc.data().pregunta || "",
-        respuesta: doc.data().respuesta || "",
-      }));
-      return items;
-    };
-
-    // Cargar preguntas-opcion_multiple
-    const fetchPreguntasOpcionMultiple = async () => {
-      const q = query(
-        collection(
-          db,
-          "usuarios",
-          user.uid,
-          "materias",
-          materia,
-          "temas",
-          temaId,
-          "preguntas-opcion_multiple"
-        )
-      );
-      const querySnapshot = await getDocs(q);
-      const items = querySnapshot.docs.map((doc) => ({
-        tipo: "opcion-multiple",
-        pregunta: doc.data().pregunta || "",
-        opciones: doc.data().opciones || [],
-        respuestaCorrecta: doc.data().respuestaCorrecta || "",
-      }));
-      return items;
-    };
-
-    const preguntasRespuestas = await fetchPreguntasRespuesta();
-    const preguntasOpcionMultiple = await fetchPreguntasOpcionMultiple();
+    const themesArray = temaId;
+    const [preguntasRespuestas, preguntasOpcionMultiple] = await getQuestions(
+      themesArray
+    );
 
     // Combinar y barajar ambas listas de preguntas
     const todasLasPreguntas = shuffleArray([
@@ -152,42 +103,12 @@ const obtenerNombreDocumento = async (
 };
 
 export const setupAuthStateChange = (
-  app,
-  db,
-  setUser,
   setPreguntas,
   setRespuestas,
   setOpciones,
-  materia,
-  temaId,
-  setMateriaNombre,
-  setTemaNombre
+  temaId
 ) => {
-  const auth = getAuth(app);
-  const unsubscribe = onAuthStateChanged(auth, (user) => {
-    if (user) {
-      setUser(user);
-      cargarPreguntasYRespuestas(
-        db,
-        user,
-        materia,
-        temaId,
-        setPreguntas,
-        setRespuestas,
-        setOpciones
-      );
-      obtenerNombreDocumento(
-        db,
-        user,
-        materia,
-        temaId,
-        setMateriaNombre,
-        setTemaNombre
-      );
-    } else {
-      setUser(null);
-    }
-  });
+  cargarPreguntasYRespuestas(temaId, setPreguntas, setRespuestas, setOpciones);
 
-  return unsubscribe;
+  return;
 };

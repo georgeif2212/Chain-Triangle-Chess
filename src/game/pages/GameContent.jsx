@@ -5,19 +5,24 @@ import GameBoard from "@components/board/Gameboard.jsx";
 import GameHasFinished from "./GameHasFinished.jsx";
 import GameHasNotStarted from "./GameHasNotStarted.jsx";
 import { useGameParams } from "@hooks/useGameParams.jsx";
-import { useLoadQuestions } from "@hooks/useLoadQuestions.jsx";
+import { useQuestionsLoader } from "@hooks/useQuestionsLoader.jsx";
+
 import { darkenHexColor, formatMode } from "@utils/utils.js";
 import styles from "@styles/components/board/GameContent.module.css";
 
 const GameContent = () => {
   const { state } = useContext(GameContext);
+
   const params = useGameParams();
-  const preguntasCargadas = useLoadQuestions(params);
+  const preguntasCargadas = useQuestionsLoader(params);
 
   const cargado = state.mode === "conPreguntas" ? preguntasCargadas : true;
+
   if (state.mode === "conPreguntas" && !cargado)
     return <div>Cargando preguntas...</div>;
+
   if (state.gameState === "notStarted") return <GameHasNotStarted />;
+  
   return (
     <div className={styles.wrapper}>
       {/* Sidebar dinámico */}
