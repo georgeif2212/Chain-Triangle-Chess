@@ -1,6 +1,6 @@
 import { createContext, useReducer } from "react";
-import { availableColors } from "../utils/utils.js";
-import { getFreshGameData } from "../utils/createArrays.jsx";
+import { availableColors } from "@utils/utils.js";
+import { getFreshGameData } from "@utils/createArrays.jsx";
 
 const GameContext = createContext();
 
