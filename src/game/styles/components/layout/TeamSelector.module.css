@@ -1,23 +1,27 @@
+.teamGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2 columnas */
+  gap: 1rem; /* espacio entre celdas */
+}
+
 .teamSelector {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 0.75rem;
-  margin-bottom: 1rem;
-}
+  gap: 1rem;
+  }
 
 .teamInput {
-  flex: 8;
-  width: 3rem;
+  flex: 5;
 }
 
 .colorSelectControl {
-  flex: 2;
+  flex: 1;
 }
 
 .colorBox {
-  width: 18px;
-  height: 18px;
+  width: 25px;
+  height: 25px;
   border-radius: 50%;
   border: 1px solid #ccc;
 }

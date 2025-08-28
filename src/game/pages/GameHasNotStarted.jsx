@@ -4,6 +4,7 @@ import { Typography } from "@mui/material";
 import { GameContext } from "@contexts/GameContext.jsx";
 import { formatMode } from "@utils/utils.js";
 import CustomButton from "@components/ui/CustomButton.jsx";
+import { Container } from "@mui/material";
 import styles from "@styles/pages/GameHasNotStarted.module.css";
 
 const GameHasNotStarted = () => {
@@ -35,7 +36,7 @@ const GameHasNotStarted = () => {
           <div
             key={index}
             className={styles.teamCard}
-            style={{ borderColor: team.color }}
+            style={{ borderColor: team.color, backgroundColor: `${team.color}63` }}
           >
             <Typography variant="body1" className={styles.teamText}>
               Equipo {index + 1}: <strong>{team.name}</strong>
@@ -47,12 +48,12 @@ const GameHasNotStarted = () => {
       <div className={styles.buttonsWrapper}>
         <CustomButton
           text="Configurar"
-          variant="secondary"
+          variant="primary"
           onClick={() => navigate(`/options${location.search}`)}
         />
         <CustomButton
           text="Comenzar juego"
-          variant="primary"
+          variant="secondary"
           onClick={handleStartGame}
         />
       </div>
