@@ -15,7 +15,7 @@ const GameHeader = ({ usuario, materia, tema }) => {
       </div>
 
       <div className={styles.titleSection}>
-        <h2>Triangle chess</h2>
+        <h2>Triangle Chess!</h2>
         <div className={styles.details}>
           <span>Usuario: {usuario} </span>
           <span>Materia: {materia} </span>
