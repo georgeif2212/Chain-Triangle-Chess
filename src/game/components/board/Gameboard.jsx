@@ -11,26 +11,16 @@ import CustomAlert from "@components/ui/Alert.jsx";
 import QuestionDialog from "@components/dialogs/QuestionDialog.jsx";
 import NoMoreQuestionsDialog from "@components/dialogs/NoMoreQuestionsDialog.jsx";
 import { GameContext } from "@contexts/GameContext.jsx";
+import useStageSize from "@hooks/useStageSize.jsx";
 
 const GameBoard = () => {
   const { state, dispatch } = useContext(GameContext);
   const [showNoMoreQuestionsDialog, setShowNoMoreQuestionsDialog] =
     useState(false);
 
-  const boardRef = useRef(null); // <--- ref del contenedor
-  const [stageSize, setStageSize] = useState({ width: 0, height: 0 });
+  const [boardRef, stageSize] = useStageSize();
 
-  useEffect(() => {
-    const handleResize = () => {
-      if (boardRef.current) {
-        const { width, height } = boardRef.current.getBoundingClientRect();
-        setStageSize({ width, height });
-      }
-    };
-    handleResize(); // Medimos al montar
-    window.addEventListener("resize", handleResize); // y cuando cambie la ventana
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+
   const [invalidMoveAlert, setInvalidMoveAlert] = useState(null);
   const [incorrectAnswerAlert, setIncorrectAnswerAlert] = useState(false);
 
@@ -42,7 +32,6 @@ const GameBoard = () => {
     onSuccess: () => {},
     onFail: () => {},
   });
-
 
   useEffect(() => {
     const sinPreguntas =
@@ -58,7 +47,7 @@ const GameBoard = () => {
 
   const polygonX = stageSize.width / 2;
   const polygonY = stageSize.height / 2;
-  const vertexSpacing = Math.min(stageSize.width, stageSize.height) / 5
+  const vertexSpacing = Math.min(stageSize.width, stageSize.height) / 5;
 
   const rows = [3, 4, 5, 4, 3];
 
