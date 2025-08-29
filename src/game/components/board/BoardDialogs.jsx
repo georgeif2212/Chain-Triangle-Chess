@@ -1,4 +1,3 @@
-import React from "react";
 import CustomAlert from "@components/ui/Alert.jsx";
 import QuestionDialog from "@components/dialogs/QuestionDialog.jsx";
 import NoMoreQuestionsDialog from "@components/dialogs/NoMoreQuestionsDialog.jsx";
