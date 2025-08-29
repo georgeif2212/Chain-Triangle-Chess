@@ -1,7 +1,9 @@
 import { Typography, Button } from "@mui/material";
 import { useContext } from "react";
 import { GameContext } from "@contexts/GameContext.jsx";
+import TeamBox from "@components/ui/TeamBox";
 import styles from "@styles/pages/GameHasFinished.module.css";
+import CustomButton from "@components/ui/CustomButton.jsx";
 
 const GameHasFinished = () => {
   const { state, dispatch } = useContext(GameContext);
@@ -16,77 +18,68 @@ const GameHasFinished = () => {
   // Calcular ranking con empates
   let lastScore = null;
   let lastRank = 0;
-  let skip = 0;
+
   const rankedTeams = sortedTeams.map((team, index) => {
     if (team.score !== lastScore) {
-      lastRank = index + 1 + skip;
+      lastRank += 1; // siguiente puesto
       lastScore = team.score;
-    } else {
-      skip += 1;
     }
     return { ...team, rank: lastRank };
   });
 
   return (
-    <div className={styles.container}>
-      <div className={styles.content}>
-        <Typography variant="h4" className={styles.title}>
-          El juego ha finalizado
-        </Typography>
+    <div className={styles.gameFinished}>
+      <Typography variant="h5" className={styles.title}>
+        El juego ha finalizado
+      </Typography>
 
-        <div className={styles.winnerBoxMulti}>
-          <Typography variant="h6" className={styles.winnerLabel}>
-            {winners.length === 1 ? "Ganador" : "Empate entre"}
-          </Typography>
+      <Typography variant="h7">
+        {winners.length === 1 ? "Ganador" : "Empate entre"}
+      </Typography>
+      <div className={styles.winnerBoxMulti}>
+        {winners.map((team, index) => (
+          <TeamBox key={team.name} team={team} index={index} />
+        ))}
+      </div>
 
-          {winners.map((team) => (
-            <div
-              key={team.name}
-              className={styles.winnerBox}
-              style={{ backgroundColor: team.color }}
-            >
-              <Typography variant="h5" className={styles.winnerName}>
-                {team.name}
-              </Typography>
-              <Typography variant="body1" className={styles.winnerPoints}>
-                {team.score} puntos
-              </Typography>
-            </div>
-          ))}
-        </div>
-
-        <div className={styles.resultsBox}>
-          <Typography variant="subtitle1" className={styles.label}>
-            Resultados finales
-          </Typography>
-          <table className={styles.resultsTable}>
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Equipo</th>
-                <th>Puntos</th>
-              </tr>
-            </thead>
-            <tbody>
-              {rankedTeams.map((team) => (
-                <tr key={team.name}>
+      <div className={styles.resultsBox}>
+        <Typography variant="h7">Resultados finales</Typography>
+        <table className={styles.resultsTable}>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Equipo</th>
+              <th>Puntos</th>
+            </tr>
+          </thead>
+          <tbody>
+            {rankedTeams.map((team) => {
+              // Generamos un color más claro y más oscuro
+              const backgroundColor = team.color + "33"; // agrega transparencia ~ 20%
+              const borderColor = team.color; // color original para borde
+              return (
+                <tr
+                  key={team.name}
+                  style={{
+                    backgroundColor: backgroundColor,
+                    borderBottom: `2px solid ${borderColor}`,
+                  }}
+                >
                   <td>{team.rank}</td>
                   <td>{team.name}</td>
                   <td>{team.score}</td>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-
-        <Button
-          variant="contained"
-          className={styles.playAgainButton}
-          onClick={() => dispatch({ type: "RESET_GAME" })}
-        >
-          Jugar de nuevo
-        </Button>
+              );
+            })}
+          </tbody>
+        </table>
       </div>
+      <CustomButton
+        text="Jugar de nuevo"
+        variant="secondary"
+        onClick={() => dispatch({ type: "RESET_GAME" })}
+      />
+
     </div>
   );
 };
