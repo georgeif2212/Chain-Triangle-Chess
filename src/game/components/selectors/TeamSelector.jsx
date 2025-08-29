@@ -19,11 +19,12 @@ const TeamSelector = ({ index, team, teams, onTeamChange }) => {
         size="small"
         className={styles.teamInput}
       />
+
       <FormControl size="small" className={styles.colorSelectControl}>
-        <InputLabel>Color</InputLabel>
         <Select
           value={team.color}
           onChange={(e) => onTeamChange(index, "color", e.target.value)}
+          IconComponent={() => null}
         >
           {availableColors.map((color) => (
             <MenuItem
@@ -34,11 +35,12 @@ const TeamSelector = ({ index, team, teams, onTeamChange }) => {
               <div
                 className={styles.colorBox}
                 style={{ backgroundColor: color }}
-              ></div>
+              />
             </MenuItem>
           ))}
         </Select>
       </FormControl>
+      
     </div>
   );
 };

@@ -16,6 +16,8 @@ const getInitialState = () => ({
   teams: [
     { name: "Equipo 1", color: availableColors[0], score: 0 },
     { name: "Equipo 2", color: availableColors[1], score: 0 },
+    { name: "Equipo 3", color: availableColors[2], score: 0 },
+    { name: "Equipo 4", color: availableColors[3], score: 0 },
   ],
   gameState: "notStarted", // notStarted | started | finished
   gameData: getFreshGameData(),

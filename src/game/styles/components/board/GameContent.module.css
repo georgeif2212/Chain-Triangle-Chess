@@ -1,28 +1,47 @@
-.wrapper {
+.wrapper_game {
   display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: flex-start;
-  height: auto;
-  min-height: 90vh;
-  overflow: hidden;
-  box-sizing: border-box;
-  padding: 1rem;
-  gap: 3rem;
+  gap: 2rem;
   color: #4d3f32;
   font-family: "Merriweather", serif;
+  width: 100%;
+  height: 100%; /* ocupa todo el container de MUI */
+  justify-content: center;
+  /* padding-left: 3rem; 👈 mueve sidebar y gameboard juntos */
+  box-sizing: border-box; /* asegura que el padding no deforme */
 }
 
-.sidebar {
+.sidebar_game {
   display: flex;
   flex-direction: column;
   align-items: center;
-  max-width: 300px;
-  flex-shrink: 0;
+  justify-content: center;
+  flex: 1.2; /* ocupa 1 parte */
+  min-height: 100%;
+  /* min-width: 25%; opcional: evita que crezca demasiado */
+}
+
+.gameInfo{
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  background-color: #f9f5f2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: none;
+  padding: 2rem;
+
+}
+.title {
+  font-size: 1.8rem !important;
+  font-weight: 500 !important;
+  color: #4d3f32;
+  font-family: "Merriweather", serif !important;
+  margin-bottom: 0.3rem !important;
 }
 
 .topBar {
   display: flex;
+  flex-direction: column;
   flex-wrap: wrap;
   gap: 0.5rem;
   justify-content: center;
@@ -41,6 +60,11 @@
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
+.statusInfo{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 .statusInfo strong {
   color: #5c4936;
 }

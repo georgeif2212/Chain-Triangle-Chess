@@ -1,26 +1,19 @@
-import React, { useState, useEffect, useContext } from "react";
-import { Stage } from "react-konva";
-import HexagonLayer from "./HexagonLayer.jsx";
-import TriangleLayer from "./TriangleLayer.jsx";
-import ConnectionLayer from "./ConnectionLayer.jsx";
-import VertexLayer from "./VertexLayer.jsx";
+import { useState, useEffect, useContext } from "react";
 import VertexGrid from "./VertexGrid.jsx";
 import useVertexSelection from "@hooks/useVertexSelection.jsx";
 import styles from "@styles/components/board/Gameboard.module.css";
-import CustomAlert from "@components/ui/Alert.jsx";
-import QuestionDialog from "@components/dialogs/QuestionDialog.jsx";
-import NoMoreQuestionsDialog from "@components/dialogs/NoMoreQuestionsDialog.jsx";
 import { GameContext } from "@contexts/GameContext.jsx";
+import useStageSize from "@hooks/useStageSize.jsx";
+import BoardStage from "./BoardStage.jsx";
+import BoardDialogs from "./BoardDialogs.jsx";
 
 const GameBoard = () => {
   const { state, dispatch } = useContext(GameContext);
   const [showNoMoreQuestionsDialog, setShowNoMoreQuestionsDialog] =
     useState(false);
 
-  const [stageSize, setStageSize] = useState({
-    width: window.innerWidth,
-    height: window.innerHeight,
-  });
+  const [boardRef, stageSize] = useStageSize();
+
   const [invalidMoveAlert, setInvalidMoveAlert] = useState(null);
   const [incorrectAnswerAlert, setIncorrectAnswerAlert] = useState(false);
 
@@ -34,17 +27,6 @@ const GameBoard = () => {
   });
 
   useEffect(() => {
-    const handleResize = () => {
-      setStageSize({
-        width: window.innerWidth,
-        height: window.innerHeight,
-      });
-    };
-
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-  useEffect(() => {
     const sinPreguntas =
       state.mode === "conPreguntas" && state.vaepData?.preguntas?.length === 0;
 
@@ -57,13 +39,12 @@ const GameBoard = () => {
   const [triangles, setTriangles] = useState([]);
 
   const polygonX = stageSize.width / 2;
-  const polygonY = stageSize.height / 2.3;
-  const radius = stageSize.width / 4.1;
-  const vertexSpacing = stageSize.width / 10; // 12
+  const polygonY = stageSize.height / 2;
+  const vertexSpacing = Math.min(stageSize.width, stageSize.height) / 5;
 
   const rows = [3, 4, 5, 4, 3];
-
   const vertices = VertexGrid({ polygonX, polygonY, vertexSpacing, rows });
+
   const { handleVertexClick, selectedVertexIndex } = useVertexSelection(
     vertices,
     setConnections,
@@ -73,61 +54,26 @@ const GameBoard = () => {
   );
 
   return (
-    <div className={styles.boardContainer}>
-      <Stage width={stageSize.width} height={stageSize.height}>
-        <HexagonLayer x={polygonX} y={polygonY} radius={radius} />
-        <TriangleLayer triangles={triangles} />
-        <ConnectionLayer connections={connections} />
-        <VertexLayer
-          vertices={vertices}
-          selectedVertex={selectedVertexIndex}
-          onVertexClick={handleVertexClick}
-        />
-      </Stage>
-
-      <QuestionDialog
-        open={questionData.open}
-        question={questionData.question}
-        options={questionData.options}
-        correctAnswer={questionData.correctAnswer}
-        onCorrect={() => {
-          questionData.onSuccess();
-          setQuestionData((prev) => ({ ...prev, open: false }));
-        }}
-        onIncorrect={() => {
-          questionData.onFail();
-          setQuestionData((prev) => ({ ...prev, open: false }));
-          setIncorrectAnswerAlert(true);
-        }}
-        onClose={() => setQuestionData((prev) => ({ ...prev, open: false }))}
+    <div className={styles.boardContainer} ref={boardRef}>
+      <BoardStage
+        stageSize={stageSize}
+        triangles={triangles}
+        connections={connections}
+        vertices={vertices}
+        selectedVertexIndex={selectedVertexIndex}
+        handleVertexClick={handleVertexClick}
       />
 
-      <CustomAlert
-        open={Boolean(invalidMoveAlert)}
-        onClose={() => setInvalidMoveAlert(null)}
-        severity="warning"
-        title="Movimiento inválido"
-        message={invalidMoveAlert}
-      />
-
-      <CustomAlert
-        open={incorrectAnswerAlert}
-        onClose={() => setIncorrectAnswerAlert(false)}
-        severity="error"
-        title="Respuesta incorrecta"
-        message="Fallaste la pregunta. Presta más atención la próxima vez."
-      />
-
-      <NoMoreQuestionsDialog
-        open={showNoMoreQuestionsDialog}
-        onContinue={() => {
-          dispatch({ type: "SET_MODE", payload: "sinPreguntas" });
-          setShowNoMoreQuestionsDialog(false);
-        }}
-        onEnd={() => {
-          dispatch({ type: "GAME_OVER" });
-          setShowNoMoreQuestionsDialog(false);
-        }}
+      <BoardDialogs
+        questionData={questionData}
+        setQuestionData={setQuestionData}
+        invalidMoveAlert={invalidMoveAlert}
+        setInvalidMoveAlert={setInvalidMoveAlert}
+        incorrectAnswerAlert={incorrectAnswerAlert}
+        setIncorrectAnswerAlert={setIncorrectAnswerAlert}
+        showNoMoreQuestionsDialog={showNoMoreQuestionsDialog}
+        setShowNoMoreQuestionsDialog={setShowNoMoreQuestionsDialog}
+        dispatch={dispatch}
       />
     </div>
   );

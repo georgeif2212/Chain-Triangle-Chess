@@ -1,33 +1,20 @@
 import { useState, useEffect, useRef } from "react";
 
-const useStageSize = () => {
-  const [stageSize, setStageSize] = useState({ width: 0, height: 0 });
-  const containerRef = useRef(null);
+export default function useStageSize() {
+  const ref = useRef(null);
+  const [size, setSize] = useState({ width: 0, height: 0 });
 
   useEffect(() => {
-    const currentContainer = containerRef.current; // Guardar referencia actual
-
-    const resizeObserver = new ResizeObserver((entries) => {
-      for (let entry of entries) {
-        setStageSize({
-          width: entry.contentRect.width,
-          height: entry.contentRect.height,
-        });
-      }
-    });
-
-    if (currentContainer) {
-      resizeObserver.observe(currentContainer);
-    }
-
-    return () => {
-      if (currentContainer) {
-        resizeObserver.unobserve(currentContainer);
+    const handleResize = () => {
+      if (ref.current) {
+        const { width, height } = ref.current.getBoundingClientRect();
+        setSize({ width, height });
       }
     };
-  }, []); // No se necesita agregar dependencias
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
-  return { stageSize, containerRef };
-};
-
-export default useStageSize;
+  return [ref, size];
+}
