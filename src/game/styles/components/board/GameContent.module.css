@@ -29,6 +29,14 @@
   align-items: center;
   max-width: none;
   padding: 2rem;
+
+}
+.title {
+  font-size: 1.8rem !important;
+  font-weight: 500 !important;
+  color: #4d3f32;
+  font-family: "Merriweather", serif !important;
+  margin-bottom: 0.3rem !important;
 }
 
 .topBar {
@@ -52,6 +60,11 @@
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
+.statusInfo{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 .statusInfo strong {
   color: #5c4936;
 }

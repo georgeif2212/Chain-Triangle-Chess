@@ -25,18 +25,19 @@ const GameContent = () => {
 
   return (
     <div className={styles.wrapper_game}>
-
       <div className={styles.sidebar_game}>
         {state.gameState === "started" && (
-          <>
-            <h1>Triangle Chess!</h1>
+          <div className={styles.gameInfo}>
+            <Typography variant="h4" className={styles.title}>
+              Triangle Chess!
+            </Typography>
 
             <div className={styles.statusInfo}>
-              <Typography variant="h6">
-                Turno de: <strong>{state.currentTeam?.name}</strong>
-              </Typography>
-              <Typography variant="subtitle1">
+              <Typography variant="subtitle1" style={{ marginBottom: "2rem" }}>
                 Modo: <strong>{formatMode(state.mode)}</strong>
+              </Typography>
+              <Typography variant="h7">
+                Turno de: <strong>{state.currentTeam?.name}</strong>
               </Typography>
             </div>
 
@@ -62,7 +63,7 @@ const GameContent = () => {
                 );
               })}
             </div>
-          </>
+          </div>
         )}
 
         {state.gameState === "finished" && <GameHasFinished />}
