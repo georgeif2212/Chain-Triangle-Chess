@@ -22,11 +22,11 @@ const GameContent = () => {
     return <div>Cargando preguntas...</div>;
 
   if (state.gameState === "notStarted") return <GameHasNotStarted />;
-  
+
   return (
-    <div className={styles.wrapper}>
-      {/* Sidebar dinámico */}
-      <div className={styles.sidebar}>
+    <div className={styles.wrapper_game}>
+
+      <div className={styles.sidebar_game}>
         {state.gameState === "started" && (
           <>
             <h1>Triangle Chess!</h1>
@@ -51,11 +51,11 @@ const GameContent = () => {
                       isCurrent ? styles.currentTeamBox : ""
                     }`}
                     style={{
-                      backgroundColor: team.color,
+                      backgroundColor: `${team.color}90`,
                       borderColor: darkenHexColor(team.color, 0.3),
                     }}
                   >
-                    <Typography variant="h6" className={styles.teamText}>
+                    <Typography variant="subtitle2" className={styles.teamText}>
                       {team.name}: {team.score} pts
                     </Typography>
                   </div>
@@ -68,7 +68,6 @@ const GameContent = () => {
         {state.gameState === "finished" && <GameHasFinished />}
       </div>
 
-      {/* GameBoard siempre visible */}
       <GameBoard />
     </div>
   );
