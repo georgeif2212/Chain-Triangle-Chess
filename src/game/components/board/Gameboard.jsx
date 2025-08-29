@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import { Stage } from "react-konva";
 import HexagonLayer from "./HexagonLayer.jsx";
 import TriangleLayer from "./TriangleLayer.jsx";
@@ -17,10 +17,20 @@ const GameBoard = () => {
   const [showNoMoreQuestionsDialog, setShowNoMoreQuestionsDialog] =
     useState(false);
 
-  const [stageSize, setStageSize] = useState({
-    width: window.innerWidth,
-    height: window.innerHeight,
-  });
+  const boardRef = useRef(null); // <--- ref del contenedor
+  const [stageSize, setStageSize] = useState({ width: 0, height: 0 });
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (boardRef.current) {
+        const { width, height } = boardRef.current.getBoundingClientRect();
+        setStageSize({ width, height });
+      }
+    };
+    handleResize(); // Medimos al montar
+    window.addEventListener("resize", handleResize); // y cuando cambie la ventana
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
   const [invalidMoveAlert, setInvalidMoveAlert] = useState(null);
   const [incorrectAnswerAlert, setIncorrectAnswerAlert] = useState(false);
 
@@ -33,17 +43,7 @@ const GameBoard = () => {
     onFail: () => {},
   });
 
-  useEffect(() => {
-    const handleResize = () => {
-      setStageSize({
-        width: window.innerWidth,
-        height: window.innerHeight,
-      });
-    };
 
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
   useEffect(() => {
     const sinPreguntas =
       state.mode === "conPreguntas" && state.vaepData?.preguntas?.length === 0;
@@ -57,9 +57,8 @@ const GameBoard = () => {
   const [triangles, setTriangles] = useState([]);
 
   const polygonX = stageSize.width / 2;
-  const polygonY = stageSize.height / 2.3;
-  const radius = stageSize.width / 4.1;
-  const vertexSpacing = stageSize.width / 10; // 12
+  const polygonY = stageSize.height / 2;
+  const vertexSpacing = Math.min(stageSize.width, stageSize.height) / 5
 
   const rows = [3, 4, 5, 4, 3];
 
@@ -73,62 +72,69 @@ const GameBoard = () => {
   );
 
   return (
-    <div className={styles.boardContainer}>
-      <Stage width={stageSize.width} height={stageSize.height}>
-        <HexagonLayer x={polygonX} y={polygonY} radius={radius} />
-        <TriangleLayer triangles={triangles} />
-        <ConnectionLayer connections={connections} />
-        <VertexLayer
-          vertices={vertices}
-          selectedVertex={selectedVertexIndex}
-          onVertexClick={handleVertexClick}
+    <div className={styles.boardContainer} ref={boardRef}>
+      {stageSize.width > 0 && stageSize.height > 0 && (
+        <Stage width={stageSize.width} height={stageSize.height}>
+          <HexagonLayer
+            x={stageSize.width / 2}
+            y={stageSize.height / 2}
+            radius={Math.min(stageSize.width, stageSize.height) / 2}
+          />
+          <TriangleLayer triangles={triangles} />
+          <ConnectionLayer connections={connections} />
+          <VertexLayer
+            vertices={vertices}
+            selectedVertex={selectedVertexIndex}
+            onVertexClick={handleVertexClick}
+          />
+        </Stage>
+      )}
+      <div>
+        <QuestionDialog
+          open={questionData.open}
+          question={questionData.question}
+          options={questionData.options}
+          correctAnswer={questionData.correctAnswer}
+          onCorrect={() => {
+            questionData.onSuccess();
+            setQuestionData((prev) => ({ ...prev, open: false }));
+          }}
+          onIncorrect={() => {
+            questionData.onFail();
+            setQuestionData((prev) => ({ ...prev, open: false }));
+            setIncorrectAnswerAlert(true);
+          }}
+          onClose={() => setQuestionData((prev) => ({ ...prev, open: false }))}
         />
-      </Stage>
 
-      <QuestionDialog
-        open={questionData.open}
-        question={questionData.question}
-        options={questionData.options}
-        correctAnswer={questionData.correctAnswer}
-        onCorrect={() => {
-          questionData.onSuccess();
-          setQuestionData((prev) => ({ ...prev, open: false }));
-        }}
-        onIncorrect={() => {
-          questionData.onFail();
-          setQuestionData((prev) => ({ ...prev, open: false }));
-          setIncorrectAnswerAlert(true);
-        }}
-        onClose={() => setQuestionData((prev) => ({ ...prev, open: false }))}
-      />
+        <CustomAlert
+          open={Boolean(invalidMoveAlert)}
+          onClose={() => setInvalidMoveAlert(null)}
+          severity="warning"
+          title="Movimiento inválido"
+          message={invalidMoveAlert}
+        />
 
-      <CustomAlert
-        open={Boolean(invalidMoveAlert)}
-        onClose={() => setInvalidMoveAlert(null)}
-        severity="warning"
-        title="Movimiento inválido"
-        message={invalidMoveAlert}
-      />
+        <CustomAlert
+          open={incorrectAnswerAlert}
+          onClose={() => setIncorrectAnswerAlert(false)}
+          severity="error"
+          title="Respuesta incorrecta"
+          message="Fallaste la pregunta. Presta más atención la próxima vez."
+        />
 
-      <CustomAlert
-        open={incorrectAnswerAlert}
-        onClose={() => setIncorrectAnswerAlert(false)}
-        severity="error"
-        title="Respuesta incorrecta"
-        message="Fallaste la pregunta. Presta más atención la próxima vez."
-      />
-
-      <NoMoreQuestionsDialog
-        open={showNoMoreQuestionsDialog}
-        onContinue={() => {
-          dispatch({ type: "SET_MODE", payload: "sinPreguntas" });
-          setShowNoMoreQuestionsDialog(false);
-        }}
-        onEnd={() => {
-          dispatch({ type: "GAME_OVER" });
-          setShowNoMoreQuestionsDialog(false);
-        }}
-      />
+        <NoMoreQuestionsDialog
+          open={showNoMoreQuestionsDialog}
+          onContinue={() => {
+            dispatch({ type: "SET_MODE", payload: "sinPreguntas" });
+            setShowNoMoreQuestionsDialog(false);
+          }}
+          onEnd={() => {
+            dispatch({ type: "GAME_OVER" });
+            setShowNoMoreQuestionsDialog(false);
+          }}
+        />
+      </div>
     </div>
   );
 };
