@@ -1,0 +1,26 @@
+.teamCard {
+  border: 3px solid;
+  border-radius: 12px;
+  padding: 0.75rem 1.25rem;
+  min-width: 160px;
+  box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+}
+
+.teamCard:hover {
+  transform: translateY(-2px);
+}
+
+.teamText {
+  color: #3a332b;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.buttonsWrapper {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+}
