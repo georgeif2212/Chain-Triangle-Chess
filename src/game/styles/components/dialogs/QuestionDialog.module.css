@@ -1,0 +1,19 @@
+.responsesBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+  gap: 0.5rem;
+}
+
+.successErrorBox {
+  display: flex;
+  gap: 1rem;
+  justify-content: space-around;
+}
+
+.optionsColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
