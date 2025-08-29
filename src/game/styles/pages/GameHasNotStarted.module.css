@@ -25,12 +25,18 @@
 }
 
 .teamsContainer {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
   flex-wrap: wrap;
   justify-content: center;
   gap: 1rem;
   max-width: 600px;
   width: 100%;
+}
+/* Caso especial: si hay 3 items, centra el último */
+.teamsContainer > :nth-child(3):last-child {
+  grid-column: 1 / -1; /* Hace que ocupe toda la fila */
+  justify-self: center; /* Y lo centra */
 }
 
 .teamCard {
