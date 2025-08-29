@@ -35,10 +35,8 @@ img {
   flex-direction: column;
   background-color: #f5f0ea;
   min-height: 100vh;
-
 }
 .general-container {
-  padding: 2em;
   display: flex;
   justify-items: center;
   align-items: center;
