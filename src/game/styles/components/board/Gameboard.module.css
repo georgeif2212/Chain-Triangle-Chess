@@ -1,7 +1,7 @@
 .boardContainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 50vw;
-    max-height: 100vh; 
-}  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 2.8;
+  height: 85vh;
+}
