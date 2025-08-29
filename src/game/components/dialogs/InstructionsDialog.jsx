@@ -44,7 +44,7 @@ const InstructionsDialog = ({ open, onClose }) => {
         </Typography>
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose} variant="outlined" color="primary">
+        <Button onClick={onClose} variant="contained" sx={{ backgroundColor: "#26355D" }}>
           Cerrar
         </Button>
       </DialogActions>

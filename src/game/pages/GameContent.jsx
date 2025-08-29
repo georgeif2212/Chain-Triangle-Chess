@@ -6,7 +6,7 @@ import GameHasFinished from "./GameHasFinished.jsx";
 import GameHasNotStarted from "./GameHasNotStarted.jsx";
 import { useGameParams } from "@hooks/useGameParams.jsx";
 import { useQuestionsLoader } from "@hooks/useQuestionsLoader.jsx";
-
+import { CircularProgress, Box } from "@mui/material";
 import { darkenHexColor, formatMode } from "@utils/utils.js";
 import styles from "@styles/components/board/GameContent.module.css";
 
@@ -18,8 +18,23 @@ const GameContent = () => {
 
   const cargado = state.mode === "conPreguntas" ? preguntasCargadas : true;
 
-  if (state.mode === "conPreguntas" && !cargado)
-    return <div>Cargando preguntas...</div>;
+  if (state.mode === "conPreguntas" && !cargado) {
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          minHeight: "60vh",
+          gap: 2,
+        }}
+      >
+        <CircularProgress size="3rem" color="inherit" />
+        <Typography variant="body1">Cargando preguntas...</Typography>
+      </Box>
+    );
+  }
 
   if (state.gameState === "notStarted") return <GameHasNotStarted />;
 

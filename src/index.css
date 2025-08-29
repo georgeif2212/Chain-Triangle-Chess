@@ -30,7 +30,7 @@ img {
   display: block;
 }
 
-.app-container {
+.app {
   display: flex;
   flex-direction: column;
   background-color: #f5f0ea;
@@ -41,5 +41,5 @@ img {
   justify-items: center;
   align-items: center;
   justify-content: center;
-  flex: auto;
+  flex: 1; /* ocupa el espacio restante */
 }

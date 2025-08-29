@@ -2,9 +2,31 @@
   background-color: #1b252f;
   padding: 1rem 0;
   font-size: 0.875rem;
-  margin-top: auto
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
 }
 
 .text {
   color: white;
+  line-height: 1.6;
+}
+
+.highlight {
+  color: #ff6f00;
+  font-weight: 600;
+}
+
+.section {
+  border-radius: 8px;
+
+  margin: 0.25rem auto;
+  width: fit-content;
+  max-width: 90%;
+}
+
+.subfooter {
+  color: #bbb;
+  font-size: 0.7rem;
+  margin-top: 0.8rem;
 }
