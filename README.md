@@ -20,7 +20,7 @@
 ![MUI](https://img.shields.io/badge/MUI-v5-blue?logo=mui)
 ![Firebase](https://img.shields.io/badge/Firebase-9.x-yellow?logo=firebase)
 ![Vite](https://img.shields.io/badge/Vite-4.x-purple?logo=vite)
-![Estado](https://img.shields.io/badge/Estado-En%20Desarrollo-brightgreen)
+![Estado](https://img.shields.io/badge/Estado-En%20Producción-brightgreen)
 ![Licencia](https://img.shields.io/badge/Licencia-Académica-lightgrey)
 
 Además, se utilizan las siguientes tecnologías y herramientas:
@@ -73,7 +73,7 @@ El proyecto está organizado en módulos según responsabilidad (componentes, p�
    npm start
    ```
 
-5. Accede a: [http://localhost:5173](http://localhost:5173)
+5. Accede a: [http://localhost:5173/trianglechess](http://localhost:5173/trianglechess)
 
 ---
 
@@ -91,35 +91,54 @@ A continuación, se presentan capturas de pantalla del juego *Triangular Chess* 
 
 ---
 
-### 🎮 Inicio del juego con pregunta educativa
+### 🎮 Menú opciones / Configuración del juego
 
 <div align="center">
   <img src="./public/screenshots/triangleChess2.png" alt="Inicio del juego" width="70%"/>
 </div>  
-*Figura 2. Interfaz del juego durante una partida, con una pregunta mostrada tras un movimiento válido.*
+*Figura 2. Interfaz que permite configurar los nombres de los equipos, colores y el orden*
+
+---
+
+
+### Tablero inicial
+
+<div align="center">
+  <img src="./public/screenshots/triangleChess3.png" alt="Inicio del juego" width="70%"/>
+</div>  
+*Figura 3. Interfaz que muestra el tablero en su forma inicial, antes de cualquier movimiento.*
+
+---
+
+### 🎮 Inicio del juego con pregunta educativa
+
+<div align="center">
+  <img src="./public/screenshots/triangleChess4.png" alt="Inicio del juego" width="70%"/>
+</div>  
+*Figura 4. Interfaz del juego durante una partida, con una pregunta mostrada tras un movimiento válido.*
 
 ---
 
 ### 🏁 Fin del juego
 
 <div align="center">
-  <img src="./public/screenshots/triangleChess3.png" alt="Fin del juego" width="70%"/>
+  <img src="./public/screenshots/triangleChess5.png" alt="Fin del juego" width="70%"/>
 </div>  
-*Figura 3. Pantalla final que anuncia el equipo ganador al finalizar la partida.*
+*Figura 5. Pantalla final que anuncia el equipo ganador al finalizar la partida.*
 
 ---
 
-## 🛠️ Modo de uso (VAEP)
+## ⚠️ Importante actualización
 
-La plataforma VAEP lanza el juego mediante una URL con parámetros:
+Debido a una limitación de **Firebase Hosting** (solo permite consultas entre **https ↔ https**), y dado que la plataforma **VAEP** corre en **http**, fue necesario mover el dominio de *Triangular Chess* a una dirección en **http**.
 
-```
-https://triangularchess.web.app/game/?mode=conPreguntas&materia=Matemáticas&tema=Álgebra&token=xyz123
-```
+🔗 Nueva dirección del juego:  
+👉 **http://148.206.168.145/trianglechess/game**
 
-El juego recibe esta información y prepara dinámicamente el contenido de preguntas, los equipos y la lógica del juego.
+> ⚠️ **Nota importante**  
+> - El link original en Firebase (`https://triangularchess.web.app/trianglechess...`) **sigue funcionando**, pero solo es recomendable para el **modo sin preguntas**.  
+> - Para el **modo con preguntas** (integrado a VAEP), es **indispensable** usar la dirección con IP (`http://148.206.168.145/...`) para evitar problemas de conexión.
 
----
 
 ## 🧠 Flujo de juego
 
@@ -138,7 +157,7 @@ El juego recibe esta información y prepara dinámicamente el contenido de pregu
 
 ✅ MVP funcional
 🧪 Pruebas internas realizadas
-🚀 Desplegado en Firebase Hosting
+🚀 Desplegado en Firebase Hosting y VAEP server
 
 ---
 
