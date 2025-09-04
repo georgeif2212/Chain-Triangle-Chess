@@ -135,6 +135,9 @@ Debido a una limitación de **Firebase Hosting** (solo permite consultas entre *
 🔗 Nueva dirección del juego:  
 👉 **http://148.206.168.145/trianglechess/game**
 
+🔗 Test de preguntas:  
+👉 **http://148.206.168.145/trianglechess/game?themes=686f265ab90c32f573f9b3a4**
+
 > ⚠️ **Nota importante**  
 > - El link original en Firebase (`https://triangularchess.web.app/trianglechess...`) **sigue funcionando**, pero solo es recomendable para el **modo sin preguntas**.  
 > - Para el **modo con preguntas** (integrado a VAEP), es **indispensable** usar la dirección con IP (`http://148.206.168.145/...`) para evitar problemas de conexión.
